@@ -12,7 +12,6 @@ jobs:
 adr-check:
 runs-on: ubuntu-latest
 
-```
 steps:
 
   - name: Checkout
@@ -44,4 +43,3 @@ steps:
       git diff --staged --quiet || git commit -m "ADR reminder state update"
 
       git push
-```
