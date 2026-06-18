@@ -18,10 +18,8 @@ def load_state():
 if not Path(STATE_FILE).exists():
 return {}
 
-```
 with open(STATE_FILE, "r", encoding="utf-8") as f:
     return json.load(f)
-```
 
 def save_state(state):
 with open(STATE_FILE, "w", encoding="utf-8") as f:
@@ -30,7 +28,6 @@ json.dump(state, f, indent=2)
 def send_telegram(message):
 url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
 
-```
 requests.post(
     url,
     json={
@@ -39,7 +36,6 @@ requests.post(
     },
     timeout=30
 )
-```
 
 today = datetime.utcnow().date()
 
@@ -47,7 +43,6 @@ state = load_state()
 
 for sheet in SHEETS:
 
-```
 df = pd.read_excel(EXCEL_FILE, sheet_name=sheet)
 
 for _, row in df.iterrows():
@@ -83,7 +78,6 @@ for _, row in df.iterrows():
         continue
 
     message = f"""
-```
 
 🔔 ADR REMINDER
 
@@ -105,10 +99,8 @@ Remaining:
 {days} days
 """.strip()
 
-```
     send_telegram(message)
 
     state[key] = True
-```
 
 save_state(state)
