@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Titanium Grey Enterprise V21</title>
+
+<link rel="stylesheet" href="enterprise-v21.css">
+
+
+<style>
+.matrix-container{width:100%;height:72vh;overflow:auto;border-radius:18px;background:#efefef;padding:8px}
+#matrix{border-collapse:separate;border-spacing:6px;min-width:max-content}
+#matrix th.rotate{position:sticky;top:0;z-index:5;min-width:95px}
+#matrix th.rotate>div{transform:none;font-size:11px;padding:6px 8px;border-radius:12px;background:linear-gradient(#fefefe,#e5e5e5);white-space:normal;line-height:1.0;text-align:center;white-space:normal !important;word-break:break-word;overflow-wrap:anywhere;line-height:1.1;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:visible}
+#matrix .hub{position:sticky;left:0;z-index:6;min-width:170px;background:linear-gradient(#fafafa,#ececec);animation:none!important}
+.km{min-width:44px;padding:4px 6px;font-size:11px;border-radius:8px}
+.diag{min-width:44px;padding:4px 6px;font-size:11px;border-radius:8px}
+.panel.matrix-full{width:100%!important}
+
+#matrix th.rotate>div{
+ font-weight:400 !important;
+ font-family:inherit !important;
+}
+#resetView{
+ border:none !important;
+ border-radius:16px !important;
+ padding:6px 14px !important;
+ background:linear-gradient(#f6f6f6,#d8d8d8) !important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(0,0,0,.12) !important;
+ color:#444 !important;
+ cursor:pointer;
+}
+#resetView:hover{
+ background:linear-gradient(#ffffff,#dddddd) !important;
+}
+#resetView:active{
+ transform:translateY(1px);
+ box-shadow:inset 0 2px 4px rgba(0,0,0,.15) !important;
+}
+
+</style>
+
+</head><body class="enterprise-v10"><div class="shell"><div class="top">
+<div class="panel logo">
+  <span class="logo-main">TITANIUM GREY V3</span>
+  <span class="logo-hover">Welcome to KP Gaslogistik</span>
+</div>
+<div class="panel headercenter"><div><strong>ENTERPRISE LOGISTICS & INTELLIGENCE PLATFORM</strong><br><span>Premium Command Center</span></div></div>
+<div class="panel right">
+<a href="search.html" class="topicon">🔍</a>
+<a href="alerts.html" class="topicon">🔔</a>
+<a href="login.html" class="topicon">👤</a>
+<a href="login.html" class="topicon operator-link">Operator</a>
+</div>
+</div><div class="layout"><div class="panel sidebar dashboard-sidebar"><div class="menu"><a href="#">DASHBOARD</a><a href="command.html">COMMAND CENTER</a><a href="matrix.html">MATRIX</a><a href="relations.html">RELATIONS</a><a href="addresses.html">ADDRESSES</a><a href="map.html">MAP</a><a href="#">SHIPMENTS</a><a href="#">WAREHOUSE</a><a href="#">REPORTS</a><a href="#">SETTINGS</a></div></div><div class="dashboard-main">
+
+<div class="panel command"><h3>COMMAND CENTER</h3><div class="tiles"><a href="MATRIX.html" class="tile">MATRIX</a><a href="RELATIONS.html" class="tile">RELATIONS</a><a href="ADDRESSES.html" class="tile">ADDRESSES</a><a href="MAP.html" class="tile">MAP</a><a href="ADMIN.html" class="tile">ADMIN</a><a href="KONTAKT.html" class="tile">KONTAKT</a></div>
+
+
+<div class="overview dashboard-overview" style="display:block;width:100%">
+<div class="panel matrix-full" style="padding:18px;border-radius:22px;width:100%;">
+<h3>DISTANCE MATRIX</h3>
+<p><span class="excel-btn panel">AUTOMATYCZNE ŁADOWANIE DATABANK.XLSX</span><input id="excelFile" type="file" accept=".xlsx,.xls" style="display:none"></p>
+<div style="display:grid;grid-template-columns:repeat(5,minmax(110px,1fr));gap:10px;margin:12px 0">
+<div class="panel small" id="hubs">0 HUB</div>
+<div class="panel small" id="rels">0 RELACJI</div>
+<div class="panel small" id="avg">0 AVG KM</div>
+<div class="panel small" id="max">0 MAX KM</div>
+<div class="panel small" id="sum">0 SUM KM</div>
+</div>
+<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+<div><small>Zoom</small> <input type="range" id="zoom" min="60" max="140" value="100"></div>
+<div><small>Nagłówki</small> <input type="range" id="headerZoom" min="60" max="140" value="100"></div>
+<button id="resetView" type="button">Reset widoku</button>
+</div><div class="matrix-container">
+<table id="matrix" style="border-collapse:separate;border-spacing:4px"></table>
+</div>
+</div>
+</div>
+<div class="footer dashboard-footer"><div class="panel foot">SYSTEM STATUS</div><div class="panel foot">DATABASE</div><div class="panel foot">API SERVICES</div><div class="panel foot">STORAGE</div><div class="panel foot">UPTIME</div></div></div></div></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+async function loadRows(){
+const resp=await fetch('./databank.xlsx');
+if(!resp.ok){console.error('Brak databank.xlsx');return;}
+const data=await resp.arrayBuffer();
+const wb=XLSX.read(data,{type:'array'});
+const sh=wb.Sheets['Relacje']||wb.Sheets[wb.SheetNames[0]];
+const rows=XLSX.utils.sheet_to_json(sh);
+const cities=[...new Set(rows.flatMap(r=>[r.FROM,r.TO]).filter(Boolean))].sort();
+const map={}; let vals=[];
+rows.forEach(r=>{map[r.FROM+'|'+r.TO]=r.KM; map[r.TO+'|'+r.FROM]=r.KM; if(r.KM) vals.push(+r.KM);});
+let h='<tr><th class="hub">HUB</th>'+cities.map(c=>{
+let label=c;
+let m=c.match(/^Grenze\s+(A\d+)\s+(.+)$/i);
+if(m){label='Grenze<br>'+m[1]+'<br>'+m[2];}
+else if(/^Grenze\s+/i.test(c)){
+ let rest=c.replace(/^Grenze\s+/i,'');
+ let p=rest.split(' ');
+ if(p.length==2) label='Grenze<br>'+p[0]+'<br>'+p[1];
+ else label='Grenze<br>'+rest;
+}
+else if(/^Zoll\s+/i.test(c)){
+ label='Zoll<br>'+c.replace(/^Zoll\s+/i,'');
+}
+return '<th class="rotate"><div>'+label+'</div></th>';
+}).join('')+'</tr>';
+cities.forEach(r=>{h+='<tr><td class="hub">'+r+'</td>';
+cities.forEach(c=>{
+const ri=cities.indexOf(r), ci=cities.indexOf(c);
+if(r===c){h+='<td><div class="diag">—</div></td>';}
+else{
+let km=map[r+"|"+c];
+let cls=(ci>ri)?'km-upper':'km-lower';
+h+=km?'<td><div class="'+cls+'">'+km+'</div></td>':'<td>—</td>';
+}}); h+='</tr>';});
+matrix.innerHTML=h;
+hubs.textContent=cities.length+' HUB'; rels.textContent=rows.length+' RELACJI';
+sum.textContent=vals.reduce((a,b)=>a+b,0)+' SUM KM';
+avg.textContent=(vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):0)+' AVG KM';
+max.textContent=(vals.length?Math.max(...vals):0)+' MAX KM';
+}
+loadRows();
+
+
+const zoom=document.getElementById('zoom');
+const headerZoom=document.getElementById('headerZoom');
+const resetView=document.getElementById('resetView');
+
+zoom.value=localStorage.getItem('matrixZoom')||100;
+headerZoom.value=localStorage.getItem('matrixHeaderZoom')||100;
+
+function applyZoom(){
+ const scale=zoom.value/100;
+ document.querySelector('.matrix-container').style.fontSize=(scale*100)+'%';
+ localStorage.setItem('matrixZoom',zoom.value);
+}
+function applyHeaderZoom(){
+ const scale=headerZoom.value/100;
+ document.querySelectorAll('#matrix th.rotate').forEach(th=>{
+   th.style.minWidth=(95*scale)+'px';
+   th.style.width=(95*scale)+'px';
+   th.style.height=(90*scale)+'px';
+ });
+ document.querySelectorAll('#matrix th.rotate>div').forEach(el=>{
+   let size=11*scale;
+   const lines=(el.innerHTML.match(/<br>/g)||[]).length+1;
+   if(lines===2) size*=0.92;
+   if(lines>=3) size*=0.82;
+   const txt=(el.textContent||'').trim();
+   if(txt.length>18) size*=0.92;
+   if(txt.length>24) size*=0.88;
+   el.style.fontSize=size+'px';
+   el.style.padding=(6*scale)+'px '+(8*scale)+'px';
+   el.style.minHeight=(80*scale)+'px';
+   el.style.lineHeight='1.1';
+ });
+ localStorage.setItem('matrixHeaderZoom',headerZoom.value);
+}
+
+zoom.addEventListener('input',applyZoom);
+headerZoom.addEventListener('input',applyHeaderZoom);
+
+resetView.addEventListener('click',()=>{
+ zoom.value=100;
+ headerZoom.value=100;
+ applyZoom();
+ applyHeaderZoom();
+});
+
+const observer=new MutationObserver(()=>applyHeaderZoom());
+observer.observe(document.getElementById('matrix'),{childList:true});
+
+applyZoom();
+setTimeout(applyHeaderZoom,100);
+
+</script>
+
+
+
+
+
+</body>
+
+
+</html>
+
