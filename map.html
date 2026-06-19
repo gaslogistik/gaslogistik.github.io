@@ -41,7 +41,7 @@ async function loadDatabank(){
    const resp = await fetch('databank.xlsx');
    const buf = await resp.arrayBuffer();
    const wb = XLSX.read(buf,{type:'array'});
-   const ws = wb.Sheets['Miasta'];
+   const ws = wb.Sheets['CITIES'];
    if(!ws) return;
    const rows = XLSX.utils.sheet_to_json(ws);
    
@@ -152,14 +152,14 @@ setTimeout(()=>{
 </div>
 <div class="panel headercenter"><div><strong>ENTERPRISE LOGISTICS & INTELLIGENCE PLATFORM</strong><br><span>Premium Command Center</span></div></div>
 <div class="panel right">
-<a href="search.html" class="topicon">🔍</a>
+<a href="cloud.html" class="topicon">☁</a>
 <a href="alerts.html" class="topicon">🔔</a>
 <a href="login.html" class="topicon">👤</a>
-<a href="login.html" class="topicon operator-link">Operator</a>
+<a href="operator.html" class="topicon operator-link">OPERATOR</a>
 </div>
-</div><div class="layout"><div class="panel sidebar dashboard-sidebar"><div class="menu"><a href="#">DASHBOARD</a><a href="command.html">COMMAND CENTER</a><a href="matrix.html">MATRIX</a><a href="relations.html">RELATIONS</a><a href="addresses.html">ADDRESSES</a><a href="map.html">MAP</a><a href="#">SHIPMENTS</a><a href="#">WAREHOUSE</a><a href="#">REPORTS</a><a href="#">SETTINGS</a></div></div><div class="dashboard-main">
+</div><div class="layout"><div class="panel sidebar dashboard-sidebar"><div class="menu"><a href="index.html">DASHBOARD</a><a href="matrix.html">MATRIX</a><a href="map.html">MAP</a><a href="vehicles.html">VEHICLES</a><a href="addresses.html">ADDRESSES</a><a href="admin.html">ADMIN</a><a href="contact.html">CONTACT</a><a href="#">DRIVERS</a><a href="#">DOCUMENTS/FILES</a><a href="#">WAREHOUSE</a><a href="#">REPORTS</a></div></div></div><div class="dashboard-main">
 
-<div class="panel command"><h3>COMMAND CENTER</h3><div class="tiles"><a href="MATRIX.html" class="tile">MATRIX</a><a href="RELATIONS.html" class="tile">RELATIONS</a><a href="ADDRESSES.html" class="tile">ADDRESSES</a><a href="MAP.html" class="tile">MAP</a><a href="admin.html" class="tile">ADMIN</a><a href="kontakt.html" class="tile">KONTAKT</a></div>
+<div class="panel command"><h3>COMMAND CENTER</h3><div class="tiles"><a href="index.html" class="tile">DASHBOARD</a><a href="matrix.html" class="tile">MATRIX</a><a href="map.html" class="tile">MAP</a><a href="vehicles.html" class="tile">VEHICLES</a><a href="addresses.html" class="tile">ADDRESSES</a><a href="admin.html" class="tile">ADMIN</a></div>
 
 
 <div class="workspace-empty" style="padding:12px;">

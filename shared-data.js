@@ -17,15 +17,15 @@ window.SharedData={
  },
 
  async buildMatrix(){
-   return await this.getSheet('Miasta');
+   return await this.getSheet('CITIES');
  },
 
  async buildRelations(){
-   return await this.getSheet('Relacje');
+   return await this.getSheet('RELATIONS');
  },
 
  async buildAddresses(){
-   return await this.getSheet('Addresses');
+   return await this.getSheet('ADDRESSES');
  }
 };
 
