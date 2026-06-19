@@ -6,8 +6,8 @@
 <style>
 .matrix-container{width:100%;height:72vh;overflow:auto;border-radius:18px;background:#efefef;padding:8px;max-width:100%;white-space:nowrap}
 #matrix{border-collapse:separate;border-spacing:6px;min-width:max-content;width:max-content}
-#matrix th.rotate{position:sticky;top:0;z-index:5;min-width:140px;width:140px;height:170px;white-space:normal;text-align:center;vertical-align:bottom}
-#matrix th.rotate>div{font-size:11px;padding:4px;border-radius:12px;background:linear-gradient(#fefefe,#e5e5e5);display:inline-block;writing-mode:vertical-rl;text-orientation:mixed;white-space:normal;line-height:1.0;max-height:150px;overflow:hidden}
+#matrix th.rotate{position:sticky;top:0;z-index:5;min-width:140px;width:140px;height:64px;white-space:normal;word-break:break-word;overflow-wrap:anywhere;text-align:center;line-height:1.15;padding-top:6px;padding-bottom:6px;vertical-align:middle}
+#matrix th.rotate>div{transform:none;font-size:11px;padding:6px 8px;border-radius:12px;background:linear-gradient(#fefefe,#e5e5e5);white-space:normal;line-height:1.0;text-align:center;white-space:nowrap !important;word-break:normal;overflow-wrap:normal;line-height:1.1;display:block;overflow:hidden;text-overflow:ellipsis}
 #matrix .hub{position:sticky;left:0;z-index:6;min-width:170px;background:linear-gradient(#fafafa,#ececec);animation:none!important}
 .km{min-width:44px;padding:4px 6px;font-size:11px;border-radius:8px}
 .diag,.km-upper,.km-lower{min-width:38px!important;width:38px!important;max-width:38px!important;padding:3px 5px;font-size:11px;border-radius:6px;display:block;white-space:nowrap;text-align:center}
@@ -61,10 +61,6 @@
 }
 </style>
 
-<style id="city-header-fix-v6">
-#matrix th.rotate,#matrix thead th.rotate{height:170px !important;vertical-align:bottom !important;overflow:visible !important;}
-#matrix th.rotate > *,#matrix thead th.rotate > *,#matrix th.rotate span,#matrix thead th.rotate span,#matrix th.rotate div,#matrix thead th.rotate div{display:inline-block !important;transform:rotate(-78deg) !important;transform-origin:left bottom !important;white-space:normal !important;word-break:break-word !important;overflow-wrap:anywhere !important;line-height:1.05 !important;max-width:38px !important;}
-</style>
 </head><body class="enterprise-v10"><div class="shell"><div class="top">
 <div class="panel logo">
   <span class="logo-main">TITANIUM GREY V3</span>
@@ -167,7 +163,7 @@ function applyHeaderZoom(){
  document.querySelectorAll('#matrix th.rotate').forEach(th=>{
    th.style.minWidth=(140*scale)+'px';
    th.style.width=(140*scale)+'px';
-   th.style.height=(170*scale)+'px';
+   th.style.height=(40*scale)+'px';
  });
  document.querySelectorAll('#matrix th.rotate>div').forEach(el=>{
    let size=16*scale;
