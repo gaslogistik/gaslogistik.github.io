@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Titanium Grey Enterprise V21</title>
+
+<link rel="stylesheet" href="enterprise-v21.css">
+</head><body class="enterprise-v10"><div class="shell"><div class="top">
+<div class="panel logo">
+  <span class="logo-main">KP GASLOGISTIK</span>
+  <span class="logo-hover">GAS LNG</span>
+</div>
+<div class="panel headercenter"><div><strong>ENTERPRISE LOGISTICS & INTELLIGENCE PLATFORM</strong><br><span>Premium Command Center</span></div></div>
+<div class="panel right">
+<a href="cloud.html" class="topicon">☁</a>
+<a href="alerts.html" class="topicon">🔔</a>
+<a href="login.html" class="topicon">👤</a>
+<a href="operator.html" class="topicon operator-link">OPERATOR</a>
+</div>
+</div><div class="layout"><div class="panel sidebar dashboard-sidebar"><div class="menu"><a href="index.html">DASHBOARD</a><a href="matrix.html">MATRIX</a><a href="map.html">MAP</a><a href="vehicles.html">VEHICLES</a><a href="addresses.html">ADDRESSES</a><a href="admin.html">ADMIN</a><a href="contact.html">CONTACT</a><a href="#">DRIVERS</a><a href="#">DOCUMENTS/FILES</a><a href="#">WAREHOUSE</a><a href="#">REPORTS</a></div></div><div class="dashboard-main">
+
+<div class="panel command"><h3>COMMAND CENTER</h3><div class="tiles"><a href="index.html" class="tile">DASHBOARD</a><a href="matrix.html" class="tile">MATRIX</a><a href="map.html" class="tile">MAP</a><a href="vehicles.html" class="tile">VEHICLES</a><a href="addresses.html" class="tile">ADDRESSES</a><a href="admin.html" class="tile">ADMIN</a></div>
+
+<div class="overview dashboard-overview"><div><div class="panel" style="margin-bottom:12px;padding:16px;border-radius:22px;background:linear-gradient(145deg,#f2f2f2,#bcbcbc);">
+<h3 style="margin-bottom:10px">NETWORK HEALTH</h3>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center">
+<div><div style="font-size:28px;font-weight:900;color:#57d957">99.98%</div><div>UPTIME</div></div>
+<div><div style="font-size:28px;font-weight:900;color:#ff8a00">128</div><div>ACTIVE ROUTES</div></div>
+<div><div style="font-size:28px;font-weight:900;color:#ff43ca">34</div><div>ALERTS</div></div>
+</div>
+</div><div class="panel" style="margin-bottom:12px;padding:16px;border-radius:22px;background:linear-gradient(145deg,#f2f2f2,#bcbcbc);">
+<h3 style="margin-bottom:10px">FLEET STATUS</h3>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center">
+<div><div style="font-size:28px;font-weight:900;color:#59d7ff">1483</div><div>VEHICLES</div></div>
+<div><div style="font-size:28px;font-weight:900;color:#57d957">96.8%</div><div>EFFICIENCY</div></div>
+<div><div style="font-size:28px;font-weight:900;color:#ff8a00">24</div><div>TASKS</div></div>
+</div>
+</div><div class="statsrow"><div class="panel small"><b>12,784</b><br>Shipments</div><div class="panel small"><b>96.8%</b><br>Performance</div><div class="panel small"><b>1,483</b><br>Vehicles</div><div class="panel small"><b>24</b><br>Alerts</div></div></div>
+<div class="panel world dashboard-world"><h3>GLOBAL OVERVIEW</h3>
+<div style="position:relative;z-index:2;margin-top:4px;margin-bottom:0;width:100%;aspect-ratio:1024/576;border-radius:18px;overflow:hidden;padding:0;background:#111">
+<img src="mapa_4.jpg" alt="Mapa" style="display:block;width:100%;height:100%;object-fit:contain;object-position:center;filter:brightness(1.2) contrast(1.05);border-radius:18px;">
+
+<div class="premium-route-overlay" style="position:absolute;inset:0;z-index:40;pointer-events:none">
+<svg viewBox="0 0 1400 720" preserveAspectRatio="none" style="width:100%;height:100%">
+<defs>
+<linearGradient id="lngMetal" x1="0%" x2="100%">
+<stop offset="0%" stop-color="#ffffff"/>
+<stop offset="50%" stop-color="#d7dde2"/>
+<stop offset="100%" stop-color="#ffffff"/>
+</linearGradient>
+
+<g id="lngTruck" transform="scale(-1.35,1.35)">
+<rect x="-12" y="-18" width="20" height="16" rx="3" fill="#f5f7fa" stroke="#000" stroke-width="2"/>
+<rect x="-4" y="-14" width="8" height="5" fill="#9fd8ff"/>
+<line x1="8" y1="-10" x2="18" y2="-10" stroke="#000" stroke-width="2"/>
+<rect x="18" y="-22" width="56" height="22" rx="11" fill="url(#lngMetal)" stroke="#000" stroke-width="2"/>
+<ellipse cx="18" cy="-11" rx="5" ry="11" fill="url(#lngMetal)" stroke="#000" stroke-width="2"/>
+<ellipse cx="74" cy="-11" rx="5" ry="11" fill="url(#lngMetal)" stroke="#000" stroke-width="2"/>
+<circle cx="-5" cy="4" r="4.5" fill="#111" stroke="#fff"/>
+<circle cx="10" cy="4" r="4.5" fill="#111" stroke="#fff"/>
+<circle cx="36" cy="4" r="4.5" fill="#111" stroke="#fff"/>
+<circle cx="54" cy="4" r="4.5" fill="#111" stroke="#fff"/>
+<circle cx="68" cy="4" r="4.5" fill="#111" stroke="#fff"/>
+</g>
+
+<path id="r1" d="M120,560 C280,360 500,500 720,350 S1020,120 1280,180"/>
+<path id="r2" d="M180,180 C420,120 620,480 860,350 S1120,520 1280,500"/>
+<path id="r3" d="M260,620 C460,680 760,260 980,420 S1140,160 1320,220"/>
+</defs>
+
+<!-- COMBINED TRUCKS + LABELS (LOCKED TO VEHICLES) -->
+
+<g>
+<use href="#lngTruck"/>
+<line x1="-35" y1="-8" x2="-35" y2="-42" stroke="#ffffff" stroke-width="2"/>
+<rect x="-155" y="-100" width="240" height="52" rx="6" fill="#0b0f14" stroke="#ffd400" stroke-width="3"/>
+<text x="-35" y="-64" text-anchor="middle" fill="#ffffff" font-size="32" font-weight="900">DM-KP 606</text>
+<animateMotion dur="25s" begin="8s" rotate="auto" repeatCount="indefinite"><mpath href="#r3"/></animateMotion>
+</g>
+
+<g>
+<use href="#lngTruck"/>
+<line x1="-35" y1="-8" x2="-35" y2="-42" stroke="#ffffff" stroke-width="2"/>
+<rect x="-155" y="-100" width="240" height="52" rx="6" fill="#0b0f14" stroke="#ffd400" stroke-width="3"/>
+<text x="-35" y="-64" text-anchor="middle" fill="#ffffff" font-size="32" font-weight="900">DM-KP 621</text>
+<animateMotion dur="27s" begin="14s" rotate="auto" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</g>
+
+<g>
+<use href="#lngTruck"/>
+<line x1="-35" y1="-8" x2="-35" y2="-42" stroke="#ffffff" stroke-width="2"/>
+<rect x="-155" y="-100" width="240" height="52" rx="6" fill="#0b0f14" stroke="#ffd400" stroke-width="3"/>
+<text x="-35" y="-64" text-anchor="middle" fill="#ffffff" font-size="32" font-weight="900">DM-KP 326</text>
+<animateMotion dur="24s" rotate="auto" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</g>
+
+<g>
+<use href="#lngTruck"/>
+<line x1="-35" y1="-8" x2="-35" y2="-42" stroke="#ffffff" stroke-width="2"/>
+<rect x="-155" y="-100" width="240" height="52" rx="6" fill="#0b0f14" stroke="#ffd400" stroke-width="3"/>
+<text x="-35" y="-64" text-anchor="middle" fill="#ffffff" font-size="32" font-weight="900">DM-KP 118</text>
+<animateMotion dur="20s" rotate="auto" repeatCount="indefinite"><mpath href="#r2"/></animateMotion>
+</g>
+
+<g>
+<use href="#lngTruck"/>
+<line x1="-35" y1="-8" x2="-35" y2="-42" stroke="#ffffff" stroke-width="2"/>
+<rect x="-155" y="-100" width="240" height="52" rx="6" fill="#0b0f14" stroke="#ffd400" stroke-width="3"/>
+<text x="-35" y="-64" text-anchor="middle" fill="#ffffff" font-size="32" font-weight="900">DM-KP 625</text>
+<animateMotion dur="28s" rotate="auto" repeatCount="indefinite"><mpath href="#r3"/></animateMotion>
+</g>
+
+<g>
+<use href="#lngTruck"/>
+<line x1="-35" y1="-8" x2="-35" y2="-42" stroke="#ffffff" stroke-width="2"/>
+<rect x="-155" y="-100" width="240" height="52" rx="6" fill="#0b0f14" stroke="#ffd400" stroke-width="3"/>
+<text x="-35" y="-64" text-anchor="middle" fill="#ffffff" font-size="32" font-weight="900">DM-KP 601</text>
+<animateMotion dur="22s" begin="24s" rotate="auto" repeatCount="indefinite"><mpath href="#r2"/></animateMotion>
+</g>
+
+<g>
+<use href="#lngTruck"/>
+<line x1="-35" y1="-8" x2="-35" y2="-42" stroke="#ffffff" stroke-width="2"/>
+<rect x="-155" y="-100" width="240" height="52" rx="6" fill="#0b0f14" stroke="#ffd400" stroke-width="3"/>
+<text x="-35" y="-64" text-anchor="middle" fill="#ffffff" font-size="32" font-weight="900">DM-KP 620</text>
+<animateMotion dur="26s" begin="30s" rotate="auto" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</g>
+
+<use href="#r1" class="route-glow" stroke="#65ff9a"/>
+<circle cx="120" cy="560" r="9" fill="#65ff9a"/>
+<circle cx="720" cy="350" r="9" fill="#59d7ff"/>
+<circle cx="1280" cy="180" r="9" fill="#ffffff"/>
+<text x="90" y="590" fill="#fff" font-size="12">RZESZÓW HUB</text>
+<text x="675" y="335" fill="#fff" font-size="12">LNG TERMINAL</text>
+<text x="1210" y="165" fill="#fff" font-size="12">CUSTOMER</text>
+
+<use href="#r2" class="route-glow" stroke="#59d7ff"/>
+<use href="#r3" class="route-glow" stroke="#ffb347"/>
+
+<!-- CURVED NETWORK PACKETS -->
+<circle r="6" fill="#ffffff" filter="url(#packetGlow)">
+<animateMotion dur="5s" repeatCount="indefinite" rotate="auto"><mpath href="#r1"/></animateMotion>
+</circle>
+<circle r="6" fill="#65ff9a" filter="url(#packetGlow)">
+<animateMotion dur="6s" begin="1s" repeatCount="indefinite" rotate="auto"><mpath href="#r2"/></animateMotion>
+</circle>
+<circle r="6" fill="#59d7ff" filter="url(#packetGlow)">
+<animateMotion dur="7s" begin="2s" repeatCount="indefinite" rotate="auto"><mpath href="#r3"/></animateMotion>
+</circle>
+
+<!-- PREMIUM NETWORK FLOW -->
+<filter id="packetGlow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+
+<use href="#r1" stroke="#65ff9a" stroke-width="8" opacity="0.18" fill="none"/>
+<use href="#r2" stroke="#59d7ff" stroke-width="8" opacity="0.18" fill="none"/>
+<use href="#r3" stroke="#ff43ca" stroke-width="8" opacity="0.18" fill="none"/>
+
+<circle cx="120" cy="560" r="12" fill="#65ff9a"><animate attributeName="r" values="10;16;10" dur="2s" repeatCount="indefinite"/></circle>
+<circle cx="720" cy="350" r="12" fill="#59d7ff"><animate attributeName="r" values="10;16;10" dur="2.5s" repeatCount="indefinite"/></circle>
+<circle cx="1280" cy="180" r="12" fill="#ffffff"><animate attributeName="r" values="10;16;10" dur="3s" repeatCount="indefinite"/></circle>
+
+<circle r="3" fill="#fff" filter="url(#packetGlow)">
+<animateMotion dur="4s" begin="0.0s" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</circle>
+<circle r="4" fill="#65ff9a" filter="url(#packetGlow)">
+<animateMotion dur="5s" begin="0.35s" repeatCount="indefinite"><mpath href="#r2"/></animateMotion>
+</circle>
+<circle r="5" fill="#59d7ff" filter="url(#packetGlow)">
+<animateMotion dur="6s" begin="0.7s" repeatCount="indefinite"><mpath href="#r3"/></animateMotion>
+</circle>
+<circle r="3" fill="#ff43ca" filter="url(#packetGlow)">
+<animateMotion dur="7s" begin="1.0499999999999998s" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</circle>
+<circle r="4" fill="#fff" filter="url(#packetGlow)">
+<animateMotion dur="8s" begin="1.4s" repeatCount="indefinite"><mpath href="#r2"/></animateMotion>
+</circle>
+<circle r="5" fill="#65ff9a" filter="url(#packetGlow)">
+<animateMotion dur="4s" begin="1.75s" repeatCount="indefinite"><mpath href="#r3"/></animateMotion>
+</circle>
+<circle r="3" fill="#59d7ff" filter="url(#packetGlow)">
+<animateMotion dur="5s" begin="2.0999999999999996s" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</circle>
+<circle r="4" fill="#ff43ca" filter="url(#packetGlow)">
+<animateMotion dur="6s" begin="2.4499999999999997s" repeatCount="indefinite"><mpath href="#r2"/></animateMotion>
+</circle>
+<circle r="5" fill="#fff" filter="url(#packetGlow)">
+<animateMotion dur="7s" begin="2.8s" repeatCount="indefinite"><mpath href="#r3"/></animateMotion>
+</circle>
+<circle r="3" fill="#65ff9a" filter="url(#packetGlow)">
+<animateMotion dur="8s" begin="3.15s" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</circle>
+<circle r="4" fill="#59d7ff" filter="url(#packetGlow)">
+<animateMotion dur="4s" begin="3.5s" repeatCount="indefinite"><mpath href="#r2"/></animateMotion>
+</circle>
+<circle r="5" fill="#ff43ca" filter="url(#packetGlow)">
+<animateMotion dur="5s" begin="3.8499999999999996s" repeatCount="indefinite"><mpath href="#r3"/></animateMotion>
+</circle>
+<circle r="3" fill="#fff" filter="url(#packetGlow)">
+<animateMotion dur="6s" begin="4.199999999999999s" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</circle>
+<circle r="4" fill="#65ff9a" filter="url(#packetGlow)">
+<animateMotion dur="7s" begin="4.55s" repeatCount="indefinite"><mpath href="#r2"/></animateMotion>
+</circle>
+<circle r="5" fill="#59d7ff" filter="url(#packetGlow)">
+<animateMotion dur="8s" begin="4.8999999999999995s" repeatCount="indefinite"><mpath href="#r3"/></animateMotion>
+</circle>
+<circle r="3" fill="#ff43ca" filter="url(#packetGlow)">
+<animateMotion dur="4s" begin="5.25s" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</circle>
+<circle r="4" fill="#fff" filter="url(#packetGlow)">
+<animateMotion dur="5s" begin="5.6s" repeatCount="indefinite"><mpath href="#r2"/></animateMotion>
+</circle>
+<circle r="5" fill="#65ff9a" filter="url(#packetGlow)">
+<animateMotion dur="6s" begin="5.949999999999999s" repeatCount="indefinite"><mpath href="#r3"/></animateMotion>
+</circle>
+<circle r="3" fill="#59d7ff" filter="url(#packetGlow)">
+<animateMotion dur="7s" begin="6.3s" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</circle>
+<circle r="4" fill="#ff43ca" filter="url(#packetGlow)">
+<animateMotion dur="8s" begin="6.6499999999999995s" repeatCount="indefinite"><mpath href="#r2"/></animateMotion>
+</circle>
+<circle r="5" fill="#fff" filter="url(#packetGlow)">
+<animateMotion dur="4s" begin="7.0s" repeatCount="indefinite"><mpath href="#r3"/></animateMotion>
+</circle>
+<circle r="3" fill="#65ff9a" filter="url(#packetGlow)">
+<animateMotion dur="5s" begin="7.35s" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</circle>
+<circle r="4" fill="#59d7ff" filter="url(#packetGlow)">
+<animateMotion dur="6s" begin="7.699999999999999s" repeatCount="indefinite"><mpath href="#r2"/></animateMotion>
+</circle>
+<circle r="5" fill="#ff43ca" filter="url(#packetGlow)">
+<animateMotion dur="7s" begin="8.049999999999999s" repeatCount="indefinite"><mpath href="#r3"/></animateMotion>
+</circle>
+<circle cx="120" cy="560" r="18" fill="none" stroke="#65ff9a" stroke-width="2">
+<animate attributeName="r" values="12;28;12" dur="2s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/>
+</circle>
+<circle cx="720" cy="350" r="18" fill="none" stroke="#59d7ff" stroke-width="2">
+<animate attributeName="r" values="12;28;12" dur="2.5s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="1;0;1" dur="2.5s" repeatCount="indefinite"/>
+</circle>
+
+<!-- ENTERPRISE BIDIRECTIONAL FLOW -->
+<circle r="5" fill="#ffffff" filter="url(#packetGlow)">
+<animateMotion dur="3.5s" repeatCount="indefinite"><mpath href="#r1"/></animateMotion>
+</circle>
+<circle r="5" fill="#65ff9a" filter="url(#packetGlow)">
+<animateMotion dur="4.2s" repeatCount="indefinite"><mpath href="#r2"/></animateMotion>
+</circle>
+<circle r="5" fill="#59d7ff" filter="url(#packetGlow)">
+<animateMotion dur="5.1s" repeatCount="indefinite"><mpath href="#r3"/></animateMotion>
+</circle>
+
+<g id="city-markers">
+  <g transform="translate(240,110)">
+    <circle class="city-dot" r="16"><animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite"/></circle>
+    <text class="city-label" x="12" y="-8">Stavenhagen</text>
+  </g>
+
+  <g transform="translate(230,170)">
+    <circle class="city-dot" r="16"><animate attributeName="opacity" values="1;0.2;1" dur="1.7s" repeatCount="indefinite"/></circle>
+    <text class="city-label" x="12" y="-8">Wustermark</text>
+  </g>
+
+  <g transform="translate(530,270)">
+    <circle class="city-dot" r="16"><animate attributeName="opacity" values="1;0.2;1" dur="1.6s" repeatCount="indefinite"/></circle>
+    <text class="city-label" x="12" y="-8">Olszowa</text>
+  </g>
+
+  <g transform="translate(680,275)">
+    <circle class="city-dot" r="16"><animate attributeName="opacity" values="1;0.2;1" dur="1.8s" repeatCount="indefinite"/></circle>
+    <text class="city-label" x="12" y="-8">Rzeszów</text>
+  </g>
+
+  <g transform="translate(740,300)">
+    <circle class="city-dot" r="16"><animate attributeName="opacity" values="1;0.2;1" dur="1.4s" repeatCount="indefinite"/></circle>
+    <text class="city-label" x="12" y="-8">Korczowa</text>
+  </g>
+
+  <g transform="translate(740,235)">
+    <circle class="city-dot" r="16"><animate attributeName="opacity" values="1;0.2;1" dur="1.9s" repeatCount="indefinite"/></circle>
+    <text class="city-label" x="12" y="-8">Rawa Ruska</text>
+  </g>
+
+  <g transform="translate(900,330)">
+    <circle class="city-dot" r="16"><animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite"/></circle>
+    <text class="city-label" x="12" y="-8">Ladyzhyn</text>
+  </g>
+</g>
+
+</svg></div></div></div></div><div class="charts dashboard-charts"><div class="panel chartbox"><h4>SHIPMENTS OVERVIEW</h4><div class="donut"></div></div><div class="panel chartbox"><h4>PERFORMANCE TREND</h4><div class="lines"><svg viewBox="0 0 400 180"><polyline points="0,120 60,90 120,100 180,40 240,70 300,30 390,20" fill="none" stroke="lime" stroke-width="3"/><polyline points="0,140 60,130 120,120 180,90 240,95 300,80 390,70" fill="none" stroke="orange" stroke-width="3"/><polyline points="0,150 60,145 120,140 180,120 240,90 300,70 390,75" fill="none" stroke="magenta" stroke-width="3"/></svg></div></div><div class="panel chartbox"><h4>TOP ROUTES</h4><br>Warsaw → Berlin<br><br>
+Hamburg → Paris<br><br>
+Rotterdam → Milan<br><br>
+Prague → Vienna
+</div></div></div><div class="footer dashboard-footer"><div class="panel foot">SYSTEM STATUS</div><div class="panel foot">DATABASE</div><div class="panel foot">API SERVICES</div><div class="panel foot">STORAGE</div><div class="panel foot">UPTIME</div></div></div></div></div>
+
+</body></html>
+

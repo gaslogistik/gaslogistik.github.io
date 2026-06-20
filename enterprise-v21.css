@@ -438,12 +438,12 @@ transition:opacity .25s ease;
 }
 
 .logo-main{
-color:#111;
+color:#ff43ca;
 opacity:1;
 }
 
 .logo-hover{
-color:#ff43ca;
+color:#000000;
 opacity:0;
 text-shadow:0 0 8px rgba(255,67,202,.35);
 }
