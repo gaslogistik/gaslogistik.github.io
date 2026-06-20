@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GASLOGISTIK - ADMIN</title>
+
+<link rel="stylesheet" href="enterprise-v21.css">
+</head><body class="enterprise-v10"><div class="shell"><div class="top">
+<div class="panel logo">
+  <span class="logo-main">TITANIUM GREY V3</span>
+  <span class="logo-hover">Welcome to KP Gaslogistik</span>
+</div>
+<div class="panel headercenter"><div><strong>ENTERPRISE LOGISTICS & INTELLIGENCE PLATFORM</strong><br><span>Premium Command Center</span></div></div>
+<div class="panel right">
+<a href="cloud.html" class="topicon">☁</a>
+<a href="alerts.html" class="topicon">🔔</a>
+<a href="login.html" class="topicon">👤</a>
+<a href="operator.html" class="topicon operator-link">OPERATOR</a>
+</div>
+</div><div class="layout"><div class="panel sidebar dashboard-sidebar"><div class="menu"><a href="index.html">DASHBOARD</a><a href="matrix.html">MATRIX</a><a href="map.html">MAP</a><a href="vehicles.html">VEHICLES</a><a href="addresses.html">ADDRESSES</a><a href="admin.html">ADMIN</a><a href="contact.html">CONTACT</a><a href="#">DRIVERS</a><a href="#">DOCUMENTS/FILES</a><a href="#">WAREHOUSE</a><a href="#">REPORTS</a></div></div><div class="dashboard-main">
+
+<div class="panel command"><h3>COMMAND CENTER</h3><div class="tiles"><a href="index.html" class="tile">DASHBOARD</a><a href="matrix.html" class="tile">MATRIX</a><a href="map.html" class="tile">MAP</a><a href="vehicles.html" class="tile">VEHICLES</a><a href="addresses.html" class="tile">ADDRESSES</a><a href="admin.html" class="tile">ADMIN</a></div>
+
+
+
+<div class="workspace-empty" style="padding:16px;">
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+
+</div>
+
+
+
+
+<h4 style="margin:8px 0 10px 0;color:#555;">CALENDAR</h4>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;">
+  <div class="calendar-card">
+    <h5><button type="button" onclick="changeMonth(-1)" style="border:none;border-radius:8px;padding:2px 8px;cursor:pointer;">◀</button> POLAND <span id="monthPL"></span> <button type="button" onclick="changeMonth(1)" style="border:none;border-radius:8px;padding:2px 8px;cursor:pointer;">▶</button></h5>
+    <div id="calendarPL"></div>
+  </div>
+  <div class="calendar-card">
+    <h5><button type="button" onclick="changeMonth(-1)" style="border:none;border-radius:8px;padding:2px 8px;cursor:pointer;">◀</button> GERMANY <span id="monthDE"></span> <button type="button" onclick="changeMonth(1)" style="border:none;border-radius:8px;padding:2px 8px;cursor:pointer;">▶</button></h5>
+    <div id="calendarDE"></div>
+  </div>
+</div>
+
+<h4 style="margin:8px 0 10px 0;color:#555;">DATA STATUS / SHEETS STATUS / DATABASE RECORDS</h4>
+
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:8px;">
+<div class="admcard">KW<br><strong id="weekOnly">-</strong></div>
+<div class="admcard">LAST UPDATE<br><strong id="lastUpdate">-</strong></div>
+<div class="admcard">USERS<br><strong id="usersCount">0</strong></div>
+<div class="admcard">RELATIONS<br><strong id="relationsRows">0</strong></div>
+<div class="admcard">CITIES<br><strong id="citiesRows">0</strong></div>
+<div class="admcard">ADDRESSES<br><strong id="addressesRows">0</strong></div>
+<div class="admcard">LOCATIONS<br><strong id="locationsCount">0</strong></div>
+<div class="admcard">TYPES<br><strong id="typesCount">0</strong></div>
+<div class="admcard">COUNTRIES<br><strong id="countriesCount">0</strong></div>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:16px;">
+<div class="admcard">WORKBOOK<br><strong id="wbStatus">LOADING</strong></div>
+<div class="admcard">CITIES SHEET<br><strong id="citiesSheet">CHECKING</strong></div>
+<div class="admcard">RELATIONS SHEET<br><strong id="relationsSheet">CHECKING</strong></div>
+<div class="admcard">ADDRESSES SHEET<br><strong id="addressesSheet">CHECKING</strong></div>
+<div class="admcard">DASHBOARD DATA<br><strong>EMPTY</strong></div>
+<div class="admcard">HISTORY DATA<br><strong>EMPTY</strong></div>
+<div class="admcard">CONTACT DATA<br><strong>EMPTY</strong></div>
+</div>
+
+<h4 style="margin:8px 0 10px 0;color:#555;">WORLD TIME</h4>
+
+<div id="worldTimeGrid" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:stretch;gap:10px;margin-bottom:18px;width:100%;"></div>
+
+
+
+  <div class="calendar-card">
+    <h5><button type="button" onclick="changeMonth(-1)" style="border:none;border-radius:8px;padding:2px 8px;cursor:pointer;">◀</button> GERMANY <span id="monthDE"></span> <button type="button" onclick="changeMonth(1)" style="border:none;border-radius:8px;padding:2px 8px;cursor:pointer;">▶</button></h5>
+    <div id="calendarDE"></div>
+  </div>
+</div>
+
+</div>
+
+</div>
+
+<style>
+.admcard{
+width:auto;
+min-width:85px;
+min-height:54px;
+padding:10px;
+border-radius:16px;
+border:1px solid #6d7278;
+background:linear-gradient(180deg,#8c9298,#646a71);
+color:#fff;
+text-align:center;
+font-size:12px;
+box-sizing:border-box;
+display:flex;
+flex-direction:column;
+justify-content:center;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+.admcard strong{font-size:14px;}
+.small-card{width:180px;min-height:54px;}
+.calendar-card{
+background:linear-gradient(180deg,#8c9298,#646a71);
+border-radius:18px;
+padding:12px;
+color:white;
+}
+.calendar-card h5{margin:0 0 10px 0;}
+.mini-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:11px;}
+.mini-cal div{padding:4px;border-radius:8px;text-align:center;background:rgba(255,255,255,.08);}
+.holiday{background:rgba(255,120,120,.35)!important;}
+.weekend{background:rgba(255,255,255,.18)!important;}
+</style>
+
+<script>
+let viewDate=new Date();
+let currentMonth=viewDate.getMonth();
+let currentYear=viewDate.getFullYear();
+window.changeMonth=function(step){
+ currentMonth+=step;
+ if(currentMonth>11){currentMonth=0;currentYear++;}
+ if(currentMonth<0){currentMonth=11;currentYear--;}
+ if(window.renderBoth) window.renderBoth();
+};
+async function loadAdminData(){
+ try{
+   const resp=await fetch('databank.xlsx');
+   const buf=await resp.arrayBuffer();
+   const wb=XLSX.read(buf,{type:'array'});
+
+   wbStatus.textContent='LOADED';
+
+   const cities=wb.Sheets['CITIES'] || wb.Sheets['Cities'];
+   const relations=wb.Sheets['RELATIONS'] || wb.Sheets['Relations'];
+   const addresses=wb.Sheets['ADDRESSES'] || wb.Sheets['Addresses'];
+   const adminSheet=wb.Sheets['ADMIN'];
+
+   citiesSheet.textContent=cities?'READY':'MISSING';
+   relationsSheet.textContent=relations?'READY':'MISSING';
+   addressesSheet.textContent=addresses?'READY':'MISSING';
+
+   if(cities){
+      const rows=XLSX.utils.sheet_to_json(cities);
+      const countries=[...new Set(rows.map(r=>String(r.COUNTRY||'').trim()).filter(Boolean))];
+      const types=[...new Set(rows.map(r=>String(r.TYPE||'').trim()).filter(Boolean))];
+      locationsCount.textContent=rows.length;
+      countriesCount.textContent=countries.length;
+      typesCount.textContent=types.length;
+      citiesRows.textContent=rows.length;
+   }
+
+   if(relations) relationsRows.textContent=XLSX.utils.sheet_to_json(relations).length;
+   if(addresses) addressesRows.textContent=XLSX.utils.sheet_to_json(addresses).length;
+   if(adminSheet) usersCount.textContent=XLSX.utils.sheet_to_json(adminSheet).length;
+
+   lastUpdate.textContent=new Date().toLocaleString();
+
+function isoWeek(d){d=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));d.setUTCDate(d.getUTCDate()+4-(d.getUTCDay()||7));const y=new Date(Date.UTC(d.getUTCFullYear(),0,1));return Math.ceil((((d-y)/86400000)+1)/7);}
+const now=new Date();
+weekOnly.textContent='KW'+isoWeek(now);
+
+const zones=[
+['GERMANY - BERLIN','Europe/Berlin'],
+['UKRAINE - KYIV','Europe/Kyiv'],
+['ENGLAND - LONDON','Europe/London'],
+['TURKEY - ANKARA','Europe/Istanbul'],
+['NETHERLANDS - AMSTERDAM','Europe/Amsterdam'],
+['BELGIUM - BRUSSELS','Europe/Brussels'],
+['DENMARK - COPENHAGEN','Europe/Copenhagen']
+];
+const grid=document.getElementById('worldTimeGrid');
+zones.forEach(z=>{
+ const d=document.createElement('div');
+ d.className='admcard';
+ d.style.width='165px';
+ d.innerHTML='<span>'+z[0]+'</span><strong id="t_'+z[1].replace(/[^a-z]/gi,'')+'"></strong>';
+ grid.appendChild(d);
+});
+function updateClocks(){
+ zones.forEach(z=>{
+ const id='t_'+z[1].replace(/[^a-z]/gi,'');
+ const el=document.getElementById(id);
+ if(el) el.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:z[1],hour:'2-digit',minute:'2-digit',second:'2-digit',day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date());
+ });
+}
+updateClocks(); setInterval(updateClocks,1000);
+
+function fmtLocal(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function easter(Y){const C=Math.floor(Y/100),N=Y-19*Math.floor(Y/19),K=Math.floor((C-17)/25),I=C-Math.floor(C/4)-Math.floor((C-K)/3)+19*N+15;let J=I-30*Math.floor(I/30);J=J-Math.floor(J/28)*(1-Math.floor(J/28)*Math.floor(29/(J+1))*Math.floor((21-N)/11));const L=J-(Math.floor(Y/4)+Y+J+2-C+Math.floor(C/4))%7;const M=3+Math.floor((L+40)/44);const D=L+28-31*Math.floor(M/4);return new Date(Y,M-1,D);}
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}
+function renderCalendar(target,holidays){
+ const now=new Date(), y=currentYear, m=currentMonth, today=fmtLocal(now);
+ const first=new Date(y,m,1), last=new Date(y,m+1,0);
+ const start=(first.getDay()+6)%7;
+ let html='<table style="width:100%;font-size:11px;border-collapse:separate;border-spacing:2px"><tr><th>KW</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th><th>Su</th></tr>';
+ let day=1-start;
+ while(day<=last.getDate()){
+  let ref=new Date(y,m,Math.max(1,day)); html+='<tr><td><b>'+isoWeek(ref)+'</b></td>';
+  for(let i=0;i<7;i++,day++){
+   if(day<1||day>last.getDate()){html+='<td></td>';continue;}
+   const d=new Date(y,m,day), key=fmtLocal(d);
+   let st='padding:4px;text-align:center;border-radius:8px;';
+   let title='';
+   if(i>=5) st+='background:rgba(255,255,255,.14);';
+   if(holidays[key]){st+='background:rgba(255,70,70,.45);color:#fff;font-weight:700;cursor:pointer;';title=holidays[key];}
+   if(key===today){st+='outline:2px solid white;font-weight:bold;box-shadow:0 0 10px rgba(255,255,255,.35);';}
+   html+='<td title="'+title+'" style="'+st+'">'+day+'</td>';
+  } html+='</tr>';
+ }
+ html+='</table>'; document.getElementById(target).innerHTML=html;
+}
+const y=new Date().getFullYear(),m=(new Date().getMonth()+1).toString().padStart(2,'0');
+const monthNamesPL=['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'];
+const monthNamesDE=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+function updateMonthLabels(){document.getElementById('monthPL').textContent='- '+monthNamesPL[currentMonth]+' '+currentYear;document.getElementById('monthDE').textContent='- '+monthNamesDE[currentMonth]+' '+currentYear;}
+
+window.renderBoth=function(){
+ const y=currentYear;
+ const E=easter(y);
+ const holidaysPL={
+ [`${y}-01-01`]:'Nowy Rok',[`${y}-01-06`]:'Trzech Króli',[`${y}-05-01`]:'Święto Pracy',[`${y}-05-03`]:'Święto Konstytucji 3 Maja',[`${y}-08-15`]:'Wniebowzięcie NMP',[`${y}-11-01`]:'Wszystkich Świętych',[`${y}-11-11`]:'Święto Niepodległości',[`${y}-12-25`]:'Boże Narodzenie',[`${y}-12-26`]:'Drugi Dzień Świąt'};
+ holidaysPL[fmtLocal(E)]='Wielkanoc'; holidaysPL[fmtLocal(addDays(E,1))]='Poniedziałek Wielkanocny'; holidaysPL[fmtLocal(addDays(E,60))]='Boże Ciało';
+ const holidaysDE={
+ [`${y}-01-01`]:'Neujahr',[`${y}-05-01`]:'Tag der Arbeit',[`${y}-10-03`]:'Tag der Deutschen Einheit',[`${y}-12-25`]:'1. Weihnachtstag',[`${y}-12-26`]:'2. Weihnachtstag'};
+ holidaysDE[fmtLocal(addDays(E,-2))]='Karfreitag'; holidaysDE[fmtLocal(E)]='Ostersonntag'; holidaysDE[fmtLocal(addDays(E,1))]='Ostermontag'; holidaysDE[fmtLocal(addDays(E,39))]='Christi Himmelfahrt'; holidaysDE[fmtLocal(addDays(E,50))]='Pfingstmontag';
+ updateMonthLabels();renderCalendar('calendarPL',holidaysPL);renderCalendar('calendarDE',holidaysDE);
+};
+window.renderBoth();
+ }catch(e){
+   wbStatus.textContent='ERROR';
+ }
+}
+setTimeout(loadAdminData,300);
+</script>
+</div>
+</div>
+<div class="footer dashboard-footer"><div class="panel foot">SYSTEM STATUS</div><div class="panel foot">DATABASE</div><div class="panel foot">API SERVICES</div><div class="panel foot">STORAGE</div><div class="panel foot">UPTIME</div></div></div></div></div>
+
+</body></html>
