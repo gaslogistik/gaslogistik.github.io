@@ -96,6 +96,51 @@ document.addEventListener('DOMContentLoaded',function(){
 }
 </style>
 
+
+<style id="vehicles-mobile-table-premium">
+@media (max-width:768px){
+
+  .veh-grid{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:16px !important;
+  }
+
+  .veh-card{
+    width:100% !important;
+    min-width:0 !important;
+    overflow:hidden !important;
+  }
+
+  .veh-card > div[style*="overflow-y:auto"]{
+    overflow-x:auto !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  .veh-table{
+    width:100% !important;
+    min-width:560px !important;
+    font-size:12px !important;
+  }
+
+  .veh-table th,
+  .veh-table td{
+    padding:6px 8px !important;
+    white-space:nowrap !important;
+  }
+
+  .veh-head{
+    flex-wrap:wrap !important;
+    gap:8px !important;
+  }
+
+  .veh-badge{
+    font-size:11px !important;
+  }
+}
+</style>
+
 </head><body class="enterprise-v10"><div class="shell"><div class="top">
 <div class="panel logo">
   <span class="logo-main">KP GASLOGISTIK</span>
