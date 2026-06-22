@@ -53,6 +53,50 @@ document.addEventListener('DOMContentLoaded',function(){
  });
 });
 </script>
+
+<style id="admin-calendar-mobile-premium">
+@media (max-width:768px){
+
+  h4 + div[style*="grid-template-columns:1fr 1fr"]{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:16px !important;
+  }
+
+  .calendar-card{
+    width:100% !important;
+    padding:16px !important;
+    border-radius:20px !important;
+    box-sizing:border-box !important;
+  }
+
+  .calendar-card h5{
+    font-size:18px !important;
+    text-align:center !important;
+    margin-bottom:14px !important;
+  }
+
+  .calendar-card table{
+    width:100% !important;
+    font-size:13px !important;
+    border-spacing:4px !important;
+  }
+
+  .calendar-card td{
+    min-height:34px !important;
+    height:34px !important;
+    padding:8px 4px !important;
+    font-size:13px !important;
+    font-weight:600 !important;
+  }
+
+  .calendar-card th{
+    padding:6px 2px !important;
+    font-size:12px !important;
+  }
+}
+</style>
+
 </head><body class="enterprise-v10"><div class="shell"><div class="top">
 <div class="panel logo">
   <span class="logo-main">KP GASLOGISTIK</span>
