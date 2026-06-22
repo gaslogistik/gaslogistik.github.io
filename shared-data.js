@@ -33,3 +33,5 @@ window.loadWorkbook=()=>window.SharedData.loadWorkbook();
 window.buildMatrix=()=>window.SharedData.buildMatrix();
 window.buildRelations=()=>window.SharedData.buildRelations();
 window.buildAddresses=()=>window.SharedData.buildAddresses();
+window.getAdminUsers = async () =>
+  await window.SharedData.getSheet('ADMIN');
