@@ -1,10 +1,62 @@
-<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GASLOGISTIK - ADDRESSES</title>
+<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GASLOGISTIK - Cloud</title>
 
 <link rel="stylesheet" href="enterprise-v21.css">
+
+<style>
+@media (max-width: 900px){
+.layout{display:block!important}
+.sidebar,.dashboard-sidebar{width:100%!important;max-width:none!important;margin-bottom:12px!important}
+.dashboard-main,.main-content,.content{width:100%!important}
+table{display:block;overflow-x:auto;white-space:nowrap}
+input,select,button,textarea{max-width:100%;box-sizing:border-box}
+.card,.tile,.admcard{min-width:140px!important}
+}
+@media (max-width: 600px){
+h1,h2,h3{word-break:break-word}
+.card,.tile,.admcard{width:100%!important}
+.menu a{display:block;padding:12px}
+}
+</style>
+
+
+<style id="v5-mobile-native">
+@media (max-width:768px){
+body{font-size:15px}
+.shell{margin:0;padding:8px;border-radius:0}
+.top{grid-template-columns:1fr; height:auto}
+.headercenter,.right{padding:10px;justify-content:center;flex-wrap:wrap}
+.layout{display:block!important}
+.sidebar{position:fixed;left:-280px;top:0;width:260px!important;height:100vh;z-index:9999;overflow:auto;transition:.3s;background:#e5e5e5;padding-top:70px}
+.sidebar.open{left:0}
+.mobile-menu-btn{display:flex!important;position:fixed;top:12px;left:12px;z-index:10000;background:#222;color:#fff;border:none;border-radius:12px;padding:12px 14px}
+.dashboard-grid,.cards,.tiles{grid-template-columns:1fr!important}
+.card,.tile,.admcard,.panel{width:100%!important}
+table{display:block;overflow:auto}
+.matrix-container{height:78vh}
+#matrix th.rotate{min-width:90px!important;width:90px!important}
+#matrix .hub{min-width:120px!important}
+.map-controls,.filters{display:flex;flex-direction:column;gap:8px}
+}
+@media (min-width:769px){.mobile-menu-btn{display:none!important}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+ const sb=document.querySelector('.sidebar');
+ if(!sb) return;
+ const b=document.createElement('button');
+ b.className='mobile-menu-btn';
+ b.innerHTML='☰';
+ document.body.appendChild(b);
+ b.onclick=()=>sb.classList.toggle('open');
+ document.addEventListener('click',e=>{
+   if(window.innerWidth<=768 && sb.classList.contains('open') && !sb.contains(e.target) && !b.contains(e.target)){sb.classList.remove('open');}
+ });
+});
+</script>
 </head><body class="enterprise-v10"><div class="shell"><div class="top">
 <div class="panel logo">
-  <span class="logo-main">TITANIUM GREY V3</span>
-  <span class="logo-hover">Welcome to KP Gaslogistik</span>
+  <span class="logo-main">KP GASLOGISTIK</span>
+  <span class="logo-hover">GAS LNG CNG H2</span>
 </div>
 <div class="panel headercenter"><div><strong>ENTERPRISE LOGISTICS & INTELLIGENCE PLATFORM</strong><br><span>Premium Command Center</span></div></div>
 <div class="panel right">
