@@ -4,8 +4,8 @@
 
 <style>
 @media (max-width: 900px){
-.layout{display:block!important}
-.sidebar,.dashboard-sidebar{width:100%!important;max-width:none!important;margin-bottom:12px!important}
+.layout{display:block!important}.sidebar:not(.open){display:none!important}.sidebar.open{display:block!important}
+.dashboard-main,.main-content,.content{width:100%!important}
 .dashboard-main,.main-content,.content{width:100%!important}
 table{display:block;overflow-x:auto;white-space:nowrap}
 input,select,button,textarea{max-width:100%;box-sizing:border-box}
@@ -25,7 +25,7 @@ body{font-size:15px}
 .shell{margin:0;padding:8px;border-radius:0}
 .top{grid-template-columns:1fr; height:auto}
 .headercenter,.right{padding:10px;justify-content:center;flex-wrap:wrap}
-.layout{display:block!important}
+.layout{display:block!important}.sidebar:not(.open){display:none!important}.sidebar.open{display:block!important}
 .sidebar{position:fixed;left:-280px;top:0;width:260px!important;height:100vh;z-index:9999;overflow:auto;transition:.3s;background:#e5e5e5;padding-top:70px}
 .sidebar.open{left:0}
 .mobile-menu-btn{display:flex!important;position:fixed;top:12px;left:12px;z-index:10000;background:#222;color:#fff;border:none;border-radius:12px;padding:12px 14px}
@@ -281,6 +281,65 @@ padding:12px;text-align:center;box-sizing:border-box;
 @keyframes float{50%{transform:translateY(-4px)}}
 .tempchart{height:24px;margin-top:6px;font-size:18px;letter-spacing:1px}
 .radarbtn{margin-top:6px;font-size:11px;padding:3px 8px;border:1px solid #ff00ff;border-radius:10px;cursor:pointer}
+</style>
+
+
+<style id="kp-mobile-cards-fix">
+@media (max-width:768px){
+  .kp-dashboard{
+    display:flex !important;
+    flex-direction:column !important;
+  }
+  .dashboard-world{
+    width:100% !important;
+    max-width:100% !important;
+    order:1;
+  }
+  .kp-left{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    width:100% !important;
+    order:2;
+    margin-top:12px;
+  }
+  .kp-left .panel.chartbox{
+    width:100% !important;
+    min-width:0 !important;
+  }
+}
+</style>
+
+
+<style id="mobile-weather-symmetry-fix">
+@media (max-width:768px){
+  .til-wrap{
+    grid-template-columns:1fr !important;
+  }
+
+  .til-weather-grid{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:12px !important;
+  }
+
+  .til-weather-grid .til-weather:nth-child(5){
+    grid-column:1 / -1 !important;
+  }
+}
+</style>
+
+
+<style id="mobile-top-cards-stack-final">
+@media (max-width:768px){
+  .today-logistics .til-wrap{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+  }
+  .today-logistics .til-wrap .til-card{
+    width:100% !important;
+    grid-column:1 / -1 !important;
+  }
+}
 </style>
 
 </head><body class="enterprise-v10"><div class="shell"><div class="top">
