@@ -918,7 +918,11 @@ from="20 0" to="150 0" dur="8s" repeatCount="indefinite"/>
 <div class="til-weather"><div class="wxicon">☁️</div><div class='til-city'>🇺🇦 MHP LADYZHYN - UA</div><div id="w2" class="til-temp">--°C</div><div id="m2" class="til-meta">--<div class='tempchart' id='chart2'>Loading...</div><button class='radarbtn' onclick='openRadar(2)'>RADAR</button></div></div>
 <div class="til-weather"><div class="wxicon">☁️</div><div class='til-city'>🇺🇦 YM VINNYTSIA - UA</div><div id="w3" class="til-temp">--°C</div><div id="m3" class="til-meta">--<div class='tempchart' id='chart3'>Loading...</div><button class='radarbtn' onclick='openRadar(3)'>RADAR</button></div></div>
 <div class="til-weather"><div class="wxicon">☁️</div><div class='til-city'>🇧🇪 ZEEBRUGGE - BE</div><div id="w4" class="til-temp">--°C</div><div id="m4" class="til-meta">--<div class='tempchart' id='chart4'>Loading...</div><button class='radarbtn' onclick='openRadar(4)'>RADAR</button></div></div>
-<div class="til-weather"><div class="wxicon">☁️</div><div class='til-city'>🇳🇱 GATE ROTTERDAM - NL</div><div id="w5" class="til-temp">--°C</div><div id="m5" class="til-meta">--</div></div></div>
+<div class="til-weather"><div class="wxicon">☁️</div><div class='til-city'>🇳🇱 GATE ROTTERDAM - NL</div><div id="w5" class="til-temp">--°C</div><div id="m5" class="til-meta">
+  --
+  <div class='tempchart' id='chart5'>Loading...</div>
+  <button class='radarbtn' onclick='openRadar(5)'>RADAR</button>
+</div></div></div>
 </div>
 </div>
 
@@ -934,8 +938,36 @@ from="20 0" to="150 0" dur="8s" repeatCount="indefinite"/>
 
 
 <script>
-function kpUpd(){const d=new Date();kpClock.textContent=d.toLocaleTimeString('en-GB');kpDate.textContent=d.toLocaleDateString('en-GB');kpYear.textContent=d.getFullYear();kpMonth.textContent=d.toLocaleString('en-US',{month:'long'}).toUpperCase();const s=new Date(d.getFullYear(),0,1);kpWeek.textContent=Math.ceil((((d-s)/86400000)+s.getDay()+1)/7);let c=0,t=new Date(d);while(t.getDay()!=6){t.setDate(t.getDate()+1);c++;}kpWeekend.textContent=c+' DAYS';}
-kpUpd();setInterval(kpUpd,1000);
+function kpUpd(){
+ const d=new Date();
+
+ const kpClock=document.getElementById('kpClock');
+ const kpDate=document.getElementById('kpDate');
+ const kpYear=document.getElementById('kpYear');
+ const kpMonth=document.getElementById('kpMonth');
+ const kpWeek=document.getElementById('kpWeek');
+ const kpWeekend=document.getElementById('kpWeekend');
+
+ if(!kpClock) return;
+
+ kpClock.textContent=d.toLocaleTimeString('en-GB');
+ kpDate.textContent=d.toLocaleDateString('en-GB');
+ kpYear.textContent=d.getFullYear();
+ kpMonth.textContent=d.toLocaleString('en-US',{month:'long'}).toUpperCase();
+
+ const s=new Date(d.getFullYear(),0,1);
+ kpWeek.textContent=Math.ceil((((d-s)/86400000)+s.getDay()+1)/7);
+
+ let c=0,t=new Date(d);
+ while(t.getDay()!=6){
+   t.setDate(t.getDate()+1);
+   c++;
+ }
+
+ kpWeekend.textContent=c+' DAYS';
+}
+kpUpd();
+setInterval(kpUpd,1000);
 </script>
 </div>
 </div></div></div></div></div></div>
@@ -1032,9 +1064,17 @@ function sparkline(values){
  return `<svg width="120" height="26"><polyline fill="none" stroke="#ff00ff" stroke-width="2" points="${pts}"/></svg>`;
 }
 async function load24hChart(id,lat,lon){
- const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m&forecast_days=2`);
- const d=await r.json();
- document.getElementById(id).innerHTML=sparkline(d.hourly.temperature_2m.slice(0,24));
+ try{
+   const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m&forecast_days=2`);
+   const d=await r.json();
+
+   const el=document.getElementById(id);
+   if(!el) return;
+
+   el.innerHTML=sparkline(d.hourly.temperature_2m.slice(0,24));
+ }catch(err){
+   console.error('Chart error:',err);
+ }
 }
 load24hChart('chart1',52.5559824529,12.9713582335);
 load24hChart('chart2',48.6883115331,29.1034383708);
