@@ -4,7 +4,7 @@
 ========================================================= */
 
 async function loadUsersFromExcel() {
-  const response = await fetch("databank.xlsx");
+  const response = await fetch("databank.xlsx?v=" + Date.now());
   const data = await response.arrayBuffer();
   const workbook = XLSX.read(data, { type: "array" });
   const sheet = workbook.Sheets["ADMIN"];
@@ -508,3 +508,4 @@ document.addEventListener(
 );
 
 })();
+const GAS_URL="https://script.google.com/macros/s/AKfycbyuPZ688VewJDgvOFccqmRusg6MofQjADa9HiRWEyClQyjc3J3jN8rZF-TOD28jvlB9oA/exec";

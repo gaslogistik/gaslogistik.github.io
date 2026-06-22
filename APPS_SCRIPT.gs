@@ -1,0 +1,1 @@
+function doPost(e){return ContentService.createTextOutput('OK');}
