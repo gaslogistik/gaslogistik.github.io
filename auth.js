@@ -568,7 +568,7 @@ document.addEventListener(
 );
 
 })();
-const GAS_URL="https://script.google.com/macros/s/AKfycbz9eVUGDpTGPx5-7sr3YQY-ZV71Y74FGk5qwDb_uhmyn0Q9xkEf3zig_mDVJ-xYv1iK/exec";
+const GAS_URL="https://script.google.com/macros/s/AKfycbwbZ_KSjyTTDM2iONJC87-jgVZysubMfKChDxDs8l1RKJgjUJ6Q2_7oA_RhuDna39Ra/exec";
 
 async function sendLoginHistory(user,page,result){
   try{

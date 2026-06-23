@@ -1,0 +1,1172 @@
+<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KP GASLOGISTIK - Vehicles</title>
+
+<link rel="stylesheet" href="enterprise-v22.css">
+
+<style>
+@media (max-width: 900px){
+.layout{display:block!important}.sidebar:not(.open){display:none!important}.sidebar.open{display:block!important}
+.dashboard-main,.main-content,.content{width:100%!important}
+.dashboard-main,.main-content,.content{width:100%!important}
+table{display:block;overflow-x:auto;white-space:nowrap}
+input,select,button,textarea{max-width:100%;box-sizing:border-box}
+.card,.tile,.admcard{min-width:140px!important}
+}
+@media (max-width: 600px){
+h1,h2,h3{word-break:break-word}
+.card,.tile,.admcard{width:100%!important}
+.menu a{display:block;padding:12px}
+}
+</style>
+
+
+<style id="v5-mobile-native">
+@media (max-width:768px){
+body{font-size:15px}
+.shell{margin:0;padding:8px;border-radius:0}
+.top{grid-template-columns:1fr; height:auto}
+.headercenter,.right{padding:10px;justify-content:center;flex-wrap:wrap}
+.layout{display:block!important}.sidebar:not(.open){display:none!important}.sidebar.open{display:block!important}
+.sidebar{position:fixed;left:-280px;top:0;width:260px!important;height:100vh;z-index:9999;overflow:auto;transition:.3s;background:#e5e5e5;padding-top:70px}
+.sidebar.open{left:0}
+.mobile-menu-btn{display:flex!important;position:fixed;top:12px;left:12px;z-index:10000;background:#222;color:#fff;border:none;border-radius:12px;padding:12px 14px}
+.dashboard-grid,.cards,.tiles{grid-template-columns:1fr!important}
+.card,.tile,.admcard,.panel{width:100%!important}
+table{display:block;overflow:auto}
+.matrix-container{height:78vh}
+#matrix th.rotate{min-width:90px!important;width:90px!important}
+#matrix .hub{min-width:120px!important}
+.map-controls,.filters{display:flex;flex-direction:column;gap:8px}
+}
+@media (min-width:769px){.mobile-menu-btn{display:none!important}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+ const sb=document.querySelector('.sidebar');
+ if(!sb) return;
+ const b=document.createElement('button');
+ b.className='mobile-menu-btn';
+ b.innerHTML='☰';
+ document.body.appendChild(b);
+ b.onclick=()=>sb.classList.toggle('open');
+ document.addEventListener('click',e=>{
+   if(window.innerWidth<=768 && sb.classList.contains('open') && !sb.contains(e.target) && !b.contains(e.target)){sb.classList.remove('open');}
+ });
+});
+</script>
+
+<style id="calendar-mobile-premium">
+@media (max-width:768px){
+
+  h4 + div[style*="grid-template-columns:1fr 1fr"]{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:16px !important;
+  }
+
+  .calendar-card{
+    width:100% !important;
+    padding:16px !important;
+    border-radius:20px !important;
+  }
+
+  .calendar-card h5{
+    font-size:18px !important;
+    text-align:center !important;
+    margin-bottom:14px !important;
+  }
+
+  .calendar-card table{
+    width:100% !important;
+    font-size:13px !important;
+    border-spacing:4px !important;
+  }
+
+  .calendar-card td{
+    min-height:34px !important;
+    height:34px !important;
+    padding:8px 4px !important;
+    font-size:13px !important;
+    font-weight:600 !important;
+  }
+
+  .calendar-card th{
+    padding:6px 2px !important;
+    font-size:12px !important;
+  }
+}
+</style>
+
+
+<style id="vehicles-mobile-table-premium">
+@media (max-width:768px){
+
+  .veh-grid{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:16px !important;
+  }
+
+  .veh-card{
+    width:100% !important;
+    min-width:0 !important;
+    overflow:hidden !important;
+  }
+
+  .veh-card > div[style*="overflow-y:auto"]{
+    overflow-x:auto !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  .veh-table{
+    width:100% !important;
+    min-width:560px !important;
+    font-size:12px !important;
+  }
+
+  .veh-table th,
+  .veh-table td{
+    padding:6px 8px !important;
+    white-space:nowrap !important;
+  }
+
+  .veh-head{
+    flex-wrap:wrap !important;
+    gap:8px !important;
+  }
+
+  .veh-badge{
+    font-size:11px !important;
+  }
+}
+</style>
+
+<link rel="stylesheet" href="auth.css">
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="auth.js"></script>
+
+</head><body class="enterprise-v10"><div class="shell"><div class="top">
+<div class="panel logo">
+  <span class="logo-main">KP GASLOGISTIK</span>
+  <span class="logo-hover">GAS LNG CNG H2</span>
+</div>
+<div class="panel headercenter"><div><strong>ENTERPRISE LOGISTICS & INTELLIGENCE PLATFORM</strong><br><span>Premium Command Center</span></div></div>
+<div class="panel right">
+<a href="cloud.html" class="topicon" data-label="CLOUD">☁</a>
+<a href="alerts.html" class="topicon" data-label="ALERTS">🔔</a>
+<a href="login.html" class="topicon" data-label="LOGIN">👤</a>
+<a href="operator.html" class="topicon operator-link">OPERATOR</a>
+</div>
+</div><div class="layout"><div class="panel sidebar dashboard-sidebar"><div class="menu"><a href="index.html">DASHBOARD</a><a href="matrix.html">MATRIX</a><a href="map.html">MAP</a><a href="vehicles.html">VEHICLES</a><a href="addresses.html">ADDRESSES</a><a href="admin.html">ADMIN</a><a href="contact.html">CONTACT</a><a href="#">DRIVERS</a><a href="#">DOCUMENTS/FILES</a><a href="#">WAREHOUSE</a><a href="#">REPORTS</a></div></div><div class="dashboard-main">
+
+<div class="panel command"><h3>COMMAND CENTER</h3><div class="tiles"><a href="index.html" class="tile">DASHBOARD</a><a href="matrix.html" class="tile">MATRIX</a><a href="map.html" class="tile">MAP</a><a href="vehicles.html" class="tile">VEHICLES</a><a href="addresses.html" class="tile">ADDRESSES</a><a href="admin.html" class="tile">ADMIN</a></div>
+
+
+
+<div class="workspace-empty" style="padding:16px;">
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+
+</div>
+
+<h4 id="dataStatusHeading" style="margin:8px 0 10px 0;color:#555;">DATA STATUS / SHEETS STATUS / DATABASE RECORDS</h4>
+<div style="display:flex;flex-wrap:nowrap;justify-content:space-between;gap:8px;margin-bottom:16px;">
+  <div class="admcard">WORKBOOK<br><strong id="wbStatus">LOADING</strong></div>
+  <div class="admcard">COUNTRIES<br><strong id="countriesCount">0</strong></div>
+  <div class="admcard">TYPES<br><strong id="typesCount">0</strong></div>
+  <div class="admcard">LOCATIONS<br><strong id="locationsCount">0</strong></div>
+  <div class="admcard">CITIES SHEET<br><strong id="citiesSheet">CHECKING</strong></div>
+  <div class="admcard">RELATIONS SHEET<br><strong id="relationsSheet">CHECKING</strong></div>
+  <div class="admcard">ADDRESSES SHEET<br><strong id="addressesSheet">CHECKING</strong></div>
+  <div class="admcard">CITIES<br><strong id="citiesRows">0</strong></div>
+  <div class="admcard">RELATIONS<br><strong id="relationsRows">0</strong></div>
+  <div class="admcard">ADDRESSES<br><strong id="addressesRows">0</strong></div>
+</div>
+
+
+
+<h4 id="worldTimeHeading" style="margin:8px 0 10px 0;color:#555;">WORLD TIME</h4>
+<div id="worldTimeGrid" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:stretch;gap:10px;margin-bottom:18px;width:100%;"></div>
+
+
+<h4 style="margin:8px 0 10px 0;color:#555;">CALENDAR</h4>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;">
+  <div class="calendar-card">
+    <h5><button type="button" onclick="changeMonth(-1)" style="border:none;border-radius:8px;padding:2px 8px;cursor:pointer;">◀</button> POLAND <span id="monthPL"></span> <button type="button" onclick="changeMonth(1)" style="border:none;border-radius:8px;padding:2px 8px;cursor:pointer;">▶</button></h5>
+    <div id="calendarPL"></div>
+  </div>
+  <div class="calendar-card">
+    <h5><button type="button" onclick="changeMonth(-1)" style="border:none;border-radius:8px;padding:2px 8px;cursor:pointer;">◀</button> GERMANY <span id="monthDE"></span> <button type="button" onclick="changeMonth(1)" style="border:none;border-radius:8px;padding:2px 8px;cursor:pointer;">▶</button></h5>
+    <div id="calendarDE"></div>
+  </div>
+</div>
+
+<section id="vehicles-section" style="margin-top:18px;">
+<h4 style="margin:8px 0 14px 0;color:#555;">VEHICLES</h4>
+
+<div class="veh-summary">
+<div class="sumcard"><b>TRUCKS</b><div id="truckCount">0</div></div>
+<div class="sumcard"><b>TANKTRAILERS</b><div id="tankCount">0</div></div><div class="sumcard"><b>ADR EXPIRING (90 DAYS)</b><div id="adrExpiring">0</div></div><div class="sumcard"><b>ADR EXPIRED</b><div id="adrExpired">0</div></div>
+</div>
+
+<div class="veh-grid">
+<div class="veh-card">
+<div class="veh-head"><span>🚚 TRUCKS</span><span class="veh-badge">databank.xlsx / TRUCKS</span></div>
+<div class="veh-count" id="truckVehicles">0 vehicles</div>
+<div style="max-height:420px;overflow-y:auto;">
+<table class="veh-table">
+<thead><tr><th>PLATES</th><th>INTERNAL NR.</th><th>MODEL</th><th>ADR VALID</th><th>VIGO CHIP</th></tr></thead>
+<tbody id="truckTableBody"></tbody>
+</table>
+</div>
+</div>
+
+<div class="veh-card">
+<div class="veh-head"><span>🚛📦 TANKTRAILERS</span><span class="veh-badge">databank.xlsx / TANKTRAILERS</span></div>
+<div class="veh-count" id="tankVehicles">0 vehicles</div>
+<div style="max-height:420px;overflow-y:auto;">
+<table class="veh-table">
+<thead><tr><th>PLATES</th><th>INTERNAL NR.</th><th>MODEL</th><th>ADR VALID</th></tr></thead>
+<tbody id="tankTableBody"></tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+
+
+<h4 id="systemInfoHeading" style="margin:8px 0 10px 0;color:#555;">SYSTEM INFO</h4>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:16px;">
+<div class="admcard small-card" style="width:180px;">LAST UPDATE<br><strong id="lastUpdate">-</strong></div>
+<div class="admcard small-card" style="width:180px;">TODAY<br><strong id="todayDate">-</strong><span id="weekInfo">KW -</span></div>
+</div>
+
+</div>
+
+<style>
+.admcard{
+width:auto;
+min-width:85px;
+min-height:54px;
+padding:10px;
+border-radius:16px;
+border:1px solid #6d7278;
+background:linear-gradient(180deg,#8c9298,#646a71);
+color:#fff;
+text-align:center;
+font-size:12px;
+box-sizing:border-box;
+display:flex;
+flex-direction:column;
+justify-content:center;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+.admcard strong{font-size:14px;}
+.small-card{width:180px;min-height:54px;}
+.calendar-card{
+background:linear-gradient(180deg,#8c9298,#646a71);
+border-radius:18px;
+padding:12px;
+color:white;
+}
+.calendar-card h5{margin:0 0 10px 0;}
+.mini-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:11px;}
+.mini-cal div{padding:4px;border-radius:8px;text-align:center;background:rgba(255,255,255,.08);}
+.holiday{background:rgba(255,120,120,.35)!important;}
+.weekend{background:rgba(255,255,255,.18)!important;}
+
+#dataStatusHeading,#dataStatusHeading+div,#worldTimeHeading,#worldTimeHeading+div,#systemInfoHeading,#systemInfoHeading+div{display:none!important;}
+#vehicles-workspace{min-height:320px;}
+.footer{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));}
+</style>
+
+<script>
+let viewDate=new Date();
+let currentMonth=viewDate.getMonth();
+let currentYear=viewDate.getFullYear();
+window.changeMonth=function(step){
+ currentMonth+=step;
+ if(currentMonth>11){currentMonth=0;currentYear++;}
+ if(currentMonth<0){currentMonth=11;currentYear--;}
+ if(window.renderBoth) window.renderBoth();
+};
+const GAS_URL="https://script.google.com/macros/s/AKfycbwbZ_KSjyTTDM2iONJC87-jgVZysubMfKChDxDs8l1RKJgjUJ6Q2_7oA_RhuDna39Ra/exec";
+
+async function loadAdminData(){
+ try{
+   const resp=await fetch(GAS_URL+'?action=getSystemData');
+   const data=await resp.json();
+
+   wbStatus.textContent='GOOGLE SHEETS';
+
+   const cities=(data.cities||[]);
+   const relations=(data.relations||[]);
+   const addresses=(data.addresses||[]);
+
+   citiesSheet.textContent=cities?'READY':'MISSING';
+   relationsSheet.textContent=relations?'READY':'MISSING';
+   addressesSheet.textContent=addresses?'READY':'MISSING';
+
+   if(cities){
+      const rows=cities;
+      const countries=[...new Set(rows.map(r=>String(r.COUNTRY||'').trim()).filter(Boolean))];
+      const types=[...new Set(rows.map(r=>String(r.TYPE||'').trim()).filter(Boolean))];
+      locationsCount.textContent=rows.length;
+      countriesCount.textContent=countries.length;
+      typesCount.textContent=types.length;
+      citiesRows.textContent=rows.length;
+   }
+
+   relationsRows.textContent=relations.length;
+   
+addressesRows.textContent=addresses.length;
+
+
+function excelDateToString(v){
+ if(v===undefined || v===null || v==='') return '';
+ if(!isNaN(v) && Number(v)>30000){
+   const d=new Date((Number(v)-25569)*86400*1000);
+   return d.toISOString().split('T')[0];
+ }
+ return v;
+}
+
+
+let adrExpiring=0;
+let adrExpired=0;
+
+function adrBadge(val){
+ const txt=excelDateToString(val);
+ if(!txt) return '';
+ const d=new Date(txt);
+ const diff=Math.ceil((d-new Date())/86400000);
+ if(diff < 0){
+   adrExpired++;
+   return `<span style="background:#d93636;color:#fff;padding:4px 8px;border-radius:8px;font-weight:700">${txt}</span>`;
+ }
+ if(diff <= 90){
+   adrExpiring++;
+   return `<span style="background:#ffb020;color:#111;padding:4px 8px;border-radius:8px;font-weight:700">${txt}</span>`;
+ }
+ return `<span style="background:#31b84d;color:#fff;padding:4px 8px;border-radius:8px;font-weight:700">${txt}</span>`;
+}
+const trucksSheet=data.trucks||[];
+const tanksSheet=data.tanktrailers||[];
+
+if(trucksSheet.length){
+ const rows=trucksSheet;
+ document.getElementById('truckCount').textContent=rows.length;
+ document.getElementById('truckVehicles').textContent=rows.length+' vehicles';
+ document.getElementById('truckTableBody').innerHTML=rows.map(r=>
+ `<tr>
+ <td>${r['PLATES']||''}</td>
+ <td>${r['INTERNAL NR.']||''}</td>
+ <td>${r['MODEL']||''}</td>
+ <td>${adrBadge(r['ADR VALID'])}</td>
+ <td>${r['VIGO CHIP']||''}</td>
+ </tr>`).join('');
+}
+
+if(tanksSheet.length){
+ const rows=tanksSheet;
+ document.getElementById('tankCount').textContent=rows.length;
+ document.getElementById('tankVehicles').textContent=rows.length+' vehicles';
+ document.getElementById('tankTableBody').innerHTML=rows.map(r=>
+ `<tr>
+ <td>${r['PLATES']||''}</td>
+ <td>${r['INTERNAL NR.']||''}</td>
+ <td>${r['MODEL']||''}</td>
+ <td>${adrBadge(r['ADR VALID'])}</td>
+ </tr>`).join('');
+}
+
+document.getElementById('adrExpiring').textContent = adrExpiring;
+document.getElementById('adrExpired').textContent = adrExpired;
+
+
+   lastUpdate.textContent=new Date().toLocaleString();
+
+function isoWeek(d){d=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));d.setUTCDate(d.getUTCDate()+4-(d.getUTCDay()||7));const y=new Date(Date.UTC(d.getUTCFullYear(),0,1));return Math.ceil((((d-y)/86400000)+1)/7);}
+const now=new Date();
+todayDate.textContent=now.toISOString().slice(0,10);
+weekInfo.textContent='KW - '+isoWeek(now);
+
+const zones=[
+['GERMANY - BERLIN','Europe/Berlin'],
+['UKRAINE - KYIV','Europe/Kyiv'],
+['ENGLAND - LONDON','Europe/London'],
+['TURKEY - ANKARA','Europe/Istanbul'],
+['NETHERLANDS - AMSTERDAM','Europe/Amsterdam'],
+['BELGIUM - BRUSSELS','Europe/Brussels'],
+['DENMARK - COPENHAGEN','Europe/Copenhagen']
+];
+const grid=document.getElementById('worldTimeGrid');
+zones.forEach(z=>{
+ const d=document.createElement('div');
+ d.className='admcard';
+ d.style.width='165px';
+ d.innerHTML='<span>'+z[0]+'</span><strong id="t_'+z[1].replace(/[^a-z]/gi,'')+'"></strong>';
+ grid.appendChild(d);
+});
+function updateClocks(){
+ zones.forEach(z=>{
+ const id='t_'+z[1].replace(/[^a-z]/gi,'');
+ const el=document.getElementById(id);
+ if(el) el.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:z[1],hour:'2-digit',minute:'2-digit',second:'2-digit',day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date());
+ });
+}
+updateClocks(); setInterval(updateClocks,1000);
+
+function fmtLocal(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function easter(Y){const C=Math.floor(Y/100),N=Y-19*Math.floor(Y/19),K=Math.floor((C-17)/25),I=C-Math.floor(C/4)-Math.floor((C-K)/3)+19*N+15;let J=I-30*Math.floor(I/30);J=J-Math.floor(J/28)*(1-Math.floor(J/28)*Math.floor(29/(J+1))*Math.floor((21-N)/11));const L=J-(Math.floor(Y/4)+Y+J+2-C+Math.floor(C/4))%7;const M=3+Math.floor((L+40)/44);const D=L+28-31*Math.floor(M/4);return new Date(Y,M-1,D);}
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}
+function renderCalendar(target,holidays){
+ const now=new Date(), y=currentYear, m=currentMonth, today=fmtLocal(now);
+ const first=new Date(y,m,1), last=new Date(y,m+1,0);
+ const start=(first.getDay()+6)%7;
+ let html='<table style="width:100%;font-size:11px;border-collapse:separate;border-spacing:2px"><tr><th>KW</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th><th>Su</th></tr>';
+ let day=1-start;
+ while(day<=last.getDate()){
+  let ref=new Date(y,m,Math.max(1,day)); html+='<tr><td><b>'+isoWeek(ref)+'</b></td>';
+  for(let i=0;i<7;i++,day++){
+   if(day<1||day>last.getDate()){html+='<td></td>';continue;}
+   const d=new Date(y,m,day), key=fmtLocal(d);
+   let st='padding:4px;text-align:center;border-radius:8px;';
+   let title='';
+   if(i>=5) st+='background:rgba(255,255,255,.14);';
+   if(holidays[key]){st+='background:rgba(255,70,70,.45);color:#fff;font-weight:700;cursor:pointer;';title=holidays[key];}
+   if(key===today){st+='outline:2px solid white;font-weight:bold;box-shadow:0 0 10px rgba(255,255,255,.35);';}
+   html+='<td title="'+title+'" style="'+st+'">'+day+'</td>';
+  } html+='</tr>';
+ }
+ html+='</table>'; document.getElementById(target).innerHTML=html;
+}
+const y=new Date().getFullYear(),m=(new Date().getMonth()+1).toString().padStart(2,'0');
+const monthNamesPL=['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'];
+const monthNamesDE=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+function updateMonthLabels(){document.getElementById('monthPL').textContent='- '+monthNamesPL[currentMonth]+' '+currentYear;document.getElementById('monthDE').textContent='- '+monthNamesDE[currentMonth]+' '+currentYear;}
+
+window.renderBoth=function(){
+ const y=currentYear;
+ const E=easter(y);
+ const holidaysPL={
+ [`${y}-01-01`]:'Nowy Rok',[`${y}-01-06`]:'Trzech Króli',[`${y}-05-01`]:'Święto Pracy',[`${y}-05-03`]:'Święto Konstytucji 3 Maja',[`${y}-08-15`]:'Wniebowzięcie NMP',[`${y}-11-01`]:'Wszystkich Świętych',[`${y}-11-11`]:'Święto Niepodległości',[`${y}-12-25`]:'Boże Narodzenie',[`${y}-12-26`]:'Drugi Dzień Świąt'};
+ holidaysPL[fmtLocal(E)]='Wielkanoc'; holidaysPL[fmtLocal(addDays(E,1))]='Poniedziałek Wielkanocny'; holidaysPL[fmtLocal(addDays(E,60))]='Boże Ciało';
+ const holidaysDE={
+ [`${y}-01-01`]:'Neujahr',[`${y}-05-01`]:'Tag der Arbeit',[`${y}-10-03`]:'Tag der Deutschen Einheit',[`${y}-12-25`]:'1. Weihnachtstag',[`${y}-12-26`]:'2. Weihnachtstag'};
+ holidaysDE[fmtLocal(addDays(E,-2))]='Karfreitag'; holidaysDE[fmtLocal(E)]='Ostersonntag'; holidaysDE[fmtLocal(addDays(E,1))]='Ostermontag'; holidaysDE[fmtLocal(addDays(E,39))]='Christi Himmelfahrt'; holidaysDE[fmtLocal(addDays(E,50))]='Pfingstmontag';
+ updateMonthLabels();renderCalendar('calendarPL',holidaysPL);renderCalendar('calendarDE',holidaysDE);
+};
+window.renderBoth();
+ }catch(e){
+   wbStatus.textContent='ERROR';
+ }
+}
+setTimeout(loadAdminData,300);
+</script>
+</div>
+</div>
+<div class="footer dashboard-footer"><div class="panel foot">SYSTEM STATUS</div><div class="panel foot">DATABASE</div><div class="panel foot">API SERVICES</div><div class="panel foot">STORAGE</div><div class="panel foot">UPTIME</div></div></div></div></div>
+
+</body></html>
+
+
+<!-- MODULE_WORKSPACE_START -->
+<div class="module-workspace">
+<h2>VEHICLES</h2>
+<p></p>
+</div>
+<!-- MODULE_WORKSPACE_END -->
+
+
+
+<style>
+.veh-summary{
+display:grid !important;
+grid-template-columns:repeat(4,minmax(140px,1fr)) !important;
+gap:14px !important;
+}
+.sumcard{
+min-height:90px !important;
+height:90px !important;
+display:flex !important;
+flex-direction:column !important;
+justify-content:center !important;
+overflow:hidden !important;
+}
+.sumcard b{
+font-size:13px !important;
+}
+.sumcard div{
+font-size:28px !important;
+margin-top:4px !important;
+}
+</style>
+
+<style>
+.veh-table th{
+cursor:pointer;
+position:sticky;
+top:0;
+background:#eef3f8;
+z-index:2;
+transition:.2s;
+}
+.veh-table th:hover{
+filter:brightness(0.96);
+}
+</style>
+
+<script>
+function sortVehicleTable(tbodyId,col){
+ const tbody=document.getElementById(tbodyId);
+ const rows=[...tbody.querySelectorAll('tr')];
+ const asc=tbody.dataset.sort!=='asc';
+ rows.sort((a,b)=>{
+   const av=a.children[col].innerText.trim();
+   const bv=b.children[col].innerText.trim();
+   return asc ? av.localeCompare(bv,undefined,{numeric:true}) :
+                bv.localeCompare(av,undefined,{numeric:true});
+ });
+ tbody.dataset.sort=asc?'asc':'desc';
+ rows.forEach(r=>tbody.appendChild(r));
+}
+
+window.addEventListener('load',()=>{
+ const truckHead=document.querySelectorAll('#truckTableBody').length ? document.querySelectorAll('.veh-table')[0].querySelectorAll('th') : [];
+ truckHead.forEach((th,i)=>th.onclick=()=>sortVehicleTable('truckTableBody',i));
+
+ const tankHead=document.querySelectorAll('.veh-table')[1].querySelectorAll('th');
+ tankHead.forEach((th,i)=>th.onclick=()=>sortVehicleTable('tankTableBody',i));
+});
+
+setInterval(()=>{
+ if(window.loadWorkbookData){
+   console.log('Vehicles data refresh ready');
+ }
+},300000);
+</script>
+
+<style>
+/* Premium fleet table styling */
+.veh-table tbody tr{
+ transition:all .18s ease;
+ border-bottom:1px solid rgba(0,0,0,.05);
+}
+.veh-table tbody tr:hover{
+ background:rgba(255,255,255,.75);
+ transform:translateY(-1px);
+ box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+.veh-table td{
+ padding:10px 12px;
+}
+.veh-count{
+ font-size:14px;
+ letter-spacing:.4px;
+ opacity:.85;
+ margin-bottom:12px;
+}
+.veh-head{
+ padding-bottom:10px;
+ border-bottom:1px solid rgba(0,0,0,.08);
+ margin-bottom:12px;
+}
+.veh-badge{
+ background:#eef3f8;
+ border:1px solid #c8d2dd;
+ border-radius:999px;
+ padding:4px 10px;
+ font-size:12px;
+ font-weight:600;
+}
+.veh-card:hover{
+ transform:translateY(-2px);
+ transition:.2s;
+}
+</style>
+
+<style>
+/* Attention highlighting */
+.adr-warning-row{
+ background:rgba(255,176,32,.12) !important;
+}
+.adr-expired-row{
+ background:rgba(217,54,54,.10) !important;
+}
+.veh-alert-bar{
+ margin:0 0 12px 0;
+ padding:10px 14px;
+ border-radius:12px;
+ background:linear-gradient(180deg,#fff8e8,#f7edd2);
+ border:1px solid #ead8a0;
+ color:#6b5300;
+ font-weight:600;
+}
+</style>
+
+<script>
+window.addEventListener('load',()=>{
+ let warning=0;
+ let expired=0;
+
+ document.querySelectorAll('#truckTableBody tr,#tankTableBody tr').forEach(row=>{
+   const txt=row.innerText;
+   if(txt.includes('background:#ffb020')){
+      row.classList.add('adr-warning-row');
+      warning++;
+   }
+   if(txt.includes('background:#d93636')){
+      row.classList.add('adr-expired-row');
+      expired++;
+   }
+ });
+
+ const grid=document.querySelector('.veh-grid');
+ if(grid){
+   const bar=document.createElement('div');
+   bar.className='veh-alert-bar';
+   bar.innerHTML='Fleet Status Overview • ADR Expiring: '+(document.getElementById('adrExpiring')?.textContent||0)+' • ADR Expired: '+(document.getElementById('adrExpired')?.textContent||0);
+   grid.parentNode.insertBefore(bar,grid);
+ }
+});
+</script>
+
+<style>
+.upcoming-adr{
+margin:14px 0;
+padding:12px 16px;
+background:linear-gradient(180deg,#f8fafc,#e8eef5);
+border:1px solid #d5dee8;
+border-radius:14px;
+}
+.upcoming-adr h5{
+margin:0 0 8px 0;
+font-size:14px;
+}
+.upcoming-adr-list{
+font-size:13px;
+line-height:1.7;
+}
+</style>
+
+<script>
+window.addEventListener('load',()=>{
+
+ const exp=document.getElementById('adrExpiring');
+ const exd=document.getElementById('adrExpired');
+
+ const overview=document.querySelector('.veh-alert-bar');
+ if(overview && exp && exd){
+   overview.innerHTML='Fleet Status Overview • ADR Expiring: '+(exp?exp.textContent:'0')+' • ADR Expired: '+(exd?exd.textContent:'0');
+ }
+
+ const dates=[];
+
+ document.querySelectorAll('#truckTableBody tr,#tankTableBody tr').forEach(r=>{
+   const cells=r.querySelectorAll('td');
+   if(cells.length>=4){
+      dates.push({
+        plate:cells[0].innerText,
+        adr:cells[3].innerText
+      });
+   }
+ });
+
+ dates.sort((a,b)=>new Date(a.adr)-new Date(b.adr));
+
+ const box=document.createElement('div');
+ box.className='upcoming-adr';
+
+ const top=dates.slice(0,5)
+ .map(x=>'• '+x.plate+' — '+x.adr)
+ .join('<br>');
+
+ box.innerHTML='<h5>Upcoming ADR Renewals (90 DAYS)</h5><div class="upcoming-adr-list">'+top+'</div>';
+
+ const sec=document.getElementById('vehicles-section');
+ if(sec){
+   const grid=sec.querySelector('.veh-grid');
+   if(grid) sec.insertBefore(box,grid);
+ }
+});
+</script>
+
+<script>
+window.addEventListener('load', function(){
+
+  // Force refresh overview from actual counters
+  const overview = document.querySelector('.veh-alert-bar');
+  const exp = document.getElementById('adrExpiring');
+  const exd = document.getElementById('adrExpired');
+
+  if(overview && exp && exd){
+    overview.innerHTML =
+      'Fleet Status Overview • ADR Expiring: ' + exp.textContent +
+      ' • ADR Expired: ' + exd.textContent;
+  }
+
+  // Rebuild Upcoming ADR Renewals from table data
+  document.querySelectorAll('.upcoming-adr').forEach(x=>x.remove());
+
+  const items = [];
+
+  document.querySelectorAll('#truckTableBody tr, #tankTableBody tr').forEach(row=>{
+      const td = row.querySelectorAll('td');
+      if(td.length < 4) return;
+
+      const plate = td[0].innerText.trim();
+      const adrText = td[3].innerText.trim();
+
+      const d = new Date(adrText);
+      if(isNaN(d)) return;
+
+      const days = Math.ceil((d - new Date())/86400000);
+
+      if(days >= 0 && days <= 90){
+         items.push({plate:plate,date:adrText,days:days});
+      }
+  });
+
+  items.sort((a,b)=>a.days-b.days);
+
+  const box = document.createElement('div');
+  box.className='upcoming-adr';
+
+  let body = '<div class="upcoming-adr-list">';
+  if(items.length===0){
+      body += 'No ADR renewals within the next 90 days';
+  } else {
+      items.slice(0,10).forEach(x=>{
+         body += '• '+x.plate+' — '+x.date+' ('+x.days+' days)<br>';
+      });
+  }
+  body += '</div>';
+
+  box.innerHTML='<h5>Upcoming ADR Renewals (90 DAYS)</h5>'+body;
+
+  const sec=document.getElementById('vehicles-section');
+  const grid=sec ? sec.querySelector('.veh-grid') : null;
+  if(sec && grid) sec.insertBefore(box, grid);
+});
+</script>
+
+<script>
+window.addEventListener('load', function(){
+
+setTimeout(function(){
+
+  let expiring = 0;
+  let expired = 0;
+  const upcoming = [];
+
+  document.querySelectorAll('#truckTableBody tr,#tankTableBody tr').forEach(function(row){
+
+      const adrCell = row.cells[3];
+      if(!adrCell) return;
+
+      const txt = adrCell.innerText.trim();
+
+      const m = txt.match(/(\d{4}-\d{2}-\d{2})/);
+      if(!m) return;
+
+      const d = new Date(m[1]);
+      const days = Math.ceil((d - new Date())/86400000);
+
+      if(days < 0){
+          expired++;
+      } else if(days <= 90){
+          expiring++;
+          const plate = row.cells[0] ? row.cells[0].innerText.trim() : '';
+          upcoming.push({plate:plate,date:m[1],days:days});
+      }
+  });
+
+  const exp = document.getElementById('adrExpiring');
+  const exd = document.getElementById('adrExpired');
+
+  if(exp) exp.textContent = expiring;
+  if(exd) exd.textContent = expired;
+
+  const overview = document.querySelector('.veh-alert-bar');
+  if(overview){
+      overview.innerHTML = 'Fleet Status Overview • ADR Expiring: ' + expiring + ' • ADR Expired: ' + expired;
+  }
+
+  document.querySelectorAll('.upcoming-adr').forEach(e=>e.remove());
+
+  upcoming.sort((a,b)=>a.days-b.days);
+
+  const box = document.createElement('div');
+  box.className='upcoming-adr';
+
+  let body='';
+  if(upcoming.length===0){
+      body='No ADR renewals within the next 90 days';
+  }else{
+      upcoming.slice(0,10).forEach(x=>{
+          body += '• ' + x.plate + ' — ' + x.date + ' (' + x.days + ' days)<br>';
+      });
+  }
+
+  box.innerHTML='<h5>Upcoming ADR Renewals (90 DAYS)</h5><div class="upcoming-adr-list">'+body+'</div>';
+
+  const sec=document.getElementById('vehicles-section');
+  const grid=sec ? sec.querySelector('.veh-grid') : null;
+  if(sec && grid) sec.insertBefore(box, grid);
+
+},1000);
+
+});
+</script>
+
+<style>
+.upcoming-adr{
+max-width:420px !important;
+width:420px !important;
+margin:14px 0 18px 0 !important;
+padding:14px 16px !important;
+background:linear-gradient(180deg,#f8fafc,#e9eff6) !important;
+border:1px solid #d4dee8 !important;
+border-radius:18px !important;
+box-shadow:0 8px 20px rgba(0,0,0,.08) !important;
+}
+
+.upcoming-adr h5{
+margin:0 0 10px 0 !important;
+font-size:14px !important;
+font-weight:700 !important;
+}
+
+.upcoming-adr-list{
+display:flex !important;
+flex-direction:column !important;
+gap:6px !important;
+}
+
+.upcoming-adr-list div{
+display:flex !important;
+justify-content:space-between !important;
+align-items:center !important;
+padding:6px 10px !important;
+background:rgba(255,255,255,.65) !important;
+border-radius:10px !important;
+font-size:12px !important;
+}
+
+.upcoming-adr-list .days{
+font-weight:700 !important;
+color:#c77d00 !important;
+}
+</style>
+
+<script>
+window.addEventListener('load',()=>{
+ setTimeout(()=>{
+
+ const old=document.querySelector('.upcoming-adr');
+ if(!old) return;
+
+ const lines=[...old.querySelectorAll('br')];
+ const txt=old.innerHTML;
+
+ const matches=[...txt.matchAll(/•\s([^—]+)\s—\s(\d{4}-\d{2}-\d{2})\s\((\d+)\sdays\)/g)];
+
+ if(matches.length===0) return;
+
+ let rows='';
+
+ matches.forEach(m=>{
+   rows += '<div><span>'+m[1].trim()+'</span><span class="days">'+m[3]+' d</span></div>';
+ });
+
+ old.innerHTML='<h5>⏳ Upcoming ADR Renewals (90 DAYS)</h5><div class="upcoming-adr-list">'+rows+'</div>';
+
+ },1200);
+});
+</script>
+
+<!-- ADR FIX PATCH -->
+<style>
+.upcoming-adr{
+max-width:none!important;
+width:100%!important;
+}
+.upcoming-adr-list{
+display:grid!important;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important;
+gap:10px!important;
+}
+.upcoming-adr-list div{
+background:rgba(255,255,255,.85)!important;
+border:1px solid #d7e0ea!important;
+padding:10px 12px!important;
+border-radius:12px!important;
+}
+.upcoming-adr-list .plate{
+font-weight:700;
+display:block;
+}
+.upcoming-adr-list .date{
+font-size:12px;
+opacity:.8;
+}
+</style>
+<script>
+window.addEventListener('load',()=>{
+setTimeout(()=>{
+ const overview=document.querySelector('.veh-alert-bar');
+ const expiredList=[];
+ document.querySelectorAll('#truckTableBody tr,#tankTableBody tr').forEach(row=>{
+   const td=row.querySelectorAll('td');
+   if(td.length<4) return;
+   const plate=td[0].innerText.trim();
+   const model=td[2].innerText.trim();
+   const m=td[3].innerText.match(/(\d{4}-\d{2}-\d{2})/);
+   if(!m) return;
+   const d=new Date(m[1]);
+   const days=Math.ceil((d-new Date())/86400000);
+   if(days<0){
+      expiredList.push(plate+' ('+model+')');
+   }
+ });
+ if(overview && expiredList.length){
+   overview.innerHTML='Fleet Status Overview • ADR Expiring: '
+   +(document.getElementById('adrExpiring')?.textContent||0)
+   +' • ADR Expired: '
+   +(document.getElementById('adrExpired')?.textContent||0)
+   +'<br><span style="font-size:12px;font-weight:600;">Expired vehicles: '
+   +expiredList.join(', ')+'</span>';
+ }
+
+ const box=document.querySelector('.upcoming-adr');
+ if(box){
+   const items=[];
+   document.querySelectorAll('#truckTableBody tr,#tankTableBody tr').forEach(row=>{
+      const td=row.querySelectorAll('td');
+      if(td.length<4) return;
+      const plate=td[0].innerText.trim();
+      const model=td[2].innerText.trim();
+      const m=td[3].innerText.match(/(\d{4}-\d{2}-\d{2})/);
+      if(!m) return;
+      const d=new Date(m[1]);
+      const days=Math.ceil((d-new Date())/86400000);
+      if(days>=0 && days<=90){
+         items.push({plate,model,date:m[1],days});
+      }
+   });
+   items.sort((a,b)=>a.days-b.days);
+   let body='';
+   items.forEach(x=>{
+      body+=`<div><span class="plate">${x.plate}</span><span>${x.model}</span><span class="date">${x.date}</span><span class="days">${x.days} d</span></div>`;
+   });
+   box.innerHTML='<h5>⏳ Upcoming ADR Renewals (90 DAYS)</h5><div class="upcoming-adr-list">'+body+'</div>';
+ }
+},1800);
+});
+</script>
+
+<style>
+.adr-reminder-center{
+margin:14px 0 18px 0;
+padding:16px;
+border-radius:18px;
+background:linear-gradient(180deg,#8c9298,#646a71);
+color:#fff;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+.adr-reminder-grid{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-top:12px;
+}
+.adr-reminder-item{
+background:rgba(255,255,255,.10);
+border-radius:14px;
+padding:12px;
+border-left:6px solid #ffcc00;
+}
+.adr-reminder-item.expired{border-left-color:#d93636;}
+.adr-reminder-item.urgent{border-left-color:#ff8c00;}
+.adr-reminder-title{font-weight:700;margin-bottom:6px;}
+</style>
+
+<script>
+window.addEventListener('load',function(){
+setTimeout(function(){
+const sec=document.getElementById('vehicles-section');
+if(!sec) return;
+
+const summary=document.querySelector('.veh-summary');
+if(summary && !document.getElementById('adrReminderCount')){
+ const card=document.createElement('div');
+ card.className='sumcard';
+ card.innerHTML='<b>ADR REMINDERS</b><div id="adrReminderCount">0</div>';
+ summary.appendChild(card);
+}
+
+const old=document.getElementById('adrReminderCenter');
+if(old) old.remove();
+
+const box=document.createElement('div');
+box.id='adrReminderCenter';
+box.className='adr-reminder-center';
+
+let reminders=[];
+
+document.querySelectorAll('#truckTableBody tr,#tankTableBody tr').forEach(row=>{
+ const td=row.querySelectorAll('td');
+ if(td.length<4) return;
+
+ const plate=td[0].innerText.trim();
+ const model=td[2].innerText.trim();
+ const m=td[3].innerText.match(/(\d{4}-\d{2}-\d{2})/);
+ if(!m) return;
+
+ const d=new Date(m[1]);
+ const days=Math.ceil((d-new Date())/86400000);
+
+ if(days<0){
+   reminders.push({status:'EXPIRED',cls:'expired',plate,model,date:m[1],days});
+ }else if(days<=7){
+   reminders.push({status:'7 DAYS',cls:'urgent',plate,model,date:m[1],days});
+ }else if(days<=21){
+   reminders.push({status:'21 DAYS',cls:'',plate,model,date:m[1],days});
+ }
+});
+
+document.getElementById('adrReminderCount').textContent=reminders.length;
+
+let body='';
+if(reminders.length===0){
+ body='<div class="adr-reminder-item"><div class="adr-reminder-title">✓ No active ADR reminders</div></div>';
+}else{
+ reminders.sort((a,b)=>a.days-b.days);
+ reminders.forEach(r=>{
+  body+=`<div class="adr-reminder-item ${r.cls}">
+   <div class="adr-reminder-title">🔔 ${r.status}</div>
+   <div><b>${r.plate}</b></div>
+   <div>${r.model}</div>
+   <div>ADR: ${r.date}</div>
+   <div>Remaining: ${r.days<0 ? 'Expired' : r.days+' days'}</div>
+  </div>`;
+ });
+}
+
+box.innerHTML='<h5 style="margin:0;">ADR REMINDER CENTER</h5><div class="adr-reminder-grid">'+body+'</div>';
+
+const upcoming=document.querySelector('.upcoming-adr');
+if(upcoming) upcoming.after(box);
+else sec.prepend(box);
+
+},1500);
+});
+</script>
+
+<style>
+.adr-reminder-banner{
+margin:12px 0 14px 0;
+padding:12px 16px;
+border-radius:12px;
+background:linear-gradient(180deg,#fff8e8,#f7edd2);
+border:1px solid #ead8a0;
+color:#6b5300;
+font-weight:600;
+}
+</style>
+
+<script>
+window.addEventListener('load',function(){
+setTimeout(function(){
+
+const oldCard=document.querySelector('.sumcard #adrReminderCount');
+if(oldCard && oldCard.parentElement){
+ oldCard.parentElement.style.display='none';
+}
+
+document.querySelectorAll('.adr-reminder-banner').forEach(e=>e.remove());
+
+let reminders=[];
+
+document.querySelectorAll('#truckTableBody tr,#tankTableBody tr').forEach(row=>{
+ const td=row.querySelectorAll('td');
+ if(td.length<4) return;
+
+ const plate=td[0].innerText.trim();
+ const model=td[2].innerText.trim();
+ const m=td[3].innerText.match(/(\d{4}-\d{2}-\d{2})/);
+ if(!m) return;
+
+ const d=new Date(m[1]);
+ const days=Math.ceil((d-new Date())/86400000);
+
+ if(days<0){
+   reminders.push('EXPIRED: '+plate+' ('+model+')');
+ }else if(days<=7){
+   reminders.push('7 DAYS: '+plate+' ('+model+')');
+ }else if(days<=21){
+   reminders.push('21 DAYS: '+plate+' ('+model+')');
+ }
+});
+
+const banner=document.createElement('div');
+banner.className='adr-reminder-banner';
+
+if(reminders.length===0){
+ banner.innerHTML='ADR Reminder Overview • No active reminders';
+}else{
+ banner.innerHTML='ADR Reminder Overview • Active reminders: '
+ + reminders.length
+ + ' • '
+ + reminders.join(' , ');
+}
+
+const target=document.getElementById('adrReminderCenter');
+if(target){
+ target.parentNode.insertBefore(banner,target);
+}
+
+},1800);
+});
+</script>
+
+<script>
+window.addEventListener('load',function(){
+setTimeout(function(){
+
+ // 1. Usuń kafelek ADR REMINDERS z sekcji summary
+ document.querySelectorAll('.veh-summary .sumcard').forEach(card=>{
+   const b=card.querySelector('b');
+   if(b && b.textContent.trim().includes('ADR REMINDERS')){
+      card.remove();
+   }
+ });
+
+ // 2. Przenieś ADR Reminder Overview bezpośrednio pod Fleet Status Overview
+ const fleet=document.querySelector('.veh-alert-bar');
+ const reminder=document.querySelector('.adr-reminder-banner');
+
+ if(fleet && reminder){
+    reminder.remove();
+    fleet.insertAdjacentElement('afterend', reminder);
+ }
+
+},2200);
+});
+</script>
+
+<style id="vehicles-real-mobile-fix">
+@media (max-width:768px){
+  .veh-summary{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:12px !important;
+  }
+
+  .veh-summary .sumcard{
+    min-width:0 !important;
+    width:auto !important;
+  }
+}
+</style>
