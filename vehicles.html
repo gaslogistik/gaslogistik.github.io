@@ -290,24 +290,25 @@ window.changeMonth=function(step){
  if(currentMonth<0){currentMonth=11;currentYear--;}
  if(window.renderBoth) window.renderBoth();
 };
+const GAS_URL="https://script.google.com/macros/s/AKfycbz9eVUGDpTGPx5-7sr3YQY-ZV71Y74FGk5qwDb_uhmyn0Q9xkEf3zig_mDVJ-xYv1iK/exec";
+
 async function loadAdminData(){
  try{
-   const resp=await fetch('databank.xlsx');
-   const buf=await resp.arrayBuffer();
-   const wb=XLSX.read(buf,{type:'array'});
+   const resp=await fetch(GAS_URL+'?action=getSystemData');
+   const data=await resp.json();
 
-   wbStatus.textContent='LOADED';
+   wbStatus.textContent='GOOGLE SHEETS';
 
-   const cities=wb.Sheets['CITIES'];
-   const relations=wb.Sheets['Relations'];
-   const addresses=wb.Sheets['ADDRESSES'];
+   const cities=(data.cities||[]);
+   const relations=(data.relations||[]);
+   const addresses=(data.addresses||[]);
 
    citiesSheet.textContent=cities?'READY':'MISSING';
    relationsSheet.textContent=relations?'READY':'MISSING';
    addressesSheet.textContent=addresses?'READY':'MISSING';
 
    if(cities){
-      const rows=XLSX.utils.sheet_to_json(cities);
+      const rows=cities;
       const countries=[...new Set(rows.map(r=>String(r.COUNTRY||'').trim()).filter(Boolean))];
       const types=[...new Set(rows.map(r=>String(r.TYPE||'').trim()).filter(Boolean))];
       locationsCount.textContent=rows.length;
@@ -316,9 +317,9 @@ async function loadAdminData(){
       citiesRows.textContent=rows.length;
    }
 
-   if(relations) relationsRows.textContent=XLSX.utils.sheet_to_json(relations).length;
+   relationsRows.textContent=relations.length;
    
-if(addresses) addressesRows.textContent=XLSX.utils.sheet_to_json(addresses).length;
+addressesRows.textContent=addresses.length;
 
 
 function excelDateToString(v){
@@ -349,11 +350,11 @@ function adrBadge(val){
  }
  return `<span style="background:#31b84d;color:#fff;padding:4px 8px;border-radius:8px;font-weight:700">${txt}</span>`;
 }
-const trucksSheet=wb.Sheets['TRUCKS'];
-const tanksSheet=wb.Sheets['TANKTRAILERS'];
+const trucksSheet=data.trucks||[];
+const tanksSheet=data.tanktrailers||[];
 
-if(trucksSheet){
- const rows=XLSX.utils.sheet_to_json(trucksSheet);
+if(trucksSheet.length){
+ const rows=trucksSheet;
  document.getElementById('truckCount').textContent=rows.length;
  document.getElementById('truckVehicles').textContent=rows.length+' vehicles';
  document.getElementById('truckTableBody').innerHTML=rows.map(r=>
@@ -366,8 +367,8 @@ if(trucksSheet){
  </tr>`).join('');
 }
 
-if(tanksSheet){
- const rows=XLSX.utils.sheet_to_json(tanksSheet);
+if(tanksSheet.length){
+ const rows=tanksSheet;
  document.getElementById('tankCount').textContent=rows.length;
  document.getElementById('tankVehicles').textContent=rows.length+' vehicles';
  document.getElementById('tankTableBody').innerHTML=rows.map(r=>

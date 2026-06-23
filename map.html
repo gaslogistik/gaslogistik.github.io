@@ -13,7 +13,7 @@ text-shadow:
 -1px 1px 0 #fff;
 white-space:nowrap;
 }
-</style><script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script><script>
+</style><script>
 setTimeout(()=>{
  try{
   const rows=window._cityRows||[];
@@ -38,12 +38,9 @@ setTimeout(()=>{
 </script><script>
 async function loadDatabank(){
  try{
-   const resp = await fetch('databank.xlsx');
-   const buf = await resp.arrayBuffer();
-   const wb = XLSX.read(buf,{type:'array'});
-   const ws = wb.Sheets['CITIES'];
-   if(!ws) return;
-   const rows = XLSX.utils.sheet_to_json(ws);
+   const resp = await fetch('https://script.google.com/macros/s/AKfycbz9eVUGDpTGPx5-7sr3YQY-ZV71Y74FGk5qwDb_uhmyn0Q9xkEf3zig_mDVJ-xYv1iK/exec?action=getSystemData');
+   const data = await resp.json();
+   const rows = data.cities || [];
    
 let countries=new Set(), types=new Set(), count=0; window._cityRows = rows;
 
@@ -199,7 +196,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </script>
 
 <link rel="stylesheet" href="auth.css">
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
 <script src="auth.js"></script>
 
 </head><body class="enterprise-v10"><div class="shell"><div class="top">
