@@ -191,8 +191,8 @@ box-shadow:0 8px 18px rgba(0,0,0,.20),0 0 12px rgba(255,120,0,.25);
 filter:brightness(1.08);
 }
 .operator-link{
-  padding-right:12px;
-  font-size:13px;
+  padding-right:11px;
+  font-size:14px;
   font-weight:700;
 }
 
@@ -937,9 +937,9 @@ html,body{overflow-x:hidden}.topicon{min-width:44px;min-height:44px;display:flex
 
 .topicon{
   position:relative;
-  font-size:20px !important;
-  min-width:42px !important;
-  min-height:42px !important;
+  font-size:14px !important;
+  min-width:32px !important;
+  min-height:32px !important;
 }
 
 .topicon[data-label]:hover::after{
@@ -966,4 +966,56 @@ html,body{overflow-x:hidden}.topicon{min-width:44px;min-height:44px;display:flex
 .dashboard-main,
 .layout{
   overflow:visible !important;
+}
+
+
+/* ===== HEADER FIX V5 ===== */
+.top{
+  align-items:stretch;
+}
+
+.right{
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  gap:8px;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.right a{
+  flex:0 1 auto;
+}
+
+.operator-link{
+  display:flex;
+  align-items:center;
+  max-width:220px;
+  white-space:normal;
+  word-break:break-word;
+  line-height:1.1;
+}
+
+.headercenter{
+  overflow:hidden;
+}
+
+/* USER MENU */
+
+.kp-user-menu{
+  font-size:11px !important;
+  min-width:120px;
+}
+
+.kp-user-name{
+  font-size:11px !important;
+  font-weight:700;
+}
+
+.kp-user-time{
+  font-size:10px !important;
+}
+
+.kp-user-logout{
+  font-size:11px !important;
 }

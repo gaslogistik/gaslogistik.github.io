@@ -11,7 +11,7 @@ async function loadUsersFromExcel() {
   return XLSX.utils.sheet_to_json(sheet);
 }
 
-const KP_SESSION_HOURS = 8;
+const KP_SESSION_HOURS = 0.5;
 
 const KP_PROTECTED_PAGES = [
   "operator.html",
@@ -307,7 +307,7 @@ function initOperatorMenu() {
     localStorage.getItem("kp_user");
 
   operator.textContent =
-    `OPERATOR (${user})`;
+    `(${user})`;
 
   const menu = document.createElement("div");
 
@@ -315,6 +315,7 @@ function initOperatorMenu() {
 
   menu.innerHTML = `
      <div class="kp-user-name">${user}</div>
+     <div class="kp-user-time" id="kpUserTime"></div>
      <div class="kp-user-logout">LOGOUT</div>
   `;
 
@@ -355,6 +356,41 @@ function initOperatorMenu() {
 
       location.reload();
     });
+	
+  function updateMenuTime() {
+
+  const el = document.getElementById("kpUserTime");
+  if (!el) return;
+
+  const loginTime =
+    Number(localStorage.getItem("kp_login_time"));
+
+  if (!loginTime) return;
+
+  const expires =
+    loginTime +
+    (KP_SESSION_HOURS * 60 * 60 * 1000);
+
+  const remaining =
+    expires - Date.now();
+
+  if (remaining <= 0) {
+    el.textContent = "Session expired";
+    return;
+  }
+
+  const h =
+    Math.floor(remaining / 1000 / 60 / 60);
+
+  const m =
+    Math.floor((remaining / 1000 / 60) % 60);
+
+  el.textContent =
+    `Remaining: ${h}h ${m}m`;
+}
+
+updateMenuTime();
+setInterval(updateMenuTime, 60000);
 }
 
 /* =========================
@@ -437,7 +473,7 @@ function startSessionCountdown() {
       Math.floor((remaining / 1000 / 60) % 60);
 
     operator.textContent =
-      `${originalText} [${h}h ${m}m]`;
+      `${originalText}`;
   }
 
   updateCountdown();
@@ -525,4 +561,3 @@ async function sendLoginHistory(user,page,result){
     console.error("LOGIN_HISTORY",e);
   }
 }
-
