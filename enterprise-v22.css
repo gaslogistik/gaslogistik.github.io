@@ -1056,3 +1056,6 @@ html,body{overflow-x:hidden}.topicon{min-width:44px;min-height:44px;display:flex
 .country-bar button,.copy-btn{padding:6px 10px;border-radius:10px}
 .result-count{margin:10px 0;font-weight:700}
 .kpi-card small{display:block;margin-top:6px;font-size:12px}
+
+.country-bar button.active-filter{transform:scale(1.08);font-weight:700}
+.copy-btn{transition:.2s}

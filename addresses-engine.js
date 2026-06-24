@@ -42,10 +42,10 @@ window.AddressesEngine={
      const vigo=rows.filter(r=>String(r.TYPE).toUpperCase().includes('VIGO'));
      const hubs=rows.filter(r=>String(r.TYPE).toUpperCase().includes('HUB'));
 
-     document.getElementById('kpiLocations').innerHTML=`${rows.length}<small>Locations</small>`;
-     document.getElementById('kpiCountries').innerHTML=`${countriesAll.length}<small>Countries (${countriesAll.join(', ')})</small>`;
-     document.getElementById('kpiVigo').innerHTML=`${vigo.length}<small>VIGO (${[...new Set(vigo.map(x=>x.COUNTRY))].join(', ')})</small>`;
-     document.getElementById('kpiHubs').innerHTML=`${hubs.length}<small>HUBS (${[...new Set(hubs.map(x=>x.COUNTRY))].join(', ')})</small>`;
+     document.getElementById('kpiLocations').innerHTML=`${rows.length}<small>Locations (${countriesAll.join(', ')})</small><small>Total Locations</small>`;
+     document.getElementById('kpiCountries').innerHTML=`${countriesAll.length}<small>Countries (${countriesAll.join(', ')})</small><small>Countries</small>`;
+     document.getElementById('kpiVigo').innerHTML=`${vigo.length}<small>VIGO (${[...new Set(vigo.map(x=>x.COUNTRY))].join(', ')})</small><small>VIGO Stations</small>`;
+     document.getElementById('kpiHubs').innerHTML=`${hubs.length}<small>HUBS (${[...new Set(hubs.map(x=>x.COUNTRY))].join(', ')})</small><small>Hubs</small>`;
 
      const dl=document.getElementById('citySuggestions');
      dl.innerHTML=[...new Set(rows.map(r=>r.LOCATION))].map(x=>`<option value="${x}">`).join('');
@@ -76,7 +76,13 @@ window.AddressesEngine={
      });
 
      document.querySelectorAll('.copy-btn').forEach(b=>{
-       b.onclick=()=>navigator.clipboard.writeText(b.dataset.c);
+       b.onclick=()=>{
+ navigator.clipboard.writeText(b.dataset.c);
+ const old=b.textContent;
+ b.textContent='✓ Copied';
+ b.style.transform='scale(1.08)';
+ setTimeout(()=>{b.textContent=old;b.style.transform='';},1200);
+};
      });
    }
 
