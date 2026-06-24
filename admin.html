@@ -231,7 +231,7 @@ async function loadAdminData(){
    const cities=data.cities||[];
    const relations=data.relations||[];
    const addresses=data.addresses||[];
-   const adminSheet=data.admin||[];
+   const users=data.users||[];
 
    citiesSheet.textContent=cities.length?'READY':'MISSING';
    relationsSheet.textContent=relations.length?'READY':'MISSING';
@@ -249,7 +249,7 @@ async function loadAdminData(){
 
    relationsRows.textContent=relations.length;
    addressesRows.textContent=addresses.length;
-   usersCount.textContent=adminSheet.length;
+   usersCount.textContent=users.length;
 
    lastUpdate.textContent=new Date().toLocaleString();
 
