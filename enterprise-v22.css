@@ -1059,3 +1059,41 @@ html,body{overflow-x:hidden}.topicon{min-width:44px;min-height:44px;display:flex
 
 .country-bar button.active-filter{transform:scale(1.08);font-weight:700}
 .copy-btn{transition:.2s}
+
+
+/* ADDRESSES V4.3 TABLE VISIBILITY */
+.addr-table tbody tr{
+  border-bottom:1px solid rgba(0,0,0,.22)!important;
+}
+.addr-table td,
+.addr-table th{
+  border-right:1px solid rgba(0,0,0,.12)!important;
+}
+.addr-table tbody tr:nth-child(odd){
+  background:rgba(0,0,0,.025)!important;
+}
+.addr-table tbody tr:nth-child(even){
+  background:rgba(255,255,255,.18)!important;
+}
+.addr-table tbody tr:hover{
+  background:rgba(255,180,80,.10)!important;
+}
+
+/* SORTABLE HEADERS FEEDBACK */
+.addr-table th{
+ cursor:pointer;
+ transition:all .18s ease;
+ user-select:none;
+}
+.addr-table th:hover{
+ background:rgba(255,180,80,.18)!important;
+ transform:translateY(-1px);
+}
+.addr-table th:active{
+ transform:scale(.97);
+ background:rgba(255,180,80,.28)!important;
+}
+.sort-active{
+ background:rgba(255,180,80,.22)!important;
+ box-shadow:inset 0 0 0 1px rgba(255,140,0,.35);
+}
