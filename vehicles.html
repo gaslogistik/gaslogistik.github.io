@@ -323,7 +323,7 @@ async function loadAdminData(){
    wbStatus.textContent='ERROR';
  }
 }
-setTimeout(loadAdminData,300);
+loadAdminData().then(()=>{window.dispatchEvent(new Event("vehiclesDataLoaded"));});
 </script>
 </div>
 </div>
@@ -393,7 +393,7 @@ function sortVehicleTable(tbodyId,col){
  rows.forEach(r=>tbody.appendChild(r));
 }
 
-window.addEventListener('load',()=>{
+window.addEventListener('vehiclesDataLoaded',()=>{
  const truckHead=document.querySelectorAll('#truckTableBody').length ? document.querySelectorAll('.veh-table')[0].querySelectorAll('th') : [];
  truckHead.forEach((th,i)=>th.onclick=()=>sortVehicleTable('truckTableBody',i));
 
@@ -467,7 +467,7 @@ setInterval(()=>{
 </style>
 
 <script>
-window.addEventListener('load',()=>{
+window.addEventListener('vehiclesDataLoaded',()=>{
  let warning=0;
  let expired=0;
 
@@ -512,7 +512,7 @@ line-height:1.7;
 </style>
 
 <script>
-window.addEventListener('load',()=>{
+window.addEventListener('vehiclesDataLoaded',()=>{
 
  const exp=document.getElementById('adrExpiring');
  const exd=document.getElementById('adrExpired');
@@ -554,7 +554,7 @@ window.addEventListener('load',()=>{
 </script>
 
 <script>
-window.addEventListener('load', function(){
+window.addEventListener('vehiclesDataLoaded', function(){
 
   // Force refresh overview from actual counters
   const overview = document.querySelector('.veh-alert-bar');
@@ -613,7 +613,7 @@ window.addEventListener('load', function(){
 </script>
 
 <script>
-window.addEventListener('load', function(){
+window.addEventListener('vehiclesDataLoaded', function(){
 
 setTimeout(function(){
 
@@ -722,7 +722,7 @@ color:#c77d00 !important;
 </style>
 
 <script>
-window.addEventListener('load',()=>{
+window.addEventListener('vehiclesDataLoaded',()=>{
  setTimeout(()=>{
 
  const old=document.querySelector('.upcoming-adr');
@@ -774,7 +774,7 @@ opacity:.8;
 }
 </style>
 <script>
-window.addEventListener('load',()=>{
+window.addEventListener('vehiclesDataLoaded',()=>{
 setTimeout(()=>{
  const overview=document.querySelector('.veh-alert-bar');
  const expiredList=[];
@@ -854,7 +854,7 @@ border-left:6px solid #ffcc00;
 </style>
 
 <script>
-window.addEventListener('load',function(){
+window.addEventListener('vehiclesDataLoaded',function(){
 setTimeout(function(){
 const sec=document.getElementById('vehicles-section');
 if(!sec) return;
@@ -938,7 +938,7 @@ font-weight:600;
 </style>
 
 <script>
-window.addEventListener('load',function(){
+window.addEventListener('vehiclesDataLoaded',function(){
 setTimeout(function(){
 
 const oldCard=document.querySelector('.sumcard #adrReminderCount');
@@ -993,7 +993,7 @@ if(target){
 </script>
 
 <script>
-window.addEventListener('load',function(){
+window.addEventListener('vehiclesDataLoaded',function(){
 setTimeout(function(){
 
  // 1. Usuń kafelek ADR REMINDERS z sekcji summary
@@ -1015,6 +1015,49 @@ setTimeout(function(){
 
 },2200);
 });
+function isoWeek(d){d=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));d.setUTCDate(d.getUTCDate()+4-(d.getUTCDay()||7));const y=new Date(Date.UTC(d.getUTCFullYear(),0,1));return Math.ceil((((d-y)/86400000)+1)/7);} 
+function fmtLocal(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function easter(Y){const C=Math.floor(Y/100),N=Y-19*Math.floor(Y/19),K=Math.floor((C-17)/25),I=C-Math.floor(C/4)-Math.floor((C-K)/3)+19*N+15;let J=I-30*Math.floor(I/30);J=J-Math.floor(J/28)*(1-Math.floor(J/28)*Math.floor(29/(J+1))*Math.floor((21-N)/11));const L=J-(Math.floor(Y/4)+Y+J+2-C+Math.floor(C/4))%7;const M=3+Math.floor((L+40)/44);const D=L+28-31*Math.floor(M/4);return new Date(Y,M-1,D);}
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}
+function renderCalendar(target,holidays){
+ const now=new Date(), y=currentYear, m=currentMonth, today=fmtLocal(now);
+ const first=new Date(y,m,1), last=new Date(y,m+1,0);
+ const start=(first.getDay()+6)%7;
+ let html='<table style="width:100%;font-size:11px;border-collapse:separate;border-spacing:2px"><tr><th>KW</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th><th>Su</th></tr>';
+ let day=1-start;
+ while(day<=last.getDate()){
+  let ref=new Date(y,m,Math.max(1,day)); html+='<tr><td><b>'+isoWeek(ref)+'</b></td>';
+  for(let i=0;i<7;i++,day++){
+   if(day<1||day>last.getDate()){html+='<td></td>';continue;}
+   const d=new Date(y,m,day), key=fmtLocal(d);
+   let st='padding:4px;text-align:center;border-radius:8px;';
+   let title='';
+   if(i>=5) st+='background:rgba(255,255,255,.14);';
+   if(holidays[key]){st+='background:rgba(255,70,70,.45);color:#fff;font-weight:700;cursor:pointer;';title=holidays[key];}
+   if(key===today){st+='outline:2px solid white;font-weight:bold;box-shadow:0 0 10px rgba(255,255,255,.35);';}
+   html+='<td title="'+title+'" style="'+st+'">'+day+'</td>';
+  } html+='</tr>';
+ }
+ html+='</table>'; document.getElementById(target).innerHTML=html;
+}
+const y=new Date().getFullYear(),m=(new Date().getMonth()+1).toString().padStart(2,'0');
+const monthNamesPL=['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'];
+const monthNamesDE=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+function updateMonthLabels(){document.getElementById('monthPL').textContent='- '+monthNamesPL[currentMonth]+' '+currentYear;document.getElementById('monthDE').textContent='- '+monthNamesDE[currentMonth]+' '+currentYear;}
+
+window.renderBoth=function(){
+ const y=currentYear;
+ const E=easter(y);
+ const holidaysPL={
+ [`${y}-01-01`]:'Nowy Rok',[`${y}-01-06`]:'Trzech Króli',[`${y}-05-01`]:'Święto Pracy',[`${y}-05-03`]:'Święto Konstytucji 3 Maja',[`${y}-08-15`]:'Wniebowzięcie NMP',[`${y}-11-01`]:'Wszystkich Świętych',[`${y}-11-11`]:'Święto Niepodległości',[`${y}-12-25`]:'Boże Narodzenie',[`${y}-12-26`]:'Drugi Dzień Świąt'};
+ holidaysPL[fmtLocal(E)]='Wielkanoc'; holidaysPL[fmtLocal(addDays(E,1))]='Poniedziałek Wielkanocny'; holidaysPL[fmtLocal(addDays(E,60))]='Boże Ciało';
+ const holidaysDE={
+ [`${y}-01-01`]:'Neujahr',[`${y}-05-01`]:'Tag der Arbeit',[`${y}-10-03`]:'Tag der Deutschen Einheit',[`${y}-12-25`]:'1. Weihnachtstag',[`${y}-12-26`]:'2. Weihnachtstag'};
+ holidaysDE[fmtLocal(addDays(E,-2))]='Karfreitag'; holidaysDE[fmtLocal(E)]='Ostersonntag'; holidaysDE[fmtLocal(addDays(E,1))]='Ostermontag'; holidaysDE[fmtLocal(addDays(E,39))]='Christi Himmelfahrt'; holidaysDE[fmtLocal(addDays(E,50))]='Pfingstmontag';
+ updateMonthLabels();renderCalendar('calendarPL',holidaysPL);renderCalendar('calendarDE',holidaysDE);
+};
+
+window.addEventListener('vehiclesDataLoaded',()=>{try{renderBoth()}catch(e){console.error(e)}});setTimeout(()=>{try{renderBoth()}catch(e){}},2000);
 </script>
 
 <style id="vehicles-real-mobile-fix">
