@@ -1051,3 +1051,8 @@ html,body{overflow-x:hidden}.topicon{min-width:44px;min-height:44px;display:flex
 .addr-table thead{display:none}
 .addr-table tr{margin-bottom:12px;padding:12px;border:1px solid #ddd;border-radius:12px}
 }
+
+.country-bar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.country-bar button,.copy-btn{padding:6px 10px;border-radius:10px}
+.result-count{margin:10px 0;font-weight:700}
+.kpi-card small{display:block;margin-top:6px;font-size:12px}
