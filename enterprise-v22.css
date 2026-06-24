@@ -1019,3 +1019,35 @@ html,body{overflow-x:hidden}.topicon{min-width:44px;min-height:44px;display:flex
 .kp-user-logout{
   font-size:11px !important;
 }
+.addresses-module{margin-top:16px;padding:18px}
+.addresses-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:15px 0}
+.kpi-card{padding:18px;text-align:center}
+.kpi-card span{display:block;font-size:32px;font-weight:800}
+.addresses-toolbar{display:grid;grid-template-columns:1fr 220px;gap:12px;margin-bottom:15px}
+.addresses-toolbar input,.addresses-toolbar select{padding:12px;border-radius:12px;border:1px solid #aaa}
+.table-wrapper{overflow:auto}
+#addressesTable{width:100%;border-collapse:collapse}
+#addressesTable th,#addressesTable td{padding:12px;border-bottom:1px solid #ddd;text-align:left}
+@media(max-width:768px){
+.addresses-toolbar{grid-template-columns:1fr}
+#addressesTable thead{display:none}
+#addressesTable,#addressesTable tbody,#addressesTable tr,#addressesTable td{display:block;width:100%}
+#addressesTable tr{margin-bottom:12px;background:#f4f4f4;border-radius:12px;padding:10px}
+#addressesTable td{border:none;padding:6px 0}
+}
+
+.addresses-module{padding:16px;margin-top:16px}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:12px 0}
+.kpi-card{padding:16px;border-radius:16px;background:linear-gradient(#f2f2f2,#d8d8d8);text-align:center}
+.kpi-card span{display:block;font-size:28px;font-weight:800}
+.search-row{display:grid;grid-template-columns:1fr 220px;gap:12px;margin:12px 0}
+.search-row input,.search-row select{padding:12px;border-radius:12px}
+.addr-table{width:100%;border-collapse:collapse}
+.addr-table th,.addr-table td{padding:10px;border-bottom:1px solid #ccc}
+.map-link{font-weight:700}
+@media(max-width:768px){
+.search-row{grid-template-columns:1fr}
+.addr-table,.addr-table thead,.addr-table tbody,.addr-table tr,.addr-table td{display:block}
+.addr-table thead{display:none}
+.addr-table tr{margin-bottom:12px;padding:12px;border:1px solid #ddd;border-radius:12px}
+}

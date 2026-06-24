@@ -1,5 +1,6 @@
 window.SharedData={
-cache,
+
+cache:null,
 
 async loadData(){
 if(this.cache) return this.cache;
@@ -29,7 +30,7 @@ return d.relations||[];
 
 async buildAddresses(){
 const d=await this.loadData();
-return d.addresses||[];
+return d.cities||[];
 },
 
 async getAdminUsers(){

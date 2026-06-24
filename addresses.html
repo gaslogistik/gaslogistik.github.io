@@ -74,14 +74,41 @@ document.addEventListener('DOMContentLoaded',function(){
 
 <div class="panel command"><h3>COMMAND CENTER</h3><div class="tiles"><a href="index.html" class="tile">DASHBOARD</a><a href="matrix.html" class="tile">MATRIX</a><a href="map.html" class="tile">MAP</a><a href="vehicles.html" class="tile">VEHICLES</a><a href="addresses.html" class="tile">ADDRESSES</a><a href="admin.html" class="tile">ADMIN</a></div>
 
-<div class="workspace-empty"></div><div class="footer dashboard-footer"><div class="panel foot">SYSTEM STATUS</div><div class="panel foot">DATABASE</div><div class="panel foot">API SERVICES</div><div class="panel foot">STORAGE</div><div class="panel foot">UPTIME</div></div></div></div></div>
+<div class="workspace-empty"></div><div class="panel addresses-module">
+<h3>LNG DELIVERY LOCATIONS</h3>
 
-</body></html>
-
-
-<!-- MODULE_WORKSPACE_START -->
-<div class="module-workspace">
-<h2>ADDRESSES</h2>
-<p>Moduł ADDRESSES przygotowany do dalszej implementacji.</p>
+<div class="kpi-grid">
+<div class="kpi-card"><span id="kpiLocations">0</span><small>Total Locations</small></div>
+<div class="kpi-card"><span id="kpiCountries">0</span><small>Countries</small></div>
+<div class="kpi-card"><span id="kpiVigo">0</span><small>VIGO Stations</small></div>
+<div class="kpi-card"><span id="kpiHubs">0</span><small>Hubs</small></div>
 </div>
-<!-- MODULE_WORKSPACE_END -->
+
+<div class="search-row">
+<input id="searchBox" placeholder="Search city, station, country, address..." autocomplete="off">
+<datalist id="citySuggestions"></datalist>
+
+<select id="typeFilter">
+<option value="">ALL</option>
+<option>BORDER</option>
+<option>CUSTOMS</option>
+<option>HUB</option>
+<option>PARKING</option>
+<option>VIGO FUELSTATION</option>
+<option>PL FUELSTATION</option>
+</select>
+</div>
+
+<div id="addressesTable"></div>
+</div>
+
+<div class="footer dashboard-footer"><div class="panel foot">SYSTEM STATUS</div><div class="panel foot">DATABASE</div><div class="panel foot">API SERVICES</div><div class="panel foot">STORAGE</div><div class="panel foot">UPTIME</div></div></div></div></div>
+
+
+
+
+
+
+<script src="shared-data.js"></script>
+<script src="addresses-engine.js"></script>
+</body></html>
