@@ -457,6 +457,58 @@ async function loadFolder(folder){
  });
 }
 </script>
+
+<script>
+window.FilesRepository={
+ async loadIndex(){
+   const r=await fetch('./files-index.json?_=' + Date.now());
+   return await r.json();
+ },
+ async openFolder(folder){
+   const idx=await this.loadIndex();
+   const data=(idx[folder.toLowerCase()]||[]);
+   const box=document.getElementById('repoFiles');
+   if(!box) return;
+
+   let html='<div class="repo-toolbar"><input id="repoSearch" class="repo-search" placeholder="Search files..."></div>';
+
+   data.forEach(item=>{
+      if(item.type==='dir'){
+         html+=`<div class="repo-file repo-dir" onclick="FilesRepository.openSubfolder('${folder}','${item.name}')"><span>📁 ${item.name}</span><span>Open</span></div>`;
+      }else{
+         html+=`<a class="repo-file" href="${item.url}" download><span>${item.icon||'📄'} ${item.name}</span><span>Zapisz</span></a>`;
+      }
+   });
+
+   box.innerHTML=html;
+   const s=document.getElementById('repoSearch');
+   if(s){
+      s.addEventListener('input',function(){
+        const q=this.value.toLowerCase();
+        document.querySelectorAll('.repo-file').forEach(x=>{
+           x.style.display=x.innerText.toLowerCase().includes(q)?'flex':'none';
+        });
+      });
+   }
+ },
+ async openSubfolder(folder,name){
+   const idx=await this.loadIndex();
+   const entry=(idx[folder.toLowerCase()]||[]).find(x=>x.type==='dir' && x.name===name);
+   const box=document.getElementById('repoFiles');
+   if(!entry || !box) return;
+   let html='<button onclick="FilesRepository.openFolder(\''+folder+'\')">← Powrót</button>';
+   entry.children.forEach(f=>{
+      html+=`<a class="repo-file" href="${f.url}" download><span>${f.icon||'📄'} ${f.name}</span><span>Zapisz</span></a>`;
+   });
+   box.innerHTML=html;
+ }
+};
+
+window.loadFolder=function(folder){
+ return FilesRepository.openFolder(folder);
+}
+</script>
+
 </body></html>
 
 

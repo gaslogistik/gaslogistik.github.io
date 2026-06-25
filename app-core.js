@@ -14,3 +14,5 @@ window.REPO_CONFIG={owner:'gaslogistik',repo:'gaslogistik.github.io',folders:['k
 async function repoFetch(folder){const r=await fetch(`https://api.github.com/repos/${REPO_CONFIG.owner}/${REPO_CONFIG.repo}/contents/Files/${folder}`);return r.json();}
 
 /* Stage 3 Final Clean baseline */
+
+window.REPOSITORY_MODE='JSON_INDEX';
