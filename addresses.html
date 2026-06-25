@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <a href="login.html" class="topicon" data-label="LOGIN">👤</a>
 <a href="operator.html" class="topicon operator-link">OPERATOR</a>
 </div>
-</div><div class="layout"><div class="panel sidebar dashboard-sidebar"><div class="menu"><a href="index.html">DASHBOARD</a><a href="matrix.html">MATRIX</a><a href="map.html">MAP</a><a href="vehicles.html">VEHICLES</a><a href="addresses.html">ADDRESSES</a><a href="admin.html">ADMIN</a><a href="contact.html">CONTACT</a><a href="#">DRIVERS</a><a href="#">DOCUMENTS/FILES</a><a href="#">WAREHOUSE</a><a href="#">REPORTS</a></div></div><div class="dashboard-main">
+</div><div class="layout"><div class="panel sidebar dashboard-sidebar"><div class="menu"><a href="index.html">DASHBOARD</a><a href="matrix.html">MATRIX</a><a href="map.html">MAP</a><a href="vehicles.html">VEHICLES</a><a href="addresses.html">ADDRESSES</a><a href="admin.html">ADMIN</a><a href="contact.html">CONTACT</a><a href="drivers.html">DRIVERS</a><a href="files.html">DOCUMENTS/FILES</a><a href="warehouse.html">WAREHOUSE</a><a href="reports.html">REPORTS</a></div></div><div class="dashboard-main">
 
 <div class="panel command"><h3>COMMAND CENTER</h3><div class="tiles"><a href="index.html" class="tile">DASHBOARD</a><a href="matrix.html" class="tile">MATRIX</a><a href="map.html" class="tile">MAP</a><a href="vehicles.html" class="tile">VEHICLES</a><a href="addresses.html" class="tile">ADDRESSES</a><a href="admin.html" class="tile">ADMIN</a></div>
 
@@ -148,4 +148,27 @@ document.addEventListener('DOMContentLoaded',function(){
  }
 });
 </script>
-</body></html>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+const page=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+let target=null;
+if(['files.html'].includes(page)) target='DOCUMENTS/FILES';
+else if(['drivers.html'].includes(page)) target='DRIVERS';
+else if(['warehouse.html'].includes(page)) target='WAREHOUSE';
+else if(['reports.html'].includes(page)) target='REPORTS';
+else if(['addresses.html'].includes(page)) target='ADDRESSES';
+else if(['index.html'].includes(page)) target='DASHBOARD';
+else if(['matrix.html'].includes(page)) target='MATRIX';
+else if(['map.html'].includes(page)) target='MAP';
+else if(['vehicles.html'].includes(page)) target='VEHICLES';
+else if(['admin.html'].includes(page)) target='ADMIN';
+else if(['contact.html'].includes(page)) target='CONTACT';
+document.querySelectorAll('.sidebar .menu a').forEach(a=>{
+ if(a.textContent.trim()===target){
+   a.style.background='#ff8c00';
+   a.style.color='#fff';
+ }
+});
+});
+</script></body></html>

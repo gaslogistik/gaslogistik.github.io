@@ -1140,3 +1140,15 @@ color:#fff!important;
 th{cursor:pointer;transition:.15s}
 th:hover{transform:scale(1.02)}
 th:active{transform:scale(.98)}
+
+/* Stage 3 styles loaded */
+
+/* PRODUCTION_STAGE3: enterprise-v22.css */
+
+/* Stage3 UI */
+.repo-global-stats{display:flex;gap:12px;flex-wrap:wrap}
+.repo-global-card{border:1px solid #ddd;border-radius:10px;padding:8px 12px}
+.file-new,.file-updated{font-size:11px;padding:2px 6px;border-radius:10px}
+.preview-modal iframe,.preview-modal img{width:100%;max-height:70vh}
+
+/* Stage 3 Final Clean baseline */

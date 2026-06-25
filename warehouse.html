@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GASLOGISTIK - Login</title>
+<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WAREHOUSE - KP GASLOGISTIK - Addresses</title>
 
 <link rel="stylesheet" href="enterprise-v22.css">
 
@@ -70,12 +70,47 @@ document.addEventListener('DOMContentLoaded',function(){
 <a href="login.html" class="topicon" data-label="LOGIN">👤</a>
 <a href="operator.html" class="topicon operator-link">OPERATOR</a>
 </div>
-</div><div class="layout"><div class="panel sidebar dashboard-sidebar"><div class="menu"><a href="index.html">DASHBOARD</a><a href="matrix.html">MATRIX</a><a href="map.html">MAP</a><a href="vehicles.html">VEHICLES</a><a href="addresses.html">ADDRESSES</a><a href="admin.html">ADMIN</a><a href="contact.html">CONTACT</a><a href="drivers.html">DRIVERS</a><a href="files.html">DOCUMENTS/FILES</a><a href="warehouse.html">WAREHOUSE</a><a href="reports.html">REPORTS</a></div></div><div class="dashboard-main">
+</div><div class="layout"><div class="panel sidebar dashboard-sidebar"><div class="menu"><a href="index.html">DASHBOARD</a><a href="matrix.html">MATRIX</a><a href="map.html">MAP</a><a href="vehicles.html">VEHICLES</a><a href="warehouse.html">ADDRESSES</a><a href="admin.html">ADMIN</a><a href="contact.html">CONTACT</a><a href="drivers.html">DRIVERS</a><a href="files.html">DOCUMENTS/FILES</a><a href="warehouse.html">WAREHOUSE</a><a href="reports.html">REPORTS</a></div></div><div class="dashboard-main">
 
-<div class="panel command"><h3>COMMAND CENTER</h3><div class="tiles"><a href="index.html" class="tile">DASHBOARD</a><a href="matrix.html" class="tile">MATRIX</a><a href="map.html" class="tile">MAP</a><a href="vehicles.html" class="tile">VEHICLES</a><a href="addresses.html" class="tile">ADDRESSES</a><a href="admin.html" class="tile">ADMIN</a></div>
+<div class="panel command"><h3>COMMAND CENTER</h3><div class="tiles"><a href="index.html" class="tile">DASHBOARD</a><a href="matrix.html" class="tile">MATRIX</a><a href="map.html" class="tile">MAP</a><a href="vehicles.html" class="tile">VEHICLES</a><a href="warehouse.html" class="tile">ADDRESSES</a><a href="admin.html" class="tile">ADMIN</a></div>
 
-<div class="workspace-empty"></div><div class="footer dashboard-footer"><div class="panel foot">SYSTEM STATUS</div><div class="panel foot">DATABASE</div><div class="panel foot">API SERVICES</div><div class="panel foot">STORAGE</div><div class="panel foot">UPTIME</div></div></div></div></div>
+<div class="workspace-empty"></div><div class="panel addresses-module">
+<h3>LNG DELIVERY LOCATIONS</h3>
 
+<div class="kpi-grid">
+<div class="kpi-card"><span id="kpiLocations">0</span><small>Total Locations</small></div>
+<div class="kpi-card"><span id="kpiCountries">0</span><small>Countries</small></div>
+<div class="kpi-card"><span id="kpiVigo">0</span><small>VIGO Stations</small></div>
+<div class="kpi-card"><span id="kpiHubs">0</span><small>Hubs</small></div>
+</div>
+
+<div class="search-row">
+<input id="searchBox" placeholder="Search city, station, country, address..." autocomplete="off">
+<datalist id="citySuggestions"></datalist>
+
+<select id="typeFilter">
+<option value="">ALL</option>
+<option>BORDER</option>
+<option>CUSTOMS</option>
+<option>HUB</option>
+<option>PARKING</option>
+<option>VIGO FUELSTATION</option>
+<option>PL FUELSTATION</option>
+</select>
+</div>
+
+<div id="addressesTable"></div>
+</div>
+
+<div class="footer dashboard-footer"><div class="panel foot">SYSTEM STATUS</div><div class="panel foot">DATABASE</div><div class="panel foot">API SERVICES</div><div class="panel foot">STORAGE</div><div class="panel foot">UPTIME</div></div></div></div></div>
+
+
+
+
+
+
+<script src="shared-data.js"></script>
+<script src="addresses-engine.js"></script>
 
 <script id="nav-v3-fix">
 document.addEventListener('DOMContentLoaded',function(){
@@ -86,7 +121,7 @@ document.addEventListener('DOMContentLoaded',function(){
   'matrix.html':'MATRIX',
   'map.html':'MAP',
   'vehicles.html':'VEHICLES',
-  'addresses.html':'ADDRESSES',
+  'warehouse.html':'ADDRESSES',
   'admin.html':'ADMIN',
   'contact.html':'CONTACT',
   'drivers.html':'DRIVERS',
@@ -137,11 +172,3 @@ document.querySelectorAll('.sidebar .menu a').forEach(a=>{
 });
 });
 </script></body></html>
-
-
-<!-- MODULE_WORKSPACE_START -->
-<div class="module-workspace">
-<h2>ADDRESSES</h2>
-<p>Moduł ADDRESSES przygotowany do dalszej implementacji.</p>
-</div>
-<!-- MODULE_WORKSPACE_END -->

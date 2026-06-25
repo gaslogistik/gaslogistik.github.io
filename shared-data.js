@@ -43,3 +43,11 @@ window.buildMatrix=()=>window.SharedData.buildMatrix();
 window.buildRelations=()=>window.SharedData.buildRelations();
 window.buildAddresses=()=>window.SharedData.buildAddresses();
 window.getAdminUsers=()=>window.SharedData.getAdminUsers();
+/* Stage 3 prepared */
+
+/* PRODUCTION_STAGE3: shared-data.js */
+
+// Stage3 Shared Helpers
+window.fileIcon=function(name){const e=name.split('.').pop().toLowerCase();return ({pdf:'📕',docx:'📘',xlsx:'📗',jpg:'🖼️',png:'🖼️',mp4:'🎬'})[e]||'📄';};
+
+/* Stage 3 Final Clean baseline */

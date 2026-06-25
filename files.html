@@ -1,0 +1,467 @@
+<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DOCUMENTS/FILES - KP GASLOGISTIK - Files</title>
+
+<link rel="stylesheet" href="enterprise-v22.css">
+
+<style>
+@media (max-width: 900px){
+.layout{display:block!important}.sidebar:not(.open){display:none!important}.sidebar.open{display:block!important}
+.dashboard-main,.main-content,.content{width:100%!important}
+.dashboard-main,.main-content,.content{width:100%!important}
+table{display:block;overflow-x:auto;white-space:nowrap}
+input,select,button,textarea{max-width:100%;box-sizing:border-box}
+.card,.tile,.admcard{min-width:140px!important}
+}
+@media (max-width: 600px){
+h1,h2,h3{word-break:break-word}
+.card,.tile,.admcard{width:100%!important}
+.menu a{display:block;padding:12px}
+}
+</style>
+
+
+<style id="v5-mobile-native">
+@media (max-width:768px){
+body{font-size:15px}
+.shell{margin:0;padding:8px;border-radius:0}
+.top{grid-template-columns:1fr; height:auto}
+.headercenter,.right{padding:10px;justify-content:center;flex-wrap:wrap}
+.layout{display:block!important}.sidebar:not(.open){display:none!important}.sidebar.open{display:block!important}
+.sidebar{position:fixed;left:-280px;top:0;width:260px!important;height:100vh;z-index:9999;overflow:auto;transition:.3s;background:#e5e5e5;padding-top:70px}
+.sidebar.open{left:0}
+.mobile-menu-btn{display:flex!important;position:fixed;top:12px;left:12px;z-index:10000;background:#222;color:#fff;border:none;border-radius:12px;padding:12px 14px}
+.dashboard-grid,.cards,.tiles{grid-template-columns:1fr!important}
+.card,.tile,.admcard,.panel{width:100%!important}
+table{display:block;overflow:auto}
+.matrix-container{height:78vh}
+#matrix th.rotate{min-width:90px!important;width:90px!important}
+#matrix .hub{min-width:120px!important}
+.map-controls,.filters{display:flex;flex-direction:column;gap:8px}
+}
+@media (min-width:769px){.mobile-menu-btn{display:none!important}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+ const sb=document.querySelector('.sidebar');
+ if(!sb) return;
+ const b=document.createElement('button');
+ b.className='mobile-menu-btn';
+ b.innerHTML='☰';
+ document.body.appendChild(b);
+ b.onclick=()=>sb.classList.toggle('open');
+ document.addEventListener('click',e=>{
+   if(window.innerWidth<=768 && sb.classList.contains('open') && !sb.contains(e.target) && !b.contains(e.target)){sb.classList.remove('open');}
+ });
+});
+</script>
+
+<link rel="stylesheet" href="auth.css">
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="auth.js"></script>
+
+
+<style>
+.files-module{margin-top:28px;padding:22px}
+.files-title{text-align:center;margin:8px 0 22px;font-size:28px;font-weight:800}
+.files-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:0 10px 22px}
+.files-kpi .panel{padding:22px;text-align:center}
+.doc-center{padding:18px;margin:0 10px 24px}
+.folder-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding:0 10px 10px}
+.folder{padding:18px;text-align:center}
+.system-gap{margin-top:36px}
+@media(max-width:900px){
+.files-kpi{grid-template-columns:repeat(2,1fr)}
+.folder-grid{grid-template-columns:repeat(2,1fr)}
+.files-title{text-align:center}
+}
+@media(max-width:520px){
+.folder-grid,.files-kpi{grid-template-columns:1fr}
+}
+</style>
+
+<style>
+.files-module{margin-top:40px!important;padding:26px!important}
+.files-title{text-align:center;font-size:30px;font-weight:800;margin:10px 0 28px}
+.files-title small{display:block;margin-top:6px;font-size:20px}
+.files-kpi{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px;padding:0 16px;margin-bottom:24px}
+.files-kpi .panel{box-sizing:border-box;transform:scale(.5);transform-origin:center}
+.doc-center{margin:0 16px 24px!important;padding:20px!important;overflow:hidden}
+.folder-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;padding:0 16px;box-sizing:border-box}
+.folder{padding:18px!important;overflow:hidden}
+.footer.dashboard-footer{margin-top:40px!important}
+@media(max-width:900px){
+.files-kpi{grid-template-columns:repeat(4,minmax(0,1fr))}.folder-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+.files-kpi,.folder-grid{grid-template-columns:1fr}
+.files-module{padding:14px!important}
+.doc-center,.folder-grid,.files-kpi{margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important}
+}
+</style>
+
+<style>
+.doc-center{max-width:900px;margin:0 auto 24px auto!important;padding:10px 18px!important}
+.doc-center div{word-break:break-word}
+.folder-grid{padding:12px 24px 24px 24px!important}
+.folder{min-height:74px;display:flex;flex-direction:column;justify-content:center}
+@media(max-width:600px){
+.folder-grid{padding:8px!important}
+}
+</style>
+
+<style>
+.files-repo .folder{
+cursor:pointer;transition:all .22s ease;
+}
+.files-repo .folder:hover{
+transform:translateY(-4px);
+box-shadow:0 0 12px rgba(255,165,0,.25), inset 0 2px 2px #fff;
+border-color:#ffbf66;
+}
+.files-repo .folder.active{
+background:linear-gradient(145deg,#f2e1c8,#d9c3a1);
+border-color:#f0a53a;
+}
+.doc-center{
+padding:6px 14px !important;
+min-height:48px !important;
+display:flex;align-items:center;justify-content:center;
+text-align:center;
+}
+.doc-center *{line-height:1.2;max-width:520px;margin:auto}
+.folder-grid{
+display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+gap:14px;padding:0 16px 16px;
+}
+@media(max-width:900px){.folder-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:520px){.folder-grid{grid-template-columns:1fr;}}
+</style>
+
+<style>
+.files-repo .folder a{color:inherit;text-decoration:none;display:block}
+.files-repo .folder{position:relative}
+.files-repo .badge{position:absolute;top:6px;right:8px;font-size:10px;padding:2px 6px;border-radius:10px;background:rgba(255,165,0,.15);color:#000}
+.doc-center{padding:4px 12px!important;min-height:34px!important}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+ document.querySelectorAll('.files-repo .folder').forEach(f=>{
+   f.addEventListener('click',()=>{document.querySelectorAll('.files-repo .folder').forEach(x=>x.classList.remove('active'));f.classList.add('active');});
+ });
+});
+</script>
+
+<style>
+
+.files-kpi .panel{transition:all .25s ease;cursor:pointer}
+.files-kpi .panel:hover{transform:translateY(-6px) scale(.52);box-shadow:0 0 18px rgba(255,190,80,.35)} .files-kpi .panel h2{color:#000!important}
+
+.files-repo .folder{min-height:82px;border:1px solid rgba(255,255,255,.15)}
+.files-repo .folder:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 0 18px rgba(255,190,80,.35);}
+.files-repo .folder.active{background:rgba(255,170,60,.12)!important;box-shadow:0 0 14px rgba(255,170,60,.30)}
+.compact-doc{padding:8px!important;min-height:45px!important;max-width:450px;margin:12px auto!important}
+</style>
+
+
+
+<style>
+.files-kpi-single{display:grid!important;grid-template-columns:repeat(8,1fr)!important;gap:10px!important}
+.files-kpi-single .panel{height:90px!important;transform:none!important}
+@media(max-width:1000px){.files-kpi-single{grid-template-columns:repeat(4,1fr)!important}}
+@media(max-width:600px){.files-kpi-single{grid-template-columns:repeat(2,1fr)!important}}
+</style>
+<style>
+.repo-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99999;align-items:center;justify-content:center}
+.repo-modal.open{display:flex}
+.repo-box{width:min(900px,92vw);max-height:80vh;overflow:auto;background:#fff;border-radius:14px;padding:20px}
+.repo-files a{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #ddd;text-decoration:none}
+.repo-close{float:right;cursor:pointer;font-size:24px}
+</style>
+
+<style id="stage3-enhancements">
+.repo-toolbar{display:flex;gap:10px;align-items:center;margin:10px 0 15px}
+.repo-search{flex:1;padding:8px}
+.file-badge{font-size:11px;padding:2px 6px;border-radius:10px;margin-left:8px;background:#ffd699}
+.repo-stats{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.repo-stat{padding:6px 10px;border:1px solid #ddd;border-radius:8px}
+</style>
+
+
+
+<style id="stage3-final-clean">
+.repo-global-stats{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.repo-global-card{padding:8px 12px;border:1px solid #ddd;border-radius:10px}
+</style>
+
+
+<style id="stage4-fixes">
+.files-kpi-single .panel{height:110px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;padding:10px!important;overflow:hidden}
+.files-kpi-single .panel div{line-height:1.2;text-align:center}
+.folder a{display:flex!important;flex-direction:column;justify-content:center;align-items:center;height:100%;text-align:center}
+.repo-global-stats,.repo-stats{display:flex!important;justify-content:center!important;align-items:center!important;gap:12px;margin:20px auto!important;width:100%}
+</style>
+</head><body class="enterprise-v10"><div class="shell"><div class="top">
+<div class="panel logo">
+  <span class="logo-main">KP GASLOGISTIK</span>
+  <span class="logo-hover">GAS LNG CNG H2</span>
+</div>
+<div class="panel headercenter"><div><strong>ENTERPRISE LOGISTICS & INTELLIGENCE PLATFORM</strong><br><span>Premium Command Center</span></div></div>
+<div class="panel right">
+<a href="cloud.html" class="topicon" data-label="CLOUD">☁</a>
+<a href="alerts.html" class="topicon" data-label="ALERTS">🔔</a>
+<a href="login.html" class="topicon" data-label="LOGIN">👤</a>
+<a href="operator.html" class="topicon operator-link">OPERATOR</a>
+</div>
+</div><div class="layout"><div class="panel sidebar dashboard-sidebar"><div class="menu"><a href="index.html">DASHBOARD</a><a href="matrix.html">MATRIX</a><a href="map.html">MAP</a><a href="vehicles.html">VEHICLES</a><a href="addresses.html">ADDRESSES</a><a href="admin.html">ADMIN</a><a href="contact.html">CONTACT</a><a href="drivers.html">DRIVERS</a><a href="files.html">DOCUMENTS/FILES</a><a href="warehouse.html">WAREHOUSE</a><a href="reports.html">REPORTS</a></div></div><div class="dashboard-main">
+
+<div class="panel command"><h3>COMMAND CENTER</h3><div class="tiles"><a href="index.html" class="tile">DASHBOARD</a><a href="matrix.html" class="tile">MATRIX</a><a href="map.html" class="tile">MAP</a><a href="vehicles.html" class="tile">VEHICLES</a><a href="addresses.html" class="tile">ADDRESSES</a><a href="admin.html" class="tile">ADMIN</a></div>
+
+<div class="workspace-empty"></div>
+
+<div class="panel files-module">
+<div class="files-title">FILES REPOSITORY<br><small>Driver Download Center</small></div>
+
+<div class="files-kpi files-kpi-single">
+<div class="panel"><h2>10</h2><div>Document Folders</div></div>
+<div class="panel"><h2>24/7</h2><div>Access</div></div>
+<div class="panel"><h2>PDF</h2><div>Documents</div></div>
+<div class="panel"><h2>LIVE</h2><div>Repository</div></div>
+<div class="panel"><h2>NEW</h2><div>Recent Files</div></div>
+<div class="panel"><h2>UPDATED</h2><div>Folder Activity</div></div>
+<div class="panel"><h2>10</h2><div>Repository Folders</div></div>
+<div class="panel"><h2>LIVE</h2><div>Status Monitor</div></div>
+</div>
+
+<div class="panel doc-center compact-doc"><div style="font-weight:700;font-size:12px;text-align:center">DRIVER DOCUMENT CENTER</div></div>
+
+</div>
+
+<div class="folder-grid files-repo">
+<div class="panel folder"><a href="javascript:void(0)" class="repo-folder-link" data-folder="kp"><span class="badge">LIVE</span><strong>KP</strong><br><small>Open repository</small></a></div>
+<div class="panel folder"><a href="javascript:void(0)" class="repo-folder-link" data-folder="vigo"><span class="badge">LIVE</span><strong>VIGO</strong><br><small>Open repository</small></a></div>
+<div class="panel folder"><a href="javascript:void(0)" class="repo-folder-link" data-folder="mhp"><span class="badge">LIVE</span><strong>MHP</strong><br><small>Open repository</small></a></div>
+<div class="panel folder"><a href="javascript:void(0)" class="repo-folder-link" data-folder="ym"><span class="badge">LIVE</span><strong>YM</strong><br><small>Open repository</small></a></div>
+<div class="panel folder"><a href="javascript:void(0)" class="repo-folder-link" data-folder="word"><strong>WORD</strong></a></div>
+<div class="panel folder"><a href="javascript:void(0)" class="repo-folder-link" data-folder="excel"><strong>EXCEL</strong></a></div>
+<div class="panel folder"><a href="javascript:void(0)" class="repo-folder-link" data-folder="pdf"><strong>PDF</strong></a></div>
+<div class="panel folder"><a href="javascript:void(0)" class="repo-folder-link" data-folder="txt"><strong>TXT</strong></a></div>
+<div class="panel folder"><a href="javascript:void(0)" class="repo-folder-link" data-folder="pictures"><strong>PICTURES</strong></a></div>
+<div class="panel folder"><a href="javascript:void(0)" class="repo-folder-link" data-folder="video"><strong>VIDEO</strong></a></div>
+</div>
+
+
+</div></div></div></div>
+
+
+
+
+
+
+<script src="shared-data.js"></script>
+
+
+<script id="nav-v3-fix">
+document.addEventListener('DOMContentLoaded',function(){
+ const file=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+ document.querySelectorAll('.menu a.active,.tile.active').forEach(el=>el.classList.remove('active'));
+ const map={
+  'index.html':'DASHBOARD',
+  'matrix.html':'MATRIX',
+  'map.html':'MAP',
+  'vehicles.html':'VEHICLES',
+  'files.html':'ADDRESSES',
+  'admin.html':'ADMIN',
+  'contact.html':'CONTACT',
+  'drivers.html':'DRIVERS',
+  'files.html':'DOCUMENTS / FILES'
+  ,'cloud.html':'DOCUMENTS / FILES',
+  'reports.html':'REPORTS',
+  'warehouse.html':'WAREHOUSE'
+ };
+ const target=map[file];
+ if(target){
+   document.querySelectorAll('.menu a').forEach(a=>{
+      if((a.textContent||'').trim().toUpperCase()===target){a.classList.add('active');}
+   });
+   document.querySelectorAll('.tile').forEach(t=>{
+      if((t.textContent||'').trim().toUpperCase().includes(target)){t.classList.add('active');}
+   });
+   document.querySelectorAll('.menu a[href="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    document.querySelectorAll('.menu a').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+ }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+const page=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+let target=null;
+if(['files.html'].includes(page)) target='DOCUMENTS/FILES';
+else if(['drivers.html'].includes(page)) target='DRIVERS';
+else if(['warehouse.html'].includes(page)) target='WAREHOUSE';
+else if(['reports.html'].includes(page)) target='REPORTS';
+else if(['addresses.html'].includes(page)) target='ADDRESSES';
+else if(['index.html'].includes(page)) target='DASHBOARD';
+else if(['matrix.html'].includes(page)) target='MATRIX';
+else if(['map.html'].includes(page)) target='MAP';
+else if(['vehicles.html'].includes(page)) target='VEHICLES';
+else if(['admin.html'].includes(page)) target='ADMIN';
+else if(['contact.html'].includes(page)) target='CONTACT';
+document.querySelectorAll('.sidebar .menu a').forEach(a=>{
+ if(a.textContent.trim()===target){
+   a.classList.add('active');
+ }
+});
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+ document.querySelectorAll('.folder').forEach(f=>{
+   f.addEventListener('click',()=>{
+      document.querySelectorAll('.folder').forEach(x=>x.classList.remove('active'));
+      f.classList.add('active');
+   });
+ });
+});
+</script>
+
+<div id="repoModal" class="repo-modal">
+ <div class="repo-box">
+  <span class="repo-close" onclick="document.getElementById('repoModal').classList.remove('open')">&times;</span>
+  <h2 id="repoTitle">Repository</h2>
+  <div id="repoFiles" class="repo-files">Loading...</div>
+ </div>
+</div>
+
+<script>
+document.querySelectorAll('.repo-folder-link').forEach(link=>{
+ link.addEventListener('click', async function(e){
+   e.preventDefault();
+   const folder=this.dataset.folder;
+   document.getElementById('repoModal').classList.add('open');
+   document.getElementById('repoTitle').textContent=folder.toUpperCase()+' DOCUMENTS';
+   const box=document.getElementById('repoFiles');
+   box.innerHTML='Loading...';
+   try{
+     const url='https://api.github.com/repos/gaslogistik/gaslogistik.github.io/contents/Files/'+folder;
+     const res=await fetch(url);
+     const data=await res.json();
+     box.innerHTML=data.map(f=>'<a href="'+f.download_url+'" target="_blank"><span>📄 '+f.name+'</span><span>Pobierz</span></a>').join('');
+   }catch(err){
+     box.innerHTML='Nie można pobrać listy plików';
+   }
+ });
+});
+</script><div id="repoStats" class="repo-stats"></div>
+<script>
+async function loadFolder(folder){
+ const box=document.getElementById('repoFiles');
+ const stats=document.getElementById('repoStats');
+ box.innerHTML='Loading...';
+ const url='https://api.github.com/repos/gaslogistik/gaslogistik.github.io/contents/Files/'+folder;
+ const res=await fetch(url);
+ const data=await res.json();
+
+ stats.innerHTML='<div class="repo-stat">Files: '+data.length+'</div><div class="repo-stat">Status: ONLINE</div>';
+
+ let files=data.map(f=>{
+   let badge='';
+   if(f.name.toLowerCase().includes('new')) badge='<span class="file-badge">NEW</span>';
+   if(f.name.toLowerCase().includes('update')) badge='<span class="file-badge">UPDATED</span>';
+   return '<a class="repo-file" data-name="'+f.name.toLowerCase()+'" href="'+f.download_url+'" target="_blank"><span>📄 '+f.name+badge+'</span><span>Pobierz</span></a>';
+ }).join('');
+
+ box.innerHTML=
+ '<div class="repo-toolbar"><input id="repoSearch" class="repo-search" placeholder="Search files..."></div>'+files;
+
+ document.getElementById('repoSearch').addEventListener('input',function(){
+   const q=this.value.toLowerCase();
+   document.querySelectorAll('.repo-file').forEach(r=>{
+      r.style.display=r.dataset.name.includes(q)?'flex':'none';
+   });
+ });
+}
+
+document.querySelectorAll('.repo-folder-link').forEach(link=>{
+ link.addEventListener('click',function(){
+   const folder=this.dataset.folder;
+   setTimeout(()=>loadFolder(folder),50);
+ });
+});
+</script>
+<div id="globalRepoStats" class="repo-global-stats"></div>
+<script>
+window.REPO_FOLDERS=['kp','vigo','mhp','ym','word','excel','pdf','txt','pictures','video'];
+
+async function updateRepositoryStats(){
+ try{
+   let total=0;
+   for(const f of REPO_FOLDERS){
+     const r=await fetch('https://api.github.com/repos/gaslogistik/gaslogistik.github.io/contents/Files/'+f);
+     const d=await r.json();
+     if(Array.isArray(d)) total+=d.length;
+   }
+   const el=document.getElementById('globalRepoStats');
+   if(el) el.innerHTML='<div class="repo-global-card">Repository Online</div><div class="repo-global-card">Files: '+total+'</div><div class="repo-global-card">Sync: '+new Date().toLocaleString()+'</div>';
+ } catch(e){}
+}
+document.addEventListener('DOMContentLoaded',updateRepositoryStats);
+</script>
+
+<script>
+/* Stage4 test implementation */
+async function getLatestCommitDate(path){
+ try{
+  const r=await fetch('https://api.github.com/repos/gaslogistik/gaslogistik.github.io/commits?path='+encodeURIComponent(path)+'&per_page=1');
+  const d=await r.json();
+  return d?.[0]?.commit?.committer?.date||null;
+ }catch(e){return null;}
+}
+function fileIcon(name){
+ const n=name.toLowerCase();
+ if(n.endsWith('.pdf')) return '📕';
+ if(/\.(jpg|jpeg|png|gif|webp)$/.test(n)) return '🖼️';
+ if(/\.(mp4|avi|mov|mkv)$/.test(n)) return '🎬';
+ if(/\.(doc|docx)$/.test(n)) return '📝';
+ if(/\.(xls|xlsx)$/.test(n)) return '📊';
+ return '📄';
+}
+async function loadFolder(folder){
+ const box=document.getElementById('repoFiles');
+ const stats=document.getElementById('repoStats');
+ box.innerHTML='Loading...';
+ const url='https://api.github.com/repos/gaslogistik/gaslogistik.github.io/contents/Files/'+folder;
+ const res=await fetch(url);
+ const data=await res.json();
+ if(!Array.isArray(data)){box.innerHTML='Nie można pobrać listy plików'; return;}
+ stats.innerHTML='<div class="repo-stat">Files: '+data.length+'</div><div class="repo-stat">GitHub Online</div>';
+ const now=Date.now();
+ let out='';
+ for(const f of data){
+   let badge='';
+   const cd=await getLatestCommitDate(folder+'/'+f.name);
+   if(cd){
+      const age=(now-new Date(cd).getTime())/86400000;
+      badge=age<=7?'<span class="file-badge">NEW</span>':age<=30?'<span class="file-badge">UPDATED</span>':'';
+   }
+   out+=`<a class="repo-file" data-name="${f.name.toLowerCase()}" href="${f.download_url}" target="_blank"><span>${fileIcon(f.name)} ${f.name}${badge}</span><span>Open</span></a>`;
+ }
+ box.innerHTML='<div class="repo-toolbar"><input id="repoSearch" class="repo-search" placeholder="Search files..."></div>'+out;
+ document.getElementById('repoSearch').addEventListener('input',function(){
+  const q=this.value.toLowerCase();
+  document.querySelectorAll('.repo-file').forEach(r=>r.style.display=r.dataset.name.includes(q)?'flex':'none');
+ });
+}
+</script>
+</body></html>
+
+
+<!-- Stage3 Production Features -->
+<div id="globalRepoStats" class="repo-global-stats"></div>
+<script>
+window.STAGE3_ENABLED=true;
+</script>
