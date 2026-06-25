@@ -509,6 +509,28 @@ window.loadFolder=function(folder){
 }
 </script>
 
+
+<div id="driveExplorer" style="padding:12px">
+  <input id="globalSearch" placeholder="Search files..." style="width:100%;padding:10px">
+  <div id="breadcrumbs"></div>
+  <div id="fileTree"></div>
+</div>
+<script>
+async function loadDriveExplorer(){
+ const tree=await DataLayer.getFilesTree();
+ const root=document.getElementById('fileTree');
+ if(!root) return;
+ root.innerHTML='';
+ (tree.children||[]).forEach(x=>{
+   const d=document.createElement('div');
+   d.style.padding='10px';
+   d.style.borderBottom='1px solid #ddd';
+   d.innerHTML='📁 '+x.name;
+   root.appendChild(d);
+ });
+}
+window.addEventListener('load',loadDriveExplorer);
+</script>
 </body></html>
 
 

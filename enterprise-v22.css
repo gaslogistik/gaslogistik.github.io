@@ -1152,3 +1152,6 @@ th:active{transform:scale(.98)}
 .preview-modal iframe,.preview-modal img{width:100%;max-height:70vh}
 
 /* Stage 3 Final Clean baseline */
+
+#driveExplorer{background:#fff;border-radius:12px}
+#fileTree div{cursor:pointer}

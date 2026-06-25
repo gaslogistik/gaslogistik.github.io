@@ -16,3 +16,7 @@ async function repoFetch(folder){const r=await fetch(`https://api.github.com/rep
 /* Stage 3 Final Clean baseline */
 
 window.REPOSITORY_MODE='JSON_INDEX';
+
+
+window.DRIVE_API_URL='https://script.google.com/macros/s/AKfycbxySJRg7CvMDTcLN_epiVNUsaiH959hYV-v2rdUHNFCxuGPB86KxMqwR3i9NUGboVutAw/exec';
+window.REPOSITORY_PROVIDER='google-drive';
