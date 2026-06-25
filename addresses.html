@@ -111,4 +111,41 @@ document.addEventListener('DOMContentLoaded',function(){
 
 <script src="shared-data.js"></script>
 <script src="addresses-engine.js"></script>
+
+<script id="nav-v3-fix">
+document.addEventListener('DOMContentLoaded',function(){
+ const file=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+ document.querySelectorAll('.menu a.active,.tile.active').forEach(el=>el.classList.remove('active'));
+ const map={
+  'index.html':'DASHBOARD',
+  'matrix.html':'MATRIX',
+  'map.html':'MAP',
+  'vehicles.html':'VEHICLES',
+  'addresses.html':'ADDRESSES',
+  'admin.html':'ADMIN',
+  'contact.html':'CONTACT',
+  'drivers.html':'DRIVERS',
+  'files.html':'DOCUMENTS / FILES'
+  ,'cloud.html':'DOCUMENTS / FILES',
+  'reports.html':'REPORTS',
+  'warehouse.html':'WAREHOUSE'
+ };
+ const target=map[file];
+ if(target){
+   document.querySelectorAll('.menu a').forEach(a=>{
+      if((a.textContent||'').trim().toUpperCase()===target){a.classList.add('active');}
+   });
+   document.querySelectorAll('.tile').forEach(t=>{
+      if((t.textContent||'').trim().toUpperCase().includes(target)){t.classList.add('active');}
+   });
+   document.querySelectorAll('.menu a[href="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    document.querySelectorAll('.menu a').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+ }
+});
+</script>
 </body></html>
