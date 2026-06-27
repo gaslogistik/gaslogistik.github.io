@@ -1282,23 +1282,6 @@ document.addEventListener("DOMContentLoaded",()=>{
    return text.replace(r,'<b>$1</b>');
  }
 
- function waitAndHighlight(name){
-   let tries = 0;
-   const interval = setInterval(()=>{
-     const rows = document.querySelectorAll(".file-row");
-     if(rows.length){
-       rows.forEach(r=>{
-         if(r.textContent.includes(name)){
-           r.style.background = "#fde68a";
-           r.scrollIntoView({behavior:'smooth',block:'center'});
-         }
-       });
-       clearInterval(interval);
-     }
-     if(tries++ > 15) clearInterval(interval);
-   },100);
- }
-
  function reset(){ inp.value=""; box.style.display="none"; }
 
  inp.addEventListener('input',()=>{
@@ -1324,30 +1307,40 @@ document.addEventListener("DOMContentLoaded",()=>{
    box.querySelectorAll('.search-item').forEach(el=>{
      el.onclick = ()=>{
        const name = el.dataset.name;
+
+       // 🔥 znajdź ścieżkę
        const path = findPath(window.GoogleRepository,name);
        if(!path){ reset(); return; }
 
+       // 🔥 otwórz root folder (pierwszy level)
        const root = path[0];
        if(root){
-         // directly trigger folder logic (NO .click bug)
-         document.querySelectorAll('.folder').forEach(f=>{
-           if(f.textContent.toLowerCase().includes(root.name.toLowerCase())){
-             f.dispatchEvent(new Event('click', {bubbles:true}));
-           }
-         });
+         const folderCard = [...document.querySelectorAll('.folder')]
+           .find(f=>f.innerText.toLowerCase().includes(root.name.toLowerCase()));
+         if(folderCard){ folderCard.click(); }
        }
 
-       // wait for explorer render, then highlight
-       setTimeout(()=> waitAndHighlight(name), 150);
+       // 🔥 opóźnienie aby załadować explorer
+       setTimeout(()=>{
+         const rows = document.querySelectorAll('.file-row');
+         rows.forEach(r=>{
+           if(r.textContent.includes(name)){
+             r.style.background='#fde68a';
+             r.scrollIntoView({behavior:'smooth',block:'center'});
+           }
+         });
+       },400);
 
        reset();
      };
    });
+
  });
 
  document.addEventListener('click',(e)=>{
-   if(!box.contains(e.target) && e.target!==inp) box.style.display="none";
+   if(!box.contains(e.target) && e.target!==inp) reset();
  });
+
 });
 </script>
 </body></html>

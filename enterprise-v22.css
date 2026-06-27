@@ -1155,3 +1155,14 @@ th:active{transform:scale(.98)}
 
 #driveExplorer{background:#fff;border-radius:12px}
 #fileTree div{cursor:pointer}
+
+#searchTile{
+  width:100%;
+  min-height:90px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+#searchTile{display:none!important;}

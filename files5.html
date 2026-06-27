@@ -1261,20 +1261,20 @@ try {
 document.addEventListener("DOMContentLoaded",()=>{
  const inp = document.getElementById("globalSearch");
  if(!inp) return;
-
  let box = document.createElement("div");
  box.id = "search-results";
  inp.parentNode.style.position='relative';
  inp.after(box);
 
- function findPath(node,target,path=[]){
-   if(!node) return null;
-   if(node.type==='file' && node.name===target) return path;
-   for(const c of (node.children||[])){
-     const r = findPath(c,target,[...path,node]);
-     if(r) return r;
+ function gatherFiles(repo){
+   let result=[];
+   function walk(n){
+     if(!n) return;
+     if(n.type==='file') result.push(n.name);
+     (n.children||[]).forEach(walk);
    }
-   return null;
+   walk(repo);
+   return result;
  }
 
  function highlight(text, q){
@@ -1282,71 +1282,15 @@ document.addEventListener("DOMContentLoaded",()=>{
    return text.replace(r,'<b>$1</b>');
  }
 
- function waitAndHighlight(name){
-   let tries = 0;
-   const interval = setInterval(()=>{
-     const rows = document.querySelectorAll(".file-row");
-     if(rows.length){
-       rows.forEach(r=>{
-         if(r.textContent.includes(name)){
-           r.style.background = "#fde68a";
-           r.scrollIntoView({behavior:'smooth',block:'center'});
-         }
-       });
-       clearInterval(interval);
-     }
-     if(tries++ > 15) clearInterval(interval);
-   },100);
- }
-
- function reset(){ inp.value=""; box.style.display="none"; }
-
  inp.addEventListener('input',()=>{
    const q = inp.value.toLowerCase();
    if(!q || !window.GoogleRepository){ box.style.display='none'; return; }
 
-   let files=[];
-   function walk(n){
-     if(!n) return;
-     if(n.type==='file') files.push(n);
-     (n.children||[]).forEach(walk);
-   }
-   walk(window.GoogleRepository);
+   const files = gatherFiles(window.GoogleRepository);
+   const res = files.filter(f=>f.toLowerCase().includes(q)).slice(0,10);
 
-   const res = files.filter(f=>f.name.toLowerCase().includes(q)).slice(0,10);
-
-   box.innerHTML = res.map(f=>
-     `<div class="search-item" data-name="${f.name}">📄 ${highlight(f.name,q)}</div>`
-   ).join('');
-
+   box.innerHTML = res.map(f=>`<div class="search-item">📄 ${highlight(f,q)}</div>`).join('');
    box.style.display = res.length?'block':'none';
-
-   box.querySelectorAll('.search-item').forEach(el=>{
-     el.onclick = ()=>{
-       const name = el.dataset.name;
-       const path = findPath(window.GoogleRepository,name);
-       if(!path){ reset(); return; }
-
-       const root = path[0];
-       if(root){
-         // directly trigger folder logic (NO .click bug)
-         document.querySelectorAll('.folder').forEach(f=>{
-           if(f.textContent.toLowerCase().includes(root.name.toLowerCase())){
-             f.dispatchEvent(new Event('click', {bubbles:true}));
-           }
-         });
-       }
-
-       // wait for explorer render, then highlight
-       setTimeout(()=> waitAndHighlight(name), 150);
-
-       reset();
-     };
-   });
- });
-
- document.addEventListener('click',(e)=>{
-   if(!box.contains(e.target) && e.target!==inp) box.style.display="none";
  });
 });
 </script>
