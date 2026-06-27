@@ -1148,6 +1148,56 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 
 <script>
+
+
+function normalizeFolder(node){
+  if(!node) return null;
+  return {
+    name: node.name || node.folder || "FOLDER",
+    type: "folder",
+    children: (node.children || node.files || []).map(child=>{
+      if(child && (child.children || child.files)){
+        return normalizeFolder(child);
+      }
+      return {
+        name: (child && child.name) || child,
+        type: "file",
+        previewUrl: child && child.previewUrl ? child.previewUrl : "",
+        downloadUrl: child && child.downloadUrl ? child.downloadUrl : ""
+      };
+    })
+  };
+}
+
+function openFolderDirect(folder){
+  folder = normalizeFolder(folder);
+  const modal = document.getElementById('folderExplorerModal');
+  const title = document.getElementById('explorerTitle');
+  const box = document.getElementById('explorerFiles');
+  if(!modal || !box || !folder) return;
+  window.folderHistory = [];
+  window.folderHistory.push(folder);
+  const fs = document.getElementById("folderSearch"); if(fs) fs.value = "";
+  box.innerHTML = "";
+  title.textContent = '📁 ' + (folder.name||"").toUpperCase();
+  (folder.children || []).forEach(item=>{
+    const row = document.createElement('div');
+    row.className = 'file-row';
+    if(item.type === 'folder'){
+      row.innerHTML = `<div>📁 <strong>${item.name}</strong></div>`;
+      row.onclick = () => renderSubFolder(item, title, box);
+    } else {
+      row.innerHTML = `<div>📄 ${item.name}</div><div class="file-actions"></div>`;
+      const actions = row.querySelector('.file-actions');
+      const open = document.createElement('button'); open.textContent='👁 Open'; open.onclick=()=>openFile(item.previewUrl);
+      const save = document.createElement('button'); save.textContent='⬇ Download'; save.onclick=()=>window.open(item.downloadUrl);
+      actions.append(open, save);
+    }
+    box.appendChild(row);
+  });
+  modal.classList.add('open');
+}
+
 (async function(){
 const API='https://script.google.com/macros/s/AKfycbxySJRg7CvMDTcLN_epiVNUsaiH959hYV-v2rdUHNFCxuGPB86KxMqwR3i9NUGboVutAw/exec';
 
@@ -1195,52 +1245,7 @@ try {
   "<br><small>(" + total + ")</small>";
 
     // ✅ klik
-    card.onclick = function(ev){
-      window.folderHistory = [];
-      window.folderHistory.push(folder);
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      const modal = document.getElementById('folderExplorerModal');
-      const title = document.getElementById('explorerTitle');
-      const box = document.getElementById('explorerFiles');
-
-      if(!modal || !box) return;
-
-      document.getElementById("folderSearch").value = "";
-
-      box.innerHTML = "";
-
-      title.textContent = '📁 ' + folderName.toUpperCase();
-
-      (folder.children || []).forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'file-row';
-
-        if(item.type === 'folder'){
-          row.innerHTML = '<div>📁 <strong>' + item.name + '</strong></div>';
-          row.onclick = () => renderSubFolder(item, title, box);
-        } else {
-          row.innerHTML = '<div>📄 ' + item.name + '</div><div class="file-actions"></div>';
-
-          const actions = row.querySelector('.file-actions');
-
-          const open = document.createElement('button');
-          open.textContent = '👁 Open';
-          open.onclick = () => openFile(item.previewUrl);
-
-          const save = document.createElement('button');
-          save.textContent = '⬇ Download';
-          save.onclick = () => window.open(item.downloadUrl);
-
-          actions.append(open, save);
-        }
-
-        box.appendChild(row);
-      });
-
-      modal.classList.add('open');
-    };
+    card.onclick = function(){ openFolderDirect(folder); };
 
   });
 
@@ -1330,13 +1335,7 @@ document.addEventListener("DOMContentLoaded",()=>{
        const root = path[0];
 
        if(root){
-         const folderCard = [...document.querySelectorAll('.folder')]
-           .find(f=>f.textContent.toLowerCase().includes(root.name.toLowerCase()));
-
-         if(folderCard && folderCard.onclick){
-           folderCard.onclick(new Event('click'));
-         }
-       }
+         if(root){ openFolderDirect(normalizeFolder(root)); }
 
        setTimeout(()=> waitAndHighlight(name), 200);
 
