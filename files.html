@@ -579,6 +579,46 @@ font-size:16px;background:#fff;
 .file-modal-actions{display:flex;gap:10px;margin-top:10px}
 .file-modal-actions a,.file-modal-actions button{padding:8px 14px}
 </style>
+
+<style id="sync-visual-fix">
+#syncOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999999;
+  color:#fff;
+  font-size:18px;
+  text-align:center;
+}
+#syncOverlay .spinner{
+  width:60px;
+  height:60px;
+  border:6px solid rgba(255,255,255,.3);
+  border-top:6px solid #ec4899;
+  border-radius:50%;
+  margin:0 auto 16px;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{
+  0%{transform:rotate(0)}
+  100%{transform:rotate(360deg)}
+}
+</style>
+
+
+<style id="step2-fade">
+#syncOverlay{
+  opacity:1;
+  transition:opacity .4s ease;
+}
+.folder{
+  transition: opacity .4s ease, transform .25s ease;
+}
+</style>
+
 </head>
 <body class="enterprise-v10">
 <div class="shell">
@@ -1095,9 +1135,13 @@ function openFolderExplorer(folderName){
 
  document.getElementById("folderSearch").oninput=function(){
    const q=this.value.toLowerCase();
-   document.querySelectorAll(".file-row").forEach(r=>{
-      r.style.display=r.textContent.toLowerCase().includes(q)?"flex":"none";
-   });
+   document.querySelectorAll(".file-row").forEach(el=>el.classList.remove("file-highlight"));
+      document.querySelectorAll(".file-row").forEach(r=>{
+        if(r.textContent.includes(name)){
+          r.classList.add("file-highlight");
+          r.scrollIntoView({behavior:'smooth', block:'center'});
+        }
+      });
  };
 }
 
@@ -1152,20 +1196,23 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 function normalizeFolder(node){
   if(!node) return null;
+
+  // ✅ plik = tylko jeśli API mówi file
+  if(node.type === 'file'){
+    return {
+      name: node.name,
+      type: 'file',
+      previewUrl: node.previewUrl || '',
+      downloadUrl: node.downloadUrl || '',
+      children: []
+    };
+  }
+
+  // ✅ folder tylko jeśli faktycznie folder
   return {
     name: node.name || node.folder || "FOLDER",
     type: "folder",
-    children: (node.children || node.files || []).map(child=>{
-      if(child && (child.children || child.files)){
-        return normalizeFolder(child);
-      }
-      return {
-        name: (child && child.name) || child,
-        type: "file",
-        previewUrl: child && child.previewUrl ? child.previewUrl : "",
-        downloadUrl: child && child.downloadUrl ? child.downloadUrl : ""
-      };
-    })
+    children: (node.children || []).map(child => normalizeFolder(child))
   };
 }
 
@@ -1272,51 +1319,59 @@ document.addEventListener("DOMContentLoaded",()=>{
  inp.parentNode.style.position='relative';
  inp.after(box);
 
- function findPath(node,target,path=[]){
+ function normalize(node){
    if(!node) return null;
-   if(node.type==='file' && node.name===target) return path;
+
+   if(node.type === 'file'){
+     return {
+       name: node.name,
+       type: 'file',
+       previewUrl: node.previewUrl || '',
+       downloadUrl: node.downloadUrl || '',
+       children: []
+     };
+   }
+
+   return {
+     name: node.name || node.folder || '',
+     type: 'folder',
+     children: (node.children || []).map(c => normalize(c))
+   };
+ }
+
+ function gather(node,arr=[]){
+   if(!node) return arr;
+   if(node.type==='file') arr.push(node);
+   (node.children||[]).forEach(n=>gather(n,arr));
+   return arr;
+ }
+
+ function findPath(node,name,path=[]){
+   if(!node) return null;
+   if(node.type==='file' && node.name.toLowerCase() === name.toLowerCase()) return path;
    for(const c of (node.children||[])){
-     const r = findPath(c,target,[...path,node]);
+     const r = findPath(c,name,[...path,node]);
      if(r) return r;
    }
    return null;
  }
 
- function highlight(text, q){
+ function highlight(text,q){
    const r = new RegExp('('+q+')','ig');
    return text.replace(r,'<b>$1</b>');
  }
 
- function waitAndHighlight(name){
-   let tries = 0;
-   const interval = setInterval(()=>{
-     const rows = document.querySelectorAll(".file-row");
-     if(rows.length){
-       rows.forEach(r=>{
-         if(r.textContent.includes(name)){
-           r.style.background = "#fde68a";
-           r.scrollIntoView({behavior:'smooth',block:'center'});
-         }
-       });
-       clearInterval(interval);
-     }
-     if(tries++ > 20) clearInterval(interval);
-   },100);
+ function reset(){
+   inp.value="";
+   box.style.display="none";
  }
-
- function reset(){ inp.value=""; box.style.display="none"; }
 
  inp.addEventListener('input',()=>{
    const q = inp.value.toLowerCase();
    if(!q || !window.GoogleRepository){ box.style.display='none'; return; }
 
-   let files=[];
-   function walk(n){
-     if(!n) return;
-     if(n.type==='file') files.push(n);
-     (n.children||[]).forEach(walk);
-   }
-   walk(window.GoogleRepository);
+   const tree = normalize(window.GoogleRepository);
+   const files = gather(tree);
 
    const res = files.filter(f=>f.name.toLowerCase().includes(q)).slice(0,10);
 
@@ -1324,30 +1379,279 @@ document.addEventListener("DOMContentLoaded",()=>{
      `<div class="search-item" data-name="${f.name}">📄 ${highlight(f.name,q)}</div>`
    ).join('');
 
-   box.style.display = res.length?'block':'none';
+   box.style.display = res.length ? 'block':'none';
 
    box.querySelectorAll('.search-item').forEach(el=>{
      el.onclick = ()=>{
        const name = el.dataset.name;
-       const path = findPath(window.GoogleRepository,name);
-       if(!path){ reset(); return; }
+       const path = findPath(tree,name);
+       if(!path) return;
+if(!path) return;
 
-       const root = path[0];
+openFolderDirect(path[0]);
 
-       if(root){
-         if(root){ openFolderDirect(normalizeFolder(root)); }
+function waitAndClick(levelName, cb){
+  let tries=0;
+  const i=setInterval(()=>{
+    const rows=[...document.querySelectorAll('.file-row')];
+    const found=rows.find(r=>r.textContent.includes(levelName));
+    if(found){
+      clearInterval(i);
+      found.click();
+      setTimeout(cb,250);
+    }
+    if(++tries>20) clearInterval(i);
+  },120);
+}
 
-       setTimeout(()=> waitAndHighlight(name), 200);
+let idx=1;
+function dive(){
+  if(idx>=path.length){highlight();return;}
+  waitAndClick(path[idx].name,()=>{
+    idx++;
+    dive();
+  });
+}
 
-       reset();
+setTimeout(dive,300);
+
+function highlight(){
+ setTimeout(()=>{
+  document.querySelectorAll('.file-row').forEach(x=>x.classList.remove('file-highlight'));
+  const el=[...document.querySelectorAll('.file-row')].find(r=>r.textContent.includes(name));
+  if(el){
+    el.classList.add('file-highlight');
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+ },400);
+}
+reset();
      };
    });
  });
 
  document.addEventListener('click',(e)=>{
-   if(!box.contains(e.target) && e.target!==inp) box.style.display="none";
+   if(!box.contains(e.target) && e.target!==inp){
+      reset();
+   }
  });
 });
+</script>
+<style id="highlight-final">
+.file-highlight{
+  background: linear-gradient(90deg, rgba(255,165,0,0.15), rgba(255,0,120,0.14), rgba(255,220,0,0.15)) !important;
+  box-shadow:0 0 8px rgba(255,165,0,.25),0 0 12px rgba(255,0,120,.18),0 0 14px rgba(255,220,0,.18);
+  border-radius:10px;
+  animation:fileBreath 2.4s ease-in-out infinite;
+}
+@keyframes fileBreath{
+  0%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-4px) scale(1.02);}
+  100%{transform:translateY(0) scale(1);}
+}
+</style>
+
+<div id="syncOverlay">
+  <div class="syncBox">
+    <div class="spinner"></div>
+    <div class="syncText">PLEASE WAIT<br>FILE SYNCHRONIZING</div>
+  </div>
+</div>
+<script>
+(function(){
+const overlay = document.getElementById('syncOverlay');
+function lockUI(){
+  document.querySelectorAll('.folder').forEach(f=>{
+    f.style.pointerEvents='none';
+    f.style.opacity='.5';
+  });
+  if(overlay) overlay.style.display='flex';
+}
+function unlockUI(){
+  document.querySelectorAll('.folder').forEach(f=>{
+    f.style.pointerEvents='auto';
+    f.style.opacity='1';
+  });
+  if(overlay){ overlay.style.opacity='0'; setTimeout(()=>{overlay.style.display='none';},400); }
+}
+lockUI();
+let lastChange=Date.now();
+const grid=document.querySelector('.folder-grid');
+if(grid){
+  const observer=new MutationObserver(()=>{lastChange=Date.now();});
+  observer.observe(grid,{childList:true,subtree:true});
+  
+const loop=setInterval(()=>{
+
+  if(!window.GoogleRepository) return;
+
+  const folders = document.querySelectorAll('.folder');
+
+  const ready = [...folders].some(f =>
+    f.innerHTML.includes('(')
+  );
+
+  if(ready && (Date.now() - lastChange > 300)){
+    clearInterval(loop);
+    observer.disconnect();
+    unlockUI();
+  }
+
+},200);
+
+}
+setTimeout(unlockUI,15000);
+})();
+</script>
+
+
+<script id="step3-cache-upgrade">
+// === STEP 3 CACHE UPGRADE (SWR) ===
+async function loadFresh(){
+    await DriveExplorer.load();
+    localStorage.setItem(CACHE_KEY, JSON.stringify(DriveExplorer.cache));
+    localStorage.setItem(SYNC_KEY, new Date().toLocaleString());
+    updateStatus();
+}
+
+async function refreshInBackground(){
+    try{
+        await DriveExplorer.load();
+        localStorage.setItem(CACHE_KEY, JSON.stringify(DriveExplorer.cache));
+        localStorage.setItem(SYNC_KEY, new Date().toLocaleString());
+        updateStatus();
+        console.log('cache background refreshed');
+    }catch(e){
+        console.warn('background refresh failed');
+    }
+}
+
+async function initializeDrive(){
+    const cached = localStorage.getItem(CACHE_KEY);
+
+    if(cached){
+        // instant UI
+        DriveExplorer.cache = JSON.parse(cached);
+        updateStatus();
+
+        // refresh in background
+        refreshInBackground();
+    }else{
+        // first load
+        await loadFresh();
+    }
+}
+</script>
+
+
+<script id="step4-smart-refresh">
+// === STEP 4 SMART REFRESH ===
+const CACHE_HASH_KEY = "driveExplorerHash";
+
+function getHash(data){
+    try{
+        return JSON.stringify(data);
+    }catch(e){
+        return null;
+    }
+}
+
+async function refreshInBackground(){
+    try{
+        const oldHash = localStorage.getItem(CACHE_HASH_KEY);
+
+        await DriveExplorer.load();
+        const newData = DriveExplorer.cache;
+        const newHash = getHash(newData);
+
+        if(newHash !== oldHash){
+            console.log('DATA CHANGED → updating cache');
+            localStorage.setItem(CACHE_KEY, JSON.stringify(newData));
+            localStorage.setItem(CACHE_HASH_KEY, newHash);
+            localStorage.setItem(SYNC_KEY, new Date().toLocaleString());
+            updateStatus();
+        }else{
+            console.log('NO CHANGE → skip update');
+        }
+
+    }catch(e){
+        console.warn('smart refresh failed');
+    }
+}
+
+async function loadFresh(){
+    await DriveExplorer.load();
+    const data = DriveExplorer.cache;
+    const hash = getHash(data);
+
+    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+    localStorage.setItem(CACHE_HASH_KEY, hash);
+    localStorage.setItem(SYNC_KEY, new Date().toLocaleString());
+
+    updateStatus();
+}
+
+async function initializeDrive(){
+    const cached = localStorage.getItem(CACHE_KEY);
+
+    if(cached){
+        DriveExplorer.cache = JSON.parse(cached);
+        updateStatus();
+
+        // background smart refresh
+        refreshInBackground();
+    }else{
+        await loadFresh();
+    }
+}
+</script>
+
+
+<script>
+// FINAL BLOCK + ERROR FALLBACK + TTL
+(function(){
+const overlay = document.getElementById('syncOverlay');
+function show(){ if(overlay){overlay.style.display='flex'; overlay.style.opacity='1';}}
+function hide(){ if(overlay){overlay.style.opacity='0'; setTimeout(()=>overlay.style.display='none',400);}}
+
+show();
+
+const TTL = 5*60*1000;
+const KEY = 'apiCache_v1';
+const TIME = 'apiCacheTime_v1';
+
+async function load(){
+ try{
+  const now = Date.now();
+  const cache = localStorage.getItem(KEY);
+  const t = localStorage.getItem(TIME);
+
+  if(cache && t && (now - t < TTL)){
+    window.GoogleRepository = JSON.parse(cache);
+    hide();
+  }
+
+  const res = await fetch(GOOGLE_API_URL);
+  const data = await res.json();
+
+  window.GoogleRepository = data;
+  localStorage.setItem(KEY, JSON.stringify(data));
+  localStorage.setItem(TIME, now);
+
+  hide();
+ }catch(e){
+  console.warn('API ERROR → fallback CACHE');
+  const cache = localStorage.getItem(KEY);
+  if(cache){
+    window.GoogleRepository = JSON.parse(cache);
+  }
+  hide();
+ }
+}
+
+load();
+setTimeout(hide,15000);
+})();
 </script>
 </body></html>
 <style>
