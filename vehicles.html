@@ -212,7 +212,6 @@
 
                             </div>
                         </section>
-
 <!-- ⭐ SEKCJA 2 — ADR TERMIN ⭐ -->
 <section class="inner-command-center">
     <h3 class="weather-watch-title">
@@ -268,18 +267,121 @@
             stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 3h18v18H3z"></path>
         </svg>
-        ADR REMINDER CENTER
+        ADR REMINDER CENTER - Sent Reminders
     </h3>
 
     <div class="adr-reminder-center">
         <div id="adr-reminder-container"></div>
     </div>
 </section>
-
-</div>
-</div>
-
-</main>
+        <!-- ⭐ SEKCJA 4 — ADR VEHICLES CENTER ⭐ -->
+        <section class="inner-command-center adr-vehicles-center">
+            <h3 class="weather-watch-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff2a6d" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18"></rect>
+                    <path d="M3 9h18"></path>
+                </svg>
+                ADR VEHICLES CENTER
+            </h3>
+        
+            <!-- ⭐ WYSZUKIWARKA POJAZDÓW ⭐ -->
+            <div class="adr-search-bar">
+                <div class="adr-search-inner">
+                    <input type="text" id="adr-search-input" class="adr-search-input"
+                        placeholder="Search vehicle by plate / internal nr / model..." autocomplete="off" />
+                    <div id="adr-search-suggestions" class="adr-search-suggestions"></div>
+                </div>
+            </div>
+        
+            <div class="adr-vehicles-grid">
+                <!-- LEWA KOLUMNA — TRUCKS -->
+                <div class="adr-vehicles-column adr-vehicles-trucks">
+                    <div class="adr-vehicles-header">
+                        <span class="adr-vehicles-label">TRUCKS</span>
+                        <span class="adr-vehicles-counter" id="adr-trucks-count">-- VEHICLES</span>
+                    </div>
+        
+                    <div class="adr-vehicles-subtitle">
+                        All trucks with upcoming ADR expirations
+                    </div>
+        
+                    <div class="adr-vehicles-list" id="adr-trucks-list"></div>
+                </div>
+        
+                <!-- PRAWA KOLUMNA — TANKTRAILERS -->
+                <div class="adr-vehicles-column adr-vehicles-trailers">
+                    <div class="adr-vehicles-header">
+                        <span class="adr-vehicles-label">TANKTRAILERS</span>
+                        <span class="adr-vehicles-counter" id="adr-trailers-count">-- VEHICLES</span>
+                    </div>
+        
+                    <div class="adr-vehicles-subtitle">
+                        All tanktrailers with upcoming ADR expirations
+                    </div>
+        
+                    <div class="adr-vehicles-list" id="adr-trailers-list"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ⭐ SEKCJA 5 — ALL VEHICLES ⭐ -->
+        <section class="inner-command-center adr-all-vehicles-center">
+        
+            <h3 class="weather-watch-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff2a6d" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18"></rect>
+                    <path d="M3 9h18"></path>
+                </svg>
+                ALL VEHICLES — FULL FLEET SUMMARY
+            </h3>
+        
+            <!-- ⭐ IDENTYCZNA WYSZUKIWARKA JAK W SEKCJI 4 ⭐ -->
+            <div class="adr-search-bar">
+                <div class="adr-search-inner">
+                    <input type="text" id="adr-search-input-all" class="adr-search-input"
+                        placeholder="Search vehicle by plate / internal nr / model..." autocomplete="off" />
+                    <div id="adr-search-suggestions-all" class="adr-search-suggestions"></div>
+                </div>
+            </div>
+        
+            <div class="adr-all-vehicles-wrapper">
+        
+                <div class="adr-all-column">
+                    <h4 class="adr-all-title">TRUCKS</h4>
+        
+                    <div class="adr-all-header-row">
+                        <span>PLATES</span>
+                        <span>INTERNAL NR</span>
+                        <span>MODEL</span>
+                        <span>ADR VALID</span>
+                    </div>
+        
+                    <div class="adr-all-vehicles-list" id="adr-all-trucks-list"></div>
+                </div>
+        
+                <div class="adr-all-column">
+                    <h4 class="adr-all-title">TANKTRAILERS</h4>
+        
+                    <div class="adr-all-header-row">
+                        <span>PLATES</span>
+                        <span>INTERNAL NR</span>
+                        <span>MODEL</span>
+                        <span>ADR VALID</span>
+                    </div>
+        
+                    <div class="adr-all-vehicles-list" id="adr-all-trailers-list"></div>
+                </div>
+        
+            </div>
+        
+        </section>
+    
+    </div>
+    </div>
+    
+    </main>
 
 </div> <!-- content-wrapper -->
 
