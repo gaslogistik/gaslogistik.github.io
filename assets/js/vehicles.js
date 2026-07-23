@@ -1,9 +1,9 @@
 /* ============================================================
-   VEHICLES.JS — PREMIUM ADR MODULE (STABLE, CLEAN)
+   VEHICLES.JS — PREMIUM ADR MODULE (STABLE, CLEAN, EXTENDED)
    ============================================================ */
 
 const API_URL =
-    "https://script.google.com/macros/s/AKfycbwbZ_KSjyTTDM2iONJC87-jgVZysubMfKChDxDs8l1RKJgjUJ6Q2_7oA_RhuDna39Ra/exec?action=getvehiclesdata";
+"https://script.google.com/macros/s/AKfycbwbZ_KSjyTTDM2iONJC87-jgVZysubMfKChDxDs8l1RKJgjUJ6Q2_7oA_RhuDna39Ra/exec?action=getvehiclesdata";
 
 /* ============================================================
    MAIN LOADER
@@ -25,16 +25,29 @@ async function loadVehiclesData() {
         const trucks = Array.isArray(data.trucks) ? data.trucks : [];
         const tanktrailers = Array.isArray(data.tanktrailers) ? data.tanktrailers : [];
 
-        updateCounters(trucks, tanktrailers);          // SEKCJA 1
-        updateADRStatus(trucks, tanktrailers);         // SEKCJA 2 — lista
-        updateADRExtraCounters(trucks, tanktrailers);  // SEKCJA 2 — dodatkowe kafle
-        renderADRReminderCenter(trucks, tanktrailers); // SEKCJA 3 — reminder center
+        // SEKCJA 1 — overview tiles
+        updateCounters(trucks, tanktrailers);
+
+        // SEKCJA 2 — ADR list + extra tiles
+        updateADRStatus(trucks, tanktrailers);
+        updateADRExtraCounters(trucks, tanktrailers);
+
+        // SEKCJA 3 — reminder center
+        renderADRReminderCenter(trucks, tanktrailers);
+
+        // SEKCJA 4 — premium fleet grids (TRUCKS / TANKTRAILERS)
+        renderADRFleetGrids(trucks, tanktrailers);
+
+        // SEKCJA 5 — ALL VEHICLES (FULL FLEET SUMMARY)
+        renderAllVehicles(trucks, tanktrailers);
+        initAllVehiclesSearch(trucks, tanktrailers);
 
     } catch (err) {
         console.error("API ERROR:", err);
         showErrorState();
     }
 }
+
 
 /* ============================================================
    SEKCJA 1 — VEHICLES OVERVIEW (kafle)
@@ -67,10 +80,13 @@ function updateADRStatus(trucks, tanktrailers) {
     const adr7 = [];
 
     [...trucks, ...tanktrailers].forEach((item) => {
+
+        // NAZWY KOLUMN — zgodne z Twoim arkuszem
         const adr = item["ADR VALID"];
         const plates = item["PLATES"] || item["REG"] || "UNKNOWN";
-        const internal = item["INTERNAL NR."] || "—";   // ⭐ DODANE
+        const internal = item["INTERNAL NR."] || "—";
         const model = item["MODEL"] || item["TYPE"] || "—";
+
         if (!adr) return;
 
         const adrDate = parseDate(adr);
@@ -107,7 +123,7 @@ function updateADRStatus(trucks, tanktrailers) {
         row.innerHTML = `
             <div class="adr-line-top">
                 <span class="adr-plates">${item.plates}</span>
-                <span class="adr-internal">${item.internal}</span>   <!-- ⭐ DODANE -->
+                <span class="adr-internal">${item.internal}</span>
                 <span class="adr-model">${item.model}</span>
             </div>
             <div class="adr-line-bottom">
@@ -181,16 +197,13 @@ function daysBetween(dateA, dateB) {
 function parseDate(value) {
     if (!value) return null;
 
-    // Already a Date
     if (value instanceof Date) return value;
 
-    // Excel numeric date
     if (typeof value === "number") {
         const ms = Math.round((value - 25569) * 86400 * 1000);
         return new Date(ms);
     }
 
-    // Normal string date
     const parsed = new Date(value);
     if (!isNaN(parsed.getTime())) return parsed;
 
@@ -198,12 +211,18 @@ function parseDate(value) {
 }
 
 function fmtDate(d) {
+    if (!d || !(d instanceof Date) || isNaN(d.getTime())) {
+        return "—";
+    }
+
     return d.toLocaleDateString("pl-PL", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
     });
 }
+
+
 /* ============================================================
    SEKCJA 2 — DODATKOWE KAFELKI (ADR DOCUMENT MISSING + ALERTS)
    ============================================================ */
@@ -229,8 +248,9 @@ function updateADRExtraCounters(trucks, tanktrailers) {
     }
 }
 
+
 /* ============================================================
-   SEKCJA 3 — ADR REMINDER CENTER (FINAL)
+   SEKCJA 3 — ADR REMINDER CENTER (FINAL FIXED)
    ============================================================ */
 
 function renderADRReminderCenter(trucks, tanktrailers) {
@@ -242,6 +262,7 @@ function renderADRReminderCenter(trucks, tanktrailers) {
     const reminders = [];
 
     function addVehicleReminder(item, type, diff) {
+
         const plates = item["PLATES"] || item["REG"] || "UNKNOWN";
         const internal = item["INTERNAL NR."] || "—";
         const model = item["MODEL"] || item["TYPE"] || "—";
@@ -282,6 +303,7 @@ function renderADRReminderCenter(trucks, tanktrailers) {
 
         const diff = daysBetween(today, adrDate);
 
+        // ⭐ IDENTYCZNA LOGIKA JAK TELEGRAM
         if (diff < 0) {
             addVehicleReminder(item, "EXPIRED", diff);
         } else if (diff <= 7) {
@@ -289,6 +311,8 @@ function renderADRReminderCenter(trucks, tanktrailers) {
         } else if (diff <= 21) {
             addVehicleReminder(item, "21 DAYS", diff);
         }
+
+        // ⭐ wszystko powyżej 21 dni NIE trafia do sekcji 3
     });
 
     const sorted = [
@@ -316,7 +340,6 @@ function renderADRReminderCenter(trucks, tanktrailers) {
                 🔔 ${r.type}
             </span>
 
-
             <div class="adr-reminder-main">
                 <span class="adr-reminder-plates">${r.plates}</span>
                 <span class="adr-reminder-internal">${r.internal}</span>
@@ -334,7 +357,114 @@ function renderADRReminderCenter(trucks, tanktrailers) {
     });
 }
 
+/* ============================================================
+   SEKCJA 4 — ADR VEHICLES CENTER (TRUCKS + TANKTRAILERS)
+   ============================================================ */
 
+function renderADRFleetGrids(trucks, tanktrailers) {
+    renderFleetColumn("adr-trucks-list", "adr-trucks-count", trucks, "TRUCK");
+    renderFleetColumn("adr-trailers-list", "adr-trailers-count", tanktrailers, "TRAILER");
+}
+
+function renderFleetColumn(listId, counterId, vehicles, typeLabel) {
+    const listEl = document.getElementById(listId);
+    const counterEl = document.getElementById(counterId);
+
+    if (!listEl || !counterEl) return;
+
+    counterEl.textContent = `${vehicles.length} VEHICLES`;
+    listEl.innerHTML = "";
+
+    const today = normalizeDate(new Date());
+
+    vehicles.forEach((v) => {
+
+        // NAZWY KOLUMN — zgodne z Twoim arkuszem
+        const plates = v["PLATES"] || v["REG"] || "UNKNOWN";
+        const internal = v["INTERNAL NR."] || "—";
+        const model = v["MODEL"] || v["TYPE"] || "—";
+        const adrRaw = v["ADR VALID"];
+        const adrDate = parseDate(adrRaw);
+
+        let badgeClass = "";
+        let badgeText = "";
+        let statusText = "";
+        let statusClass = "";
+
+        if (!adrDate) {
+            badgeClass = "adr-badge-critical";
+            badgeText = "NO ADR";
+            statusText = "DOCUMENT MISSING";
+            statusClass = "adr-status-critical";
+        } else {
+            const diff = daysBetween(today, adrDate);
+
+            if (diff < 0) {
+                badgeClass = "adr-badge-critical";
+                badgeText = "EXPIRED";
+                statusText = "ADR EXPIRED";
+                statusClass = "adr-status-critical";
+            } else if (diff <= 7) {
+                badgeClass = "adr-badge-days";
+                badgeText = `${diff} DAYS`;
+                statusText = "URGENT";
+                statusClass = "adr-status-critical";
+            } else if (diff <= 21) {
+                badgeClass = "adr-badge-days";
+                badgeText = `${diff} DAYS`;
+                statusText = "PLANNING REQUIRED";
+                statusClass = "adr-status-warning";
+            } else {
+                badgeClass = "adr-badge-days";
+                badgeText = `${diff} DAYS`;
+                statusText = "OK";
+                statusClass = "";
+            }
+        }
+
+        const card = document.createElement("article");
+        card.className = "adr-vehicle-card";
+        card.setAttribute("data-plate", plates);
+        card.setAttribute("data-internal", internal);
+        card.setAttribute("data-model", model);
+
+        card.innerHTML = `
+            <header class="adr-vehicle-card-header">
+                <div class="adr-vehicle-main">
+                    <span class="adr-vehicle-name">${typeLabel}</span>
+                    <span class="adr-vehicle-plate">${plates}</span>
+                </div>
+                <div class="adr-vehicle-badges">
+                    <span class="adr-badge ${badgeClass}">${badgeText}</span>
+                </div>
+            </header>
+
+            <div class="adr-vehicle-meta">
+                <div class="adr-meta-row">
+                    <span class="adr-meta-label">Internal NR</span>
+                    <span class="adr-meta-value">${internal}</span>
+                </div>
+
+                <div class="adr-meta-row">
+                    <span class="adr-meta-label">Model</span>
+                    <span class="adr-meta-value">${model}</span>
+                </div>
+
+                <div class="adr-meta-row">
+                    <span class="adr-meta-label">ADR expiry</span>
+                    <span class="adr-meta-value adr-expiry">${adrDate ? fmtDate(adrDate) : "—"}</span>
+                </div>
+
+                <div class="adr-meta-row">
+                    <span class="adr-meta-label">Status</span>
+                    <span class="adr-meta-value ${statusClass}">${statusText}</span>
+                </div>
+            </div>
+        `;
+
+        listEl.appendChild(card);
+    });
+}
 /* ============================================================
    ERROR STATE — clean fallback
    ============================================================ */
@@ -372,7 +502,7 @@ function safeNumber(n, fallback = 0) {
 }
 
 /* ============================================================
-   FINAL EXPORT
+   FINAL EXPORT (BASE MODULE)
    ============================================================ */
 
 const VehiclesModule = {
@@ -381,6 +511,7 @@ const VehiclesModule = {
     updateADRStatus,
     updateADRExtraCounters,
     renderADRReminderCenter,
+    renderADRFleetGrids,
     countADRExpiring,
     countADRExpired,
     normalizeDate,
@@ -394,3 +525,298 @@ try {
     window.VehiclesModule = VehiclesModule;
 } catch (e) { }
 
+/* ============================================================
+   ADR VEHICLE SEARCH — sekcja 4
+   ============================================================ */
+
+let adrSearchIndex = [];
+
+function buildADRSearchIndex(trucks, tanktrailers) {
+    adrSearchIndex = [];
+
+    trucks.forEach((v) => {
+        adrSearchIndex.push({
+            type: "TRUCK",
+            plates: v["PLATES"] || v["REG"] || "",
+            internal: v["INTERNAL NR."] || "",
+            model: v["MODEL"] || v["TYPE"] || "",
+        });
+    });
+
+    tanktrailers.forEach((v) => {
+        adrSearchIndex.push({
+            type: "TRAILER",
+            plates: v["PLATES"] || v["REG"] || "",
+            internal: v["INTERNAL NR."] || "",
+            model: v["MODEL"] || v["TYPE"] || "",
+        });
+    });
+}
+
+function initADRSearch(trucks, tanktrailers) {
+    buildADRSearchIndex(trucks, tanktrailers);
+
+    const input = document.getElementById("adr-search-input");
+    const suggestionsEl = document.getElementById("adr-search-suggestions");
+    const vehiclesCenter = document.querySelector(".adr-vehicles-center");
+
+    if (!input || !suggestionsEl || !vehiclesCenter) return;
+
+    function clearSuggestions() {
+        suggestionsEl.innerHTML = "";
+        suggestionsEl.classList.remove("adr-search-suggestions-visible");
+    }
+
+    function clearHighlight() {
+        document
+            .querySelectorAll(".adr-vehicle-card.adr-card-highlight")
+            .forEach((card) => card.classList.remove("adr-card-highlight"));
+    }
+
+    function scrollToCard(match) {
+        clearHighlight();
+
+        const selector = `.adr-vehicle-card[data-plate="${CSS.escape(
+            match.plates
+        )}"][data-internal="${CSS.escape(match.internal)}"]`;
+        const card = document.querySelector(selector);
+
+        if (!card) return;
+
+        card.classList.add("adr-card-highlight");
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    input.addEventListener("input", () => {
+        const q = input.value.trim().toLowerCase();
+        clearSuggestions();
+        clearHighlight();
+
+        if (!q) return;
+
+        const matches = adrSearchIndex
+            .filter((item) => {
+                const haystack = (
+                    item.plates +
+                    " " +
+                    item.internal +
+                    " " +
+                    item.model
+                ).toLowerCase();
+                return haystack.includes(q);
+            })
+            .slice(0, 8);
+
+        if (!matches.length) return;
+
+        matches.forEach((m) => {
+            const row = document.createElement("div");
+            row.className = "adr-search-suggestion-item";
+            row.innerHTML = `
+                <span class="adr-search-suggestion-type">${m.type}</span>
+                <span class="adr-search-suggestion-main">${m.plates || "—"}</span>
+                <span class="adr-search-suggestion-sub">${m.internal || "—"} · ${m.model || "—"}</span>
+            `;
+            row.addEventListener("click", (e) => {
+                e.stopPropagation();
+                scrollToCard(m);
+                clearSuggestions();
+            });
+            suggestionsEl.appendChild(row);
+        });
+
+        suggestionsEl.classList.add("adr-search-suggestions-visible");
+    });
+
+    // kliknięcie poza — reset
+    document.addEventListener("click", (e) => {
+        if (
+            e.target === input ||
+            e.target.closest(".adr-search-inner") ||
+            e.target.closest(".adr-search-suggestions")
+        ) {
+            return;
+        }
+
+        // ⭐ czyści wpis
+        input.value = "";
+
+        // ⭐ usuwa listę sugestii
+        clearSuggestions();
+
+        // ⭐ usuwa pulsowanie / highlight
+        clearHighlight();
+
+        // ❌ USUNIĘTO przewijanie do sekcji 4
+        // vehiclesCenter.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+}
+
+/* ============================================================
+   Hook: odpal wyszukiwarkę po wyrenderowaniu sekcji 4
+   ============================================================ */
+
+const _origRenderADRFleetGrids = renderADRFleetGrids;
+
+renderADRFleetGrids = function (trucks, tanktrailers) {
+    _origRenderADRFleetGrids(trucks, tanktrailers);
+    initADRSearch(trucks, tanktrailers);
+};
+/* ============================================================
+   SEKCJA 5 — ALL VEHICLES (TWO COLUMNS, PREMIUM VERSION)
+   ============================================================ */
+
+function renderAllVehicles(trucks, tanktrailers) {
+    const trucksEl = document.getElementById("adr-all-trucks-list");
+    const trailersEl = document.getElementById("adr-all-trailers-list");
+
+    if (!trucksEl || !trailersEl) return;
+
+    trucksEl.innerHTML = "";
+    trailersEl.innerHTML = "";
+
+    trucks.forEach(v => renderAllRow(v, trucksEl));
+    tanktrailers.forEach(v => renderAllRow(v, trailersEl));
+}
+
+function renderAllRow(v, container) {
+    const plates = v["PLATES"] || v["REG"] || "UNKNOWN";
+    const internal = v["INTERNAL NR."] || "—";
+    const model = v["MODEL"] || v["TYPE"] || "—";
+
+    // ⭐ poprawione pobieranie daty ADR (różne możliwe nazwy)
+    const adrRaw =
+        v["ADR VALID"] ||
+        v["ADR"] ||
+        v["ADR_VALID"] ||
+        v["ADR DATE"] ||
+        v["ADR_VALID_DATE"] ||
+        v["ADR EXPIRATION"] ||
+        "—";
+
+    const adrDate = parseDate(adrRaw);
+    const adrText = adrDate ? fmtDate(adrDate) : "—";
+
+    const row = document.createElement("div");
+    row.className = "adr-all-row";
+    row.setAttribute("data-plate", plates);
+    row.setAttribute("data-internal", internal);
+
+    row.innerHTML = `
+        <span>${plates}</span>
+        <span>${internal}</span>
+        <span>${model}</span>
+
+        <span class="adr-all-adr-cell">
+            <span class="adr-all-adr-icon">
+                <svg viewBox="0 0 32 32" class="adr-svg-icon">
+                    <rect x="4" y="4" width="24" height="24" rx="6"
+                          stroke="#ff2a6d" stroke-width="2.5" fill="none"/>
+                    <text x="16" y="20" text-anchor="middle"
+                          font-size="10" font-weight="700"
+                          fill="#ff2a6d">ADR</text>
+                </svg>
+            </span>
+
+            <span class="adr-all-adr-text">${adrText}</span>
+        </span>
+    `;
+
+    container.appendChild(row);
+}
+
+/* ============================================================
+   PREMIUM SEARCH — SEKCJA 5 (identyczna jak sekcja 4)
+   ============================================================ */
+
+function initAllVehiclesSearch(trucks, tanktrailers) {
+
+    const input = document.getElementById("adr-search-input-all");
+    const suggestionsEl = document.getElementById("adr-search-suggestions-all");
+
+    const trucksEl = document.getElementById("adr-all-trucks-list");
+    const trailersEl = document.getElementById("adr-all-trailers-list");
+
+    if (!input || !suggestionsEl || !trucksEl || !trailersEl) return;
+
+    // PREMIUM INDEX — identyczny jak sekcja 4
+    const index = [...trucks, ...tanktrailers].map(v => ({
+        plates: v["PLATES"] || v["REG"] || "",
+        internal: v["INTERNAL NR."] || "",
+        model: v["MODEL"] || v["TYPE"] || "",
+        isTruck: trucks.includes(v)
+    }));
+
+    function clearSuggestions() {
+        suggestionsEl.innerHTML = "";
+        suggestionsEl.classList.remove("adr-search-suggestions-visible");
+    }
+
+    function clearHighlight() {
+        document.querySelectorAll(".adr-all-highlight")
+            .forEach(el => el.classList.remove("adr-all-highlight"));
+    }
+
+    function scrollToRow(match) {
+        clearHighlight();
+
+        const selector = `.adr-all-row[data-plate="${CSS.escape(match.plates)}"][data-internal="${CSS.escape(match.internal)}"]`;
+        const row = document.querySelector(selector);
+
+        if (!row) return;
+
+        row.classList.add("adr-all-highlight");
+        row.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    input.addEventListener("input", () => {
+        const q = input.value.trim().toLowerCase();
+        clearSuggestions();
+        clearHighlight();
+
+        if (!q) return;
+
+        const matches = index
+            .filter(item => {
+                const haystack = (item.plates + " " + item.internal + " " + item.model).toLowerCase();
+                return haystack.includes(q);
+            })
+            .slice(0, 8);
+
+        if (!matches.length) return;
+
+        matches.forEach(m => {
+            const row = document.createElement("div");
+            row.className = "adr-search-suggestion-item";
+
+            row.innerHTML = `
+                <span class="adr-search-suggestion-type">${m.isTruck ? "TRUCK" : "TRAILER"}</span>
+                <span class="adr-search-suggestion-main">${m.plates}</span>
+                <span class="adr-search-suggestion-sub">${m.internal} · ${m.model}</span>
+            `;
+
+            row.addEventListener("click", e => {
+                e.stopPropagation();
+                scrollToRow(m);
+                clearSuggestions();
+            });
+
+            suggestionsEl.appendChild(row);
+        });
+
+        suggestionsEl.classList.add("adr-search-suggestions-visible");
+    });
+
+    // kliknięcie poza — reset
+    document.addEventListener("click", e => {
+        if (
+            e.target === input ||
+            e.target.closest(".adr-search-inner") ||
+            e.target.closest(".adr-search-suggestions")
+        ) return;
+
+        input.value = "";
+        clearSuggestions();
+        clearHighlight();
+    });
+}
