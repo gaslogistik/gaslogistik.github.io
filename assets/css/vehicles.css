@@ -948,3 +948,651 @@
         0 0 10px rgba(0, 255, 120, 0.55),
         0 0 18px rgba(0, 255, 120, 0.35);
 }
+
+/* ============================================================
+   2026-07-22 16:19 SECTION 4 — TRUCKS & TANKTRAILERS (MOBILE FIRST)
+   ============================================================ */
+/* ============================================================
+   SECTION 4 — ADR VEHICLES CENTER (MOBILE FIRST)
+   ============================================================ */
+
+/* KROK 3 — sekcja ukryta na starcie, pokazuje się dopiero po JS */
+.adr-vehicles-center {
+    margin-top: 28px;
+}
+
+/* GRID — mobile: jedna kolumna pod drugą */
+.adr-vehicles-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
+/* Kolumna TRUCKS / TANKTRAILERS */
+.adr-vehicles-column {
+    background: linear-gradient(145deg, #fdfdfd, #e6e6e6);
+    border-radius: 22px;
+    padding: 20px;
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.15),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+/* Nagłówek kolumny */
+.adr-vehicles-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.adr-vehicles-label {
+    font-size: 16px;
+    font-weight: 800;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.adr-vehicles-counter {
+    font-size: 12px;
+    font-weight: 700;
+    color: #777;
+}
+
+/* Podtytuł */
+.adr-vehicles-subtitle {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 14px;
+    font-weight: 600;
+}
+
+/* LISTA KAFELKÓW */
+.adr-vehicles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+/* ============================================================
+   KAFEL — PREMIUM CARD
+   ============================================================ */
+
+.adr-vehicle-card {
+    background: linear-gradient(145deg, #ffffff, #e4e4e4);
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow:
+        0 3px 6px rgba(0, 0, 0, 0.18),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.adr-vehicle-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 8px 16px rgba(0, 0, 0, 0.25),
+        0 0 12px rgba(255, 0, 128, 0.45);
+}
+
+/* ============================================================
+   HEADER KAFELKA
+   ============================================================ */
+
+.adr-vehicle-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.adr-vehicle-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.adr-vehicle-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #222;
+}
+
+.adr-vehicle-plate {
+    font-size: 14px;
+    font-weight: 900;
+    color: #ff2a6d;
+}
+
+/* BADGES */
+.adr-vehicle-badges {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.adr-badge {
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+/* BADGE — CRITICAL (expired) */
+.adr-badge-critical {
+    background: rgba(255, 64, 64, 0.18);
+    color: #ff2a3f;
+    box-shadow:
+        0 0 10px rgba(255, 64, 64, 0.55),
+        0 0 18px rgba(255, 64, 64, 0.35);
+}
+
+/* BADGE — DAYS (7 / 21) */
+.adr-badge-days {
+    background: rgba(255, 140, 0, 0.18);
+    color: #ff7b00;
+    box-shadow:
+        0 0 10px rgba(255, 140, 0, 0.55),
+        0 0 18px rgba(255, 140, 0, 0.35);
+}
+
+/* ============================================================
+   META — szczegóły pojazdu
+   ============================================================ */
+
+.adr-vehicle-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.adr-meta-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.adr-meta-label {
+    font-weight: 700;
+    color: #555;
+}
+
+.adr-meta-value {
+    font-weight: 800;
+    color: #333333;
+}
+
+.adr-expiry {
+    color: #3744ff;
+    /* tu ustawiasz dowolny kolor */
+    font-weight: 900;
+}
+
+/* Statusy */
+.adr-status-warning {
+    color: #ff7b00;
+}
+
+.adr-status-critical {
+    color: #ff2a3f;
+}
+
+/* ============================================================
+   FOOTER — przyciski
+   ============================================================ */
+
+.adr-vehicle-footer {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.adr-vehicle-action-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.adr-btn-primary {
+    background: #ff2a6d;
+    color: white;
+}
+
+.adr-btn-primary:hover {
+    background: #ff4a85;
+    transform: translateY(-2px);
+}
+
+.adr-btn-secondary {
+    background: #ddd;
+    color: #333;
+}
+
+.adr-btn-secondary:hover {
+    background: #ccc;
+    transform: translateY(-2px);
+}
+
+@media (min-width: 992px) {
+    .adr-vehicles-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+
+    .adr-vehicle-card {
+        padding: 18px;
+    }
+
+    .adr-vehicle-card-header {
+        align-items: center;
+    }
+
+    .adr-vehicle-main {
+        gap: 4px;
+    }
+
+    .adr-vehicle-name {
+        font-size: 16px;
+    }
+
+    .adr-vehicle-plate {
+        font-size: 14px;
+    }
+
+    .adr-meta-row {
+        font-size: 13px;
+    }
+
+    .adr-vehicle-action-btn {
+        font-size: 13px;
+    }
+}
+
+/* ⭐ ADR SEARCH BAR (sekcja 4) ⭐ */
+
+.adr-search-bar {
+    margin: 12px 0 18px;
+    display: flex;
+    justify-content: center;
+}
+
+.adr-search-inner {
+    position: relative;
+    max-width: 420px;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 24px;
+    background: linear-gradient(145deg, #f0f0f0, #d8d8d8);
+    outline: 1px solid #ff2a6d;
+        outline-offset: 0px;
+    
+        box-shadow:
+            0 0 12px rgba(255, 42, 109, 0.35),
+            0 10px 25px rgba(0, 0, 0, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.adr-search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 13px;
+    color: #333;
+    padding: 6px 4px;
+}
+
+.adr-search-input::placeholder {
+    color: #888;
+}
+
+.adr-search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 6px;
+    background: #f5f5f5;
+    border-radius: 18px;
+    box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 6px 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 50;
+}
+
+.adr-search-suggestions-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.adr-search-suggestion-item {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 6px;
+    align-items: center;
+    padding: 6px 12px;
+    font-size: 11px;
+    color: #333;
+    cursor: pointer;
+    border-radius: 14px;
+    margin: 2px 8px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.adr-search-suggestion-item:hover {
+    background: #e0e0e0;
+    transform: translateY(-1px);
+}
+
+.adr-search-suggestion-type {
+    font-weight: 700;
+    color: #ff2a6d;
+    font-size: 10px;
+}
+
+.adr-search-suggestion-main {
+    font-weight: 600;
+}
+
+.adr-search-suggestion-sub {
+    font-size: 10px;
+    color: #666;
+    text-align: right;
+}
+
+/* ⭐ Breathing highlight na kafelku pojazdu ⭐ */
+
+.adr-card-highlight {
+    animation: adrCardBreath 1.6s ease-in-out 0s 3;
+    box-shadow:
+        0 0 0 0 rgba(255, 42, 109, 0.0),
+        0 10px 24px rgba(0, 0, 0, 0.25);
+    position: relative;
+}
+
+@keyframes adrCardBreath {
+    0% {
+        box-shadow:
+            0 0 0 0 rgba(255, 42, 109, 0.0),
+            0 10px 24px rgba(0, 0, 0, 0.25);
+        transform: translateY(0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 10px rgba(255, 42, 109, 0.18),
+            0 16px 32px rgba(0, 0, 0, 0.35);
+        transform: translateY(-2px);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 0 rgba(255, 42, 109, 0.0),
+            0 10px 24px rgba(0, 0, 0, 0.25);
+        transform: translateY(0);
+    }
+}
+
+/* ============================================================
+   PREMIUM ALL VEHICLES — TWO COLUMNS
+   ============================================================ */
+
+.adr-all-vehicles-wrapper {
+    display: flex;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+.adr-all-column {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.adr-all-title {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #ff2a6d;
+    text-shadow: 0 0 8px rgba(255, 42, 109, 0.3);
+}
+
+/* ⭐ JASNY NIEBIESKI NAGŁÓWEK */
+.adr-all-header-row {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 1fr 1.2fr;
+    align-items: center;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 700;
+
+    background: #e6f3ff;
+    /* ⭐ jasny niebieski */
+    border-radius: 8px;
+    margin-bottom: 5px;
+
+    border: 1px solid #b8c7d9;
+    /* ⭐ ciemniejszy niebiesko‑szary kontur */
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.08);
+}
+
+/* RÓWNY, ULTRA-COMPACT UKŁAD 4 KOLUMN */
+.adr-all-row {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 1fr 1.2fr;
+    align-items: center;
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    margin-bottom: 3px;
+    border: 1px solid #d0d0d0;
+    transition: 0.2s ease;
+}
+
+.adr-all-row:nth-child(odd) {
+    background: #ffffff;
+}
+
+.adr-all-row:nth-child(even) {
+    background: #eaeaea;
+}
+
+.adr-all-row:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    background: #ffffff;
+}
+
+/* IDENTYCZNA WYSZUKIWARKA JAK W SEKCJI 4 */
+.premium-search {
+    background: #ffffff;
+    border-radius: 20px;
+    /* ⭐ mniejszy radius */
+    padding: 8px 14px;
+    /* ⭐ niższa, ciaśniejsza */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
+    /* ⭐ jak sekcja 4 */
+    margin-bottom: 16px;
+    border: 1px solid #d0d0d0;
+    /* ⭐ lekki kontur jak wiersze */
+}
+
+.premium-search input {
+    font-size: 13px;
+    /* ⭐ mniejszy font */
+    font-weight: 600;
+    color: #444;
+    /* ⭐ ciemniejszy tekst */
+}
+
+.premium-search input::placeholder {
+    color: #888;
+    /* ⭐ jaśniejszy placeholder */
+    font-size: 13px;
+    /* ⭐ identyczny jak sekcja 4 */
+}
+
+/* ADR cell — ikona + data */
+.adr-all-adr-cell {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    white-space: nowrap;
+}
+
+/* PREMIUM ADR ICON WRAPPER */
+.adr-all-adr-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* PREMIUM ADR SVG ICON */
+.adr-svg-icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+    margin-top: 0;
+    opacity: 0.95;
+    filter: drop-shadow(0 0 4px rgba(255, 42, 109, 0.35));
+    transition: 0.25s ease;
+}
+
+.adr-all-row:hover .adr-svg-icon {
+    opacity: 1;
+    transform: scale(1.10);
+    filter: drop-shadow(0 0 8px rgba(255, 42, 109, 0.55));
+}
+
+/* ⭐ Pulsowanie po wyszukiwaniu ⭐ */
+.adr-all-highlight {
+    animation: adrAllBreath 1.6s ease-in-out 0s 3;
+}
+
+@keyframes adrAllBreath {
+    0% {
+        box-shadow:
+            0 10px 25px rgba(0, 0, 0, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 10px rgba(255, 42, 109, 0.18),
+            0 16px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    100% {
+        box-shadow:
+            0 10px 25px rgba(0, 0, 0, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+}
+
+/* ============================================================
+   MOBILE FIX — AUTOMATYCZNY DWUWIERSZOWY UKŁAD BEZ ZMIAN HTML
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    /* kolumny jedna pod drugą */
+    .adr-all-vehicles-wrapper {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .adr-all-column {
+        width: 100%;
+    }
+
+    /* --- WIERSZE: automatyczny dwuwierszowy układ --- */
+    .adr-all-row {
+        display: flex;
+        flex-wrap: wrap;
+        /* ⭐ elementy przechodzą do drugiej linii */
+        padding: 8px 10px;
+        gap: 6px;
+        /* ⭐ odstęp między elementami */
+    }
+
+    /* każdy element w wierszu zajmuje pół szerokości */
+    .adr-all-row span,
+    .adr-all-adr-cell {
+        width: 50%;
+        /* ⭐ PLATES + INTERNAL NR w 1 linii */
+        /* ⭐ MODEL + ADR VALID w 2 linii */
+        display: flex;
+        align-items: center;
+    }
+
+    /* ADR ikona */
+    .adr-svg-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 6px;
+    }
+
+    /* nagłówki też dwuwierszowe */
+    .adr-all-header-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 8px 10px;
+    }
+
+    .adr-all-header-row span {
+        width: 50%;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .adr-all-row {
+        padding: 6px 8px;
+        gap: 4px;
+    }
+
+    .adr-all-row span,
+    .adr-all-adr-cell {
+        width: 50%;
+        font-size: 10px;
+    }
+
+    .adr-svg-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
